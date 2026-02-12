@@ -20,6 +20,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileEventsOpen, setMobileEventsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -96,11 +98,69 @@ export default function Navbar() {
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden text-yellow-400 text-2xl cursor-pointer">
+        <div
+          className="md:hidden text-yellow-400 text-2xl cursor-pointer"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
           ☰
         </div>
       </div>
       <ServicePopup isOpen={openForm} onClose={() => setOpenForm(false)} />
+      {/* Mobile Menu */}
+      <div
+        className={`md:hidden fixed top-0 left-0 w-full h-screen bg-black/95 backdrop-blur-xl transition-transform duration-500 ${
+          mobileOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <div className="flex flex-col items-center justify-center h-full gap-8 text-xl text-white">
+          <Link href="/" onClick={() => setMobileOpen(false)}>
+            Home
+          </Link>
+          <Link href="/about" onClick={() => setMobileOpen(false)}>
+            About Us
+          </Link>
+
+          {/* Mobile dropdown */}
+          <button
+            onClick={() => setMobileEventsOpen(!mobileEventsOpen)}
+            className="text-yellow-400"
+          >
+            Big Events
+          </button>
+
+          {mobileEventsOpen && (
+            <div className="flex flex-col gap-3 text-gray-300 text-lg">
+              {events.map((event) => (
+                <Link
+                  key={event.href}
+                  href={event.href}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {event.name}
+                </Link>
+              ))}
+            </div>
+          )}
+
+          <Link href="/portfolio" onClick={() => setMobileOpen(false)}>
+            Big Folio
+          </Link>
+          <Link href="/clients" onClick={() => setMobileOpen(false)}>
+            Big Clients
+          </Link>
+          <Link href="/contact" onClick={() => setMobileOpen(false)}>
+            Contact
+          </Link>
+
+          <Button
+            onClick={() => {
+              setOpenForm(true);
+              setMobileOpen(false);
+            }}
+            text="Book Now"
+          />
+        </div>
+      </div>
     </nav>
   );
 }

@@ -8,6 +8,7 @@ const images = [
   "/travel.png",
   "/festi.png",
   "/acti.png",
+  "/training.png",
 ];
 
 export default function Hero() {
