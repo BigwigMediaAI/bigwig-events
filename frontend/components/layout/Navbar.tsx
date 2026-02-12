@@ -71,7 +71,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link href="/folio" className="nav-link">
+          <Link href="/portfolio" className="nav-link">
             Big Folio
           </Link>
           <Link href="/clients" className="nav-link">

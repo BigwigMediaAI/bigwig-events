@@ -32,7 +32,7 @@ export default function CTA() {
           <Button onClick={() => setOpen(true)} text="Book Your Event" />
 
           <Link
-            href="/folio"
+            href="/portfolio"
             className="px-10 py-4 border border-yellow-400 text-yellow-400 rounded-full hover:bg-yellow-400 hover:text-black transition duration-300"
           >
             View Portfolio

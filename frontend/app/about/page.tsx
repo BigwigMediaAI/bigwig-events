@@ -143,6 +143,77 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ================= WHY CHOOSE US ================= */}
+      <section className="relative overflow-hidden bg-[var(--bg)] py-20">
+        {/* Gold Glow Background */}
+        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[var(--secondary)]/10 blur-[180px]" />
+
+        <div className="relative z-10 mx-auto w-11/12 md:w-5/6">
+          {/* SECTION HEADING */}
+          <div className="mb-16 text-center">
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-1 text-sm text-[var(--text)] backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-[var(--secondary)]" />
+              Why Choose Us
+            </p>
+
+            <h2 className="text-3xl md:text-5xl font-bold text-[var(--white)]">
+              What Makes Our Events
+              <span className="block text-[var(--secondary)]">
+                Truly Exceptional
+              </span>
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-2xl text-[var(--text)]">
+              We combine creativity, precision, and passion to deliver
+              extraordinary experiences tailored to your vision.
+            </p>
+          </div>
+
+          {/* FEATURE GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "Luxury Execution",
+                text: "From décor to guest experience, every detail reflects elegance and premium craftsmanship.",
+              },
+              {
+                title: "Personalized Planning",
+                text: "We tailor every event to your unique style, ensuring a celebration that feels authentically yours.",
+              },
+              {
+                title: "Seamless Coordination",
+                text: "Our experienced team ensures smooth execution from concept to final applause.",
+              },
+              {
+                title: "Trusted Vendor Network",
+                text: "We collaborate with the finest venues, decorators, and partners for flawless results.",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group relative rounded-2xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[var(--secondary)]/40 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6)]"
+              >
+                {/* Accent Glow on Hover */}
+                <div className="absolute -inset-4 rounded-3xl bg-[var(--secondary)]/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+
+                <div className="relative z-10">
+                  {/* Small Gold Dot */}
+                  <div className="mb-4 h-3 w-3 rounded-full bg-[var(--secondary)]" />
+
+                  <h3 className="mb-4 text-xl font-semibold text-[var(--white)]">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-[var(--text)] leading-relaxed">
+                    {item.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CTA />
 
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
