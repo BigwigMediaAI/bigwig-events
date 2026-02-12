@@ -10,6 +10,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use("/lead", require("./routes/lead.route"));
+app.use("/testimonial", require("./routes/testimonial.route"));
+app.use("/client", require("./routes/client.route"));
+
 app.get("/", (req, res) => {
   res.status(200).send("API LIVE 🚀");
 });
