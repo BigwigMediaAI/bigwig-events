@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Button from "../ui/Button";
+import ServicePopup from "../layout/Popup";
+import { useState } from "react";
 
 export default function CTA() {
+  const [open, setOpen] = useState(false);
   return (
-    <section className="relative bg-black py-32 px-6 text-white overflow-hidden">
+    <section className="relative bg-black py-16 px-6 text-white overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 flex justify-center items-center">
         <div className="w-[600px] h-[600px] bg-yellow-400/10 blur-[160px] rounded-full" />
@@ -25,21 +29,17 @@ export default function CTA() {
 
         {/* Buttons */}
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center">
-          <Link
-            href="/contact"
-            className="px-10 py-4 bg-yellow-400 text-black font-semibold rounded-xl hover:scale-105 transition duration-300 shadow-lg shadow-yellow-400/20"
-          >
-            Book Your Event
-          </Link>
+          <Button onClick={() => setOpen(true)} text="Book Your Event" />
 
           <Link
             href="/folio"
-            className="px-10 py-4 border border-yellow-400 text-yellow-400 rounded-xl hover:bg-yellow-400 hover:text-black transition duration-300"
+            className="px-10 py-4 border border-yellow-400 text-yellow-400 rounded-full hover:bg-yellow-400 hover:text-black transition duration-300"
           >
             View Portfolio
           </Link>
         </div>
       </div>
+      <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </section>
   );
 }

@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import Button from "../ui/Button";
+import ServicePopup from "./Popup";
 
 const events = [
   { name: "Corporate Events", href: "/corporate-events" },
@@ -17,6 +19,7 @@ const events = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -54,12 +57,12 @@ export default function Navbar() {
             <span className="nav-link cursor-pointer">Big Events</span>
 
             {open && (
-              <div className="absolute top-10 left-0 w-64 bg-black/90 backdrop-blur-lg border border-yellow-500/20 rounded-xl shadow-xl p-2">
+              <div className="absolute top-7 left-0 w-64 bg-black/90 backdrop-blur-lg border border-yellow-500/20 rounded-xl shadow-xl p-2">
                 {events.map((event) => (
                   <Link
                     key={event.href}
                     href={event.href}
-                    className="block px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-black transition"
+                    className="block px-4 py-2  rounded-md hover:bg-yellow-500 hover:text-black transition"
                   >
                     {event.name}
                   </Link>
@@ -74,8 +77,8 @@ export default function Navbar() {
           <Link href="/clients" className="nav-link">
             Big Clients
           </Link>
-          <Link href="/weddings" className="nav-link">
-            Big Weddings
+          <Link href="/contact" className="nav-link">
+            Contact Us
           </Link>
         </div>
 
@@ -89,12 +92,7 @@ export default function Navbar() {
           </div>
 
           {/* Book Now */}
-          <Link
-            href="/contact"
-            className="border border-yellow-500 text-yellow-400 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-black transition font-semibold"
-          >
-            Book Now
-          </Link>
+          <Button onClick={() => setOpenForm(true)} text="Book Now" />
         </div>
 
         {/* Mobile */}
@@ -102,6 +100,7 @@ export default function Navbar() {
           ☰
         </div>
       </div>
+      <ServicePopup isOpen={openForm} onClose={() => setOpenForm(false)} />
     </nav>
   );
 }

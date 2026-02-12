@@ -6,7 +6,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black text-white pt-28 pb-12 px-6 overflow-hidden">
+    <footer className="relative bg-black text-white pt-16 pb-12 px-6 overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 flex justify-center">
         <div className="w-[800px] h-[800px] bg-yellow-400/10 blur-[200px] rounded-full" />
