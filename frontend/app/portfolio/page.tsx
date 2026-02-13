@@ -11,19 +11,18 @@ import Footer from "@/components/layout/Footer";
 
 interface Portfolio {
   _id: string;
-  name: string;
+  title: string;
   image: string;
   category: string;
 }
 
 const categories = [
   "All",
-  "Wedding",
-  "Corporate",
-  "Private Party",
-  "Brand Launch",
-  "Birthday",
-  "Luxury Decor",
+  "Corporate Events",
+  "Corporate Travels",
+  "Corporate Training",
+  "Corporate Festivities",
+  "Corporate Activations",
 ];
 
 export default function PortfolioPage() {
@@ -32,6 +31,7 @@ export default function PortfolioPage() {
   const [open, setOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
 
+  /* ================= FETCH PORTFOLIO ================= */
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
@@ -57,19 +57,24 @@ export default function PortfolioPage() {
     fetchPortfolio();
   }, []);
 
+  /* ================= FILTER ================= */
   const filteredProjects =
     activeCategory === "All"
       ? projects
-      : projects.filter((project) => project.category === activeCategory);
+      : projects.filter(
+          (project) =>
+            project.category?.toLowerCase() === activeCategory.toLowerCase(),
+        );
 
   return (
     <div className="relative bg-[var(--bg)] text-[var(--white)]">
       <Navbar />
+
       {/* ================= HERO ================= */}
       <section className="relative h-[90vh] w-full overflow-hidden">
         <Image
           src="/acti.png"
-          alt="Luxury event portfolio showcase"
+          alt="Corporate event portfolio showcase"
           fill
           priority
           className="object-cover"
@@ -85,19 +90,19 @@ export default function PortfolioPage() {
                 Home
               </Link>
               <span>/</span>
-              <span className="text-[var(--text)]">Portfolio</span>
+              <span className="text-[var(--muted)]">Portfolio</span>
             </div>
 
-            <h1 className="mb-6 text-4xl md:text-6xl font-bold text-[var(--white)]">
-              Moments We’ve <br />
+            <h1 className="mb-6 text-4xl md:text-6xl font-bold">
+              Events We’ve <br />
               <span className="text-[var(--secondary)]">
-                Crafted & Celebrated
+                Designed & Delivered
               </span>
             </h1>
 
-            <p className="max-w-xl text-lg text-[var(--text)]">
-              Explore our curated collection of weddings, corporate events, and
-              luxury celebrations.
+            <p className="max-w-xl text-lg text-[var(--muted)]">
+              Explore our corporate events, activations, and travel experiences
+              crafted with precision and creativity.
             </p>
           </div>
         </div>
@@ -109,7 +114,7 @@ export default function PortfolioPage() {
 
         <div className="relative z-10 mx-auto w-11/12 md:w-5/6">
           {loading ? (
-            <div className="py-24 text-center text-[var(--text)]">
+            <div className="py-24 text-center text-[var(--muted)]">
               Loading our events...
             </div>
           ) : projects.length === 0 ? (
@@ -118,19 +123,19 @@ export default function PortfolioPage() {
                 ✨
               </div>
 
-              <h3 className="mb-4 text-2xl font-semibold text-[var(--white)]">
-                Our Next Masterpiece Could Be Yours
+              <h3 className="mb-4 text-2xl font-semibold">
+                Our Next Corporate Experience Could Be Yours
               </h3>
 
-              <p className="mb-8 text-[var(--text)]">
-                Let’s craft something extraordinary together.
+              <p className="mb-8 text-[var(--muted)]">
+                Let’s build something extraordinary together.
               </p>
 
               <Button onClick={() => setOpen(true)} text="Plan Your Event" />
             </div>
           ) : (
             <>
-              {/* FILTER BUTTONS */}
+              {/* ================= FILTER BUTTONS ================= */}
               <div className="flex flex-wrap justify-center gap-3 mb-12">
                 {categories.map((cat) => (
                   <button
@@ -139,7 +144,7 @@ export default function PortfolioPage() {
                     className={`px-5 py-2 rounded-full text-sm border transition ${
                       activeCategory === cat
                         ? "bg-[var(--secondary)] text-black border-[var(--secondary)]"
-                        : "border-white/10 text-[var(--text)] hover:border-[var(--secondary)]"
+                        : "border-white/10 text-[var(--muted)] hover:border-[var(--secondary)]"
                     }`}
                   >
                     {cat}
@@ -147,16 +152,16 @@ export default function PortfolioPage() {
                 ))}
               </div>
 
-              {/* GRID */}
+              {/* ================= GRID ================= */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-                {filteredProjects.map((project, index) => (
+                {filteredProjects.map((project) => (
                   <div
                     key={project._id}
                     className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6)]"
                   >
                     <Image
                       src={project.image}
-                      alt={project.name}
+                      alt={project.title}
                       width={600}
                       height={400}
                       className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -172,9 +177,7 @@ export default function PortfolioPage() {
 
                     {/* Title */}
                     <div className="absolute bottom-0 left-0 p-6">
-                      <h3 className="text-lg font-semibold text-[var(--white)]">
-                        {project.name}
-                      </h3>
+                      <h3 className="text-lg font-semibold">{project.title}</h3>
                     </div>
                   </div>
                 ))}
