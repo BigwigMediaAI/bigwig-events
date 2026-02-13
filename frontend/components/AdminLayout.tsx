@@ -14,6 +14,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Building, Gauge, Notebook, User2, Users, Users2 } from "lucide-react";
 import Cookies from "js-cookie";
+import { FcGallery } from "react-icons/fc";
 
 export default function AdminLayout({
   children,
@@ -47,6 +48,11 @@ export default function AdminLayout({
       icon: <FaQuoteRight size={18} />,
       label: "Testimonial",
       to: "/admin/testimonial",
+    },
+    {
+      icon: <FcGallery size={18} />,
+      label: "Portfolio",
+      to: "/admin/portfolio",
     },
     // {
     //   icon: <FaQuestion size={18} />,
