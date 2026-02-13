@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import Button from "../ui/Button";
 import ServicePopup from "./Popup";
+import Button2 from "../ui/Button2";
 
 const events = [
   { name: "Corporate Events", href: "/corporate-events" },
@@ -94,7 +95,7 @@ export default function Navbar() {
           </div>
 
           {/* Book Now */}
-          <Button onClick={() => setOpenForm(true)} text="Book Now" />
+          <Button2 onClick={() => setOpenForm(true)} text="Book Now" />
         </div>
 
         {/* Mobile */}

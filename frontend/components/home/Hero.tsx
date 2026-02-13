@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Button2 from "../ui/Button2";
 
 const images = [
   "/weding.png",
@@ -58,9 +59,7 @@ export default function Hero() {
           perfection.
         </p>
 
-        <button className="mt-8 border border-yellow-400 px-8 py-3 hover:bg-yellow-400 hover:text-black transition font-semibold rounded-md">
-          Explore Events
-        </button>
+        <Button2 text="Explore Events" className="mt-8" />
       </div>
 
       {/* Scroll Arrow */}

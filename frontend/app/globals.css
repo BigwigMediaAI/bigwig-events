@@ -38,3 +38,40 @@
 .nav-link:hover::after {
   width: 100%;
 }
+
+/* button 2 css */
+
+.btn-style500 {
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+
+  border: 2px solid #f4b400;
+  color: #f4b400;
+  background: transparent;
+
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* hover animation */
+.btn-style500:hover {
+  color: #fff;
+  transition-delay: 0.2s;
+
+  animation: ani500 0.6s forwards;
+
+  background:
+    radial-gradient(circle, #f4b400 0.2em, transparent 0.3em) 6em 6em / 1em 1em,
+    radial-gradient(circle, #f4b400 0.2em, transparent 0.3em) 0 0 / 1em 1em;
+}
+
+@keyframes ani500 {
+  100% {
+    background-size:
+      2.375em 2.375em,
+      0.1em 0.1em;
+  }
+}
