@@ -7,12 +7,15 @@ import { Target, Eye, Users } from "lucide-react";
 import Button from "@/components/ui/Button";
 import ServicePopup from "@/components/layout/Popup";
 import CTA from "@/components/home/CTA";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 export default function AboutPage() {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="relative bg-[var(--bg)] text-[var(--white)]">
+      <Navbar />
       {/* ================= HERO SECTION ================= */}
       <section className="relative h-[90vh] w-full overflow-hidden">
         <Image
@@ -215,6 +218,8 @@ export default function AboutPage() {
       </section>
 
       <CTA />
+
+      <Footer />
 
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>

@@ -12,6 +12,7 @@ import {
 import { MapPin, Phone, Mail } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import ContactFormCard from "@/components/layout/ContactFormCard";
+import Footer from "@/components/layout/Footer";
 
 const socials = [
   { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
@@ -177,6 +178,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

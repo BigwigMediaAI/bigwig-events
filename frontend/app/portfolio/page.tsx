@@ -6,6 +6,8 @@ import Link from "next/link";
 import CTA from "@/components/home/CTA";
 import Button from "@/components/ui/Button";
 import ServicePopup from "@/components/layout/Popup";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 interface Portfolio {
   _id: string;
@@ -62,6 +64,7 @@ export default function PortfolioPage() {
 
   return (
     <div className="relative bg-[var(--bg)] text-[var(--white)]">
+      <Navbar />
       {/* ================= HERO ================= */}
       <section className="relative h-[90vh] w-full overflow-hidden">
         <Image
@@ -182,6 +185,7 @@ export default function PortfolioPage() {
       </section>
 
       <CTA />
+      <Footer />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

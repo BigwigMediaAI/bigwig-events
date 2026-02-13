@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CTA from "@/components/home/CTA";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 interface Client {
   _id: string;
@@ -41,6 +43,7 @@ export default function ClientPage() {
 
   return (
     <div className="relative bg-[var(--bg)] text-[var(--white)]">
+      <Navbar />
       {/* HERO */}
       <section className="relative h-[90vh] w-full overflow-hidden">
         <Image
@@ -172,6 +175,7 @@ export default function ClientPage() {
       </section>
 
       <CTA />
+      <Footer />
     </div>
   );
 }
