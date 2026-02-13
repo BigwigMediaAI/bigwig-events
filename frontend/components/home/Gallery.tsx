@@ -12,7 +12,7 @@ const images = [
 
 export default function Gallery() {
   return (
-    <section className="bg-gradient-to-b from-black via-[#0a0a0a] to-black py-32 px-6 text-white">
+    <section className="bg-gradient-to-b from-black via-[#0a0a0a] to-black py-16 px-6 text-white">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <h2 className="text-center text-5xl md:text-6xl font-light mb-24">

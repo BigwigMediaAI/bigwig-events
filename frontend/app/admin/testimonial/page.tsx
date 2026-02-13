@@ -66,54 +66,59 @@ const AdminTestimonials = () => {
   );
 
   return (
-    <div className="h-screen bg-black text-white flex flex-col">
+    <div className="h-screen bg-[var(--bg)] text-[var(--white)] flex flex-col">
       {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-black border-b border-gray-700">
+      <div className="sticky top-0 z-20 bg-[var(--bg)] border-b border-white/10">
         <div className="p-6 flex justify-between">
           <h1 className="text-3xl font-bold">Testimonials</h1>
 
           <button
             onClick={() => {
-              setEditData(null); // CREATE MODE
+              setEditData(null);
               setShowModal(true);
             }}
-            className="border hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] text-white px-4 py-2 rounded-full flex items-center gap-2 font-semibold"
+            className="
+            border border-white/10
+            hover:border-[var(--secondary)]
+            hover:text-[var(--secondary)]
+            text-[var(--white)]
+            px-4 py-2
+            rounded-full
+            flex items-center gap-2
+            font-semibold
+            transition
+          "
           >
             <Plus size={18} /> Add Testimonial
           </button>
         </div>
       </div>
-
       {/* CONTENT */}
       <div className="flex-1 p-6 overflow-y-auto">
         {loading ? (
-          /* ================= LOADER ================= */
           <div className="flex items-center justify-center py-20">
-            <div className="flex flex-col items-center gap-3 text-gray-400">
-              <div className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
+            <div className="flex flex-col items-center gap-3 text-[var(--muted)]">
+              <div className="w-8 h-8 border-2 border-white/20 border-t-transparent rounded-full animate-spin" />
               <p className="text-sm">Loading testimonials...</p>
             </div>
           </div>
         ) : visibleItems.length === 0 ? (
-          /* ================= EMPTY STATE ================= */
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-14 h-14 rounded-full bg-[#1e1e1e] flex items-center justify-center mb-4">
-              <MessageSquare className="text-gray-400" size={24} />
+            <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4">
+              <MessageSquare className="text-[var(--muted)]" size={24} />
             </div>
 
-            <h3 className="text-lg font-semibold text-white">
-              No testimonials found
-            </h3>
+            <h3 className="text-lg font-semibold">No testimonials found</h3>
 
-            <p className="text-sm text-gray-400 max-w-md mt-2">
+            <p className="text-sm text-[var(--muted)] max-w-md mt-2">
               Add your first testimonial to build trust with your clients.
             </p>
           </div>
         ) : (
-          /* ================= TABLE ================= */
           <>
-            <table className="w-full border border-gray-700 text-sm">
-              <thead className="bg-[#1e1e1e]">
+            {/* TABLE */}
+            <table className="w-full border border-white/10 text-sm">
+              <thead className="bg-white/5">
                 <tr>
                   <th className="px-4 py-3 text-left w-1/4">Client</th>
                   <th className="px-4 py-3 text-left w-2/4">Message</th>
@@ -124,18 +129,21 @@ const AdminTestimonials = () => {
 
               <tbody>
                 {visibleItems.map((t) => (
-                  <tr key={t._id} className="even:bg-[#111] hover:bg-[#222]">
+                  <tr
+                    key={t._id}
+                    className="even:bg-white/5 hover:bg-white/10 transition"
+                  >
                     {/* CLIENT */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full overflow-hidden bg-[var(--primary-color)] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-[var(--secondary)]/20 flex items-center justify-center">
                           {t.image ? (
                             <img
                               src={t.image}
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <span className="text-white font-semibold">
+                            <span className="font-semibold">
                               {t.name.charAt(0).toUpperCase()}
                             </span>
                           )}
@@ -143,7 +151,7 @@ const AdminTestimonials = () => {
 
                         <div>
                           <p className="font-medium">{t.name}</p>
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-[var(--muted)]">
                             {t.designation}
                           </p>
                         </div>
@@ -151,7 +159,7 @@ const AdminTestimonials = () => {
                     </td>
 
                     {/* MESSAGE */}
-                    <td className="px-4 py-3 text-gray-300">
+                    <td className="px-4 py-3 text-[var(--muted)]">
                       <div className="line-clamp-2 break-words">
                         {t.message}
                       </div>
@@ -160,8 +168,10 @@ const AdminTestimonials = () => {
                     {/* STATUS */}
                     <td className="px-4 py-3 text-center">
                       <span
-                        className={`px-3 py-1 rounded text-xs ${
-                          t.isActive ? "bg-green-600" : "bg-gray-600"
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          t.isActive
+                            ? "bg-[var(--secondary)] text-black"
+                            : "bg-white/10 text-[var(--muted)]"
                         }`}
                       >
                         {t.isActive ? "Active" : "Inactive"}
@@ -169,10 +179,10 @@ const AdminTestimonials = () => {
                     </td>
 
                     {/* ACTIONS */}
-                    <td className="px-4 py-3 flex justify-center gap-3">
+                    <td className="px-4 py-3 flex justify-center gap-4">
                       <button
                         onClick={() => setSelected(t)}
-                        className="text-cyan-400"
+                        className="text-[var(--muted)] hover:text-[var(--secondary)] transition"
                         title="View"
                       >
                         <Eye size={18} />
@@ -183,7 +193,7 @@ const AdminTestimonials = () => {
                           setEditData(t);
                           setShowModal(true);
                         }}
-                        className="text-yellow-400"
+                        className="text-blue-500 hover:text-[var(--secondary)] transition"
                         title="Edit"
                       >
                         <Pencil size={18} />
@@ -191,7 +201,7 @@ const AdminTestimonials = () => {
 
                       <button
                         onClick={() => handleDelete(t._id)}
-                        className="text-red-400"
+                        className="text-red-500 hover:text-red-600 transition"
                         title="Delete"
                       >
                         <Trash2 size={18} />
@@ -208,19 +218,19 @@ const AdminTestimonials = () => {
                 <button
                   disabled={currentPage === 1}
                   onClick={() => setCurrentPage((p) => p - 1)}
-                  className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
+                  className="px-3 py-1 bg-white/5 rounded disabled:opacity-50"
                 >
                   Prev
                 </button>
 
-                <span className="px-3 py-1 bg-[var(--primary-color)] rounded">
+                <span className="px-3 py-1 bg-[var(--secondary)] text-black rounded">
                   {currentPage}
                 </span>
 
                 <button
                   disabled={currentPage === totalPages}
                   onClick={() => setCurrentPage((p) => p + 1)}
-                  className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
+                  className="px-3 py-1 bg-white/5 rounded disabled:opacity-50"
                 >
                   Next
                 </button>
@@ -229,29 +239,32 @@ const AdminTestimonials = () => {
           </>
         )}
       </div>
-
-      {/* VIEW MODAL */}
+      {/* VIEW MODAL */}{" "}
       {selected && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
+          {" "}
           <div className="bg-[#111] w-full max-w-xl rounded-xl border border-gray-800">
+            {" "}
             <div className="flex justify-between p-5 border-b border-gray-700">
-              <h2 className="text-xl font-semibold">{selected.name}</h2>
+              {" "}
+              <h2 className="text-xl font-semibold">{selected.name}</h2>{" "}
               <button onClick={() => setSelected(null)}>
-                <X size={18} />
-              </button>
-            </div>
-
+                {" "}
+                <X size={18} />{" "}
+              </button>{" "}
+            </div>{" "}
             <div className="p-6 space-y-4">
-              <p className="text-gray-300">{selected.message}</p>
+              {" "}
+              <p className="text-gray-300">{selected.message}</p>{" "}
               <p className="text-sm text-gray-400">
-                Status: {selected.isActive ? "Active" : "Inactive"}
-              </p>
-            </div>
-          </div>
+                {" "}
+                Status: {selected.isActive ? "Active" : "Inactive"}{" "}
+              </p>{" "}
+            </div>{" "}
+          </div>{" "}
         </div>
-      )}
-
-      {/* CREATE + EDIT MODAL */}
+      )}{" "}
+      {/* CREATE + EDIT MODAL */}{" "}
       {showModal && (
         <TestimonialModal
           initialData={editData}
