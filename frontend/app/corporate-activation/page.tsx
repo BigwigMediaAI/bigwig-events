@@ -106,7 +106,31 @@ export default function CorporateActivation() {
         </section>
         {/* PREMIUM GALLERY */}
         <ActivationGallery />
+        {/* STATS / CREDIBILITY */}
+        <section className="py-28 px-6 text-center">
+          <h2 className="text-5xl font-light mb-16">
+            Trusted at <span className="italic text-yellow-400">Scale</span>
+          </h2>
 
+          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <div>
+              <h3 className="text-5xl font-light text-yellow-400">200+</h3>
+              <p className="text-gray-400 mt-4">
+                Corporate productions delivered
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-5xl font-light text-yellow-400">40+</h3>
+              <p className="text-gray-400 mt-4">Global brand partnerships</p>
+            </div>
+
+            <div>
+              <h3 className="text-5xl font-light text-yellow-400">1M+</h3>
+              <p className="text-gray-400 mt-4">Attendees engaged</p>
+            </div>
+          </div>
+        </section>
         <CTA />
       </main>
       <Footer />
