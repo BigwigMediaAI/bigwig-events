@@ -13,6 +13,8 @@ app.use(cors());
 app.use("/lead", require("./routes/lead.route"));
 app.use("/testimonial", require("./routes/testimonial.route"));
 app.use("/client", require("./routes/client.route"));
+app.use("/subscribers", require("./routes/subscriber.route"));
+app.use("/newsletter", require("./routes/newsletter.route"));
 
 app.get("/", (req, res) => {
   res.status(200).send("API LIVE 🚀");
