@@ -1,0 +1,190 @@
+"use client";
+import {
+  FaBars,
+  FaTimes,
+  FaSignOutAlt,
+  FaBuilding,
+  FaMailBulk,
+  FaQuoteRight,
+  FaQuestion,
+} from "react-icons/fa";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import Image from "next/image";
+import { Building, Gauge, Notebook, User2, Users, Users2 } from "lucide-react";
+import Cookies from "js-cookie";
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navItems = [
+    { icon: <Gauge size={18} />, label: "Dashboard", to: "/admin" },
+    { icon: <Users size={18} />, label: "Leads", to: "/admin/lead" },
+    {
+      icon: <User2 size={18} />,
+      label: "Subscribers",
+      to: "/admin/subscribers",
+    },
+    {
+      icon: <Users2 size={18} />,
+      label: "Clients",
+      to: "/admin/clients",
+    },
+    // { icon: <Notebook size={18} />, label: "Blogs", to: "/admin/blogs" },
+    {
+      icon: <FaMailBulk size={18} />,
+      label: "Newsletter",
+      to: "/admin/newsletter",
+    },
+    {
+      icon: <FaQuoteRight size={18} />,
+      label: "Testimonial",
+      to: "/admin/testimonial",
+    },
+    // {
+    //   icon: <FaQuestion size={18} />,
+    //   label: "FAQ",
+    //   to: "/admin/faq",
+    // },
+  ];
+
+  const handleLogout = () => {
+    Cookies.remove("adminAuth");
+    router.push("/login");
+  };
+
+  return (
+    <div className="h-screen flex flex-col lg:flex-row overflow-hidden bg-[var(--bg)] text-[var(--white)] font-raleway relative">
+      {/* ===== MOBILE TOP NAV ===== */}
+      <div className="lg:hidden bg-[var(--bg)] flex items-center justify-between px-5 py-4 shadow-md border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={40}
+            height={40}
+            className="object-contain"
+            style={{ height: "auto" }}
+          />
+          <span className="text-lg font-semibold tracking-wide text-[var(--white)]">
+            Admin
+          </span>
+        </div>
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="text-[var(--white)] text-2xl"
+        >
+          {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* ===== MOBILE SLIDE-OUT MENU ===== */}
+      <div
+        className={`fixed top-0 left-0 w-3/4 sm:w-2/5 h-full bg-[var(--bg)] z-50 transform transition-transform duration-300 ease-in-out 
+        ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="logo"
+              width={40}
+              height={40}
+              className="object-contain"
+              style={{ height: "auto" }}
+            />
+            <span className="text-lg font-semibold tracking-wide text-[var(--white)]">
+              Admin
+            </span>
+          </div>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="text-[var(--white)] text-2xl"
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        <nav className="flex flex-col mt-6 space-y-1">
+          {navItems.map(({ icon, label, to }) => (
+            <Link
+              key={to}
+              href={to}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all duration-200 
+              ${
+                pathname === to
+                  ? "bg-[var(--secondary)] text-black shadow-md"
+                  : "text-[var(--muted)] hover:bg-black/40 hover:text-[var(--white)]"
+              }`}
+            >
+              {icon}
+              <span>{label}</span>
+            </Link>
+          ))}
+
+          {/* Logout Button (Mobile) */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-6 py-3 mt-4 text-sm font-medium text-red-400 hover:text-red-500 border-t border-white/10"
+          >
+            <FaSignOutAlt />
+            Logout
+          </button>
+        </nav>
+      </div>
+
+      {/* ===== DESKTOP SIDEBAR ===== */}
+      <aside className="hidden lg:flex lg:flex-col w-64 bg-[var(--bg)] border-r border-white/10 shadow-lg p-5 fixed h-full">
+        <div className="flex items-center gap-3 mb-8">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={140}
+            height={100}
+            className="object-contain"
+            style={{ height: "auto" }}
+          />
+        </div>
+
+        <nav className="flex flex-col gap-1 text-sm font-medium overflow-y-auto flex-1 hide-scrollbar">
+          {navItems.map(({ icon, label, to }) => (
+            <Link
+              key={to}
+              href={to}
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-md transition-all duration-200 ${
+                pathname === to
+                  ? "bg-[var(--secondary)] text-black shadow-md"
+                  : "text-[var(--muted)] hover:bg-black/40 hover:text-[var(--white)]"
+              }`}
+            >
+              {icon}
+              <span>{label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        {/* Logout Button (Desktop) */}
+        <button
+          onClick={handleLogout}
+          className="cursor-pointer flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium text-red-400 hover:text-red-500 transition-all duration-200 border-t border-white/10"
+        >
+          <FaSignOutAlt />
+          Logout
+        </button>
+      </aside>
+
+      {/* ===== MAIN CONTENT AREA ===== */}
+      <main className="flex-1 lg:ml-64 overflow-y-auto p-5 sm:p-8 bg-[var(--bg)] text-[var(--white)] min-h-screen">
+        {children}
+      </main>
+    </div>
+  );
+}
