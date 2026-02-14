@@ -35,10 +35,10 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="bg-black py-28 px-6 text-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-black py-16 text-white">
+      <div className="w-11/12 md:w-5/6 mx-auto">
         {/* Heading */}
-        <h2 className="text-center text-5xl font-light mb-20">
+        <h2 className="text-center text-5xl font-light mb-10">
           Our <span className="text-yellow-400 italic">Experiences</span>
         </h2>
 

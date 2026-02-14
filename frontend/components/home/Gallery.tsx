@@ -12,10 +12,10 @@ const images = [
 
 export default function Gallery() {
   return (
-    <section className="bg-gradient-to-b from-black via-[#0a0a0a] to-black py-16 px-6 text-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-gradient-to-b from-black via-[#0a0a0a] to-black py-16 text-white">
+      <div className="w-11/12 md:w-5/6 mx-auto">
         {/* Heading */}
-        <h2 className="text-center text-5xl md:text-6xl font-light mb-24">
+        <h2 className="text-center text-5xl md:text-6xl font-light mb-10">
           Our <span className="text-yellow-400 italic">Showcase</span>
         </h2>
 

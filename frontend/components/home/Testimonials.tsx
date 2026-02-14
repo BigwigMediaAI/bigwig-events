@@ -49,16 +49,51 @@ export default function Testimonials() {
 
   if (loading) {
     return (
-      <section className="py-16 text-center text-white">Loading...</section>
+      <section className="relative bg-[var(--bg)] py-16 text-white">
+        <div className="w-11/12 md:w-5/6 mx-auto">
+          <h2 className="text-center text-5xl md:text-6xl font-light mb-10 opacity-30">
+            Client{" "}
+            <span className="text-[var(--secondary)] italic font-serif">
+              Experiences
+            </span>
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="bg-black/60 backdrop-blur-lg border border-white/10 p-8 rounded-3xl shadow-lg animate-pulse"
+              >
+                {/* Quote line */}
+                <div className="h-4 bg-white/10 rounded w-3/4 mb-4" />
+                <div className="h-4 bg-white/10 rounded w-full mb-3" />
+                <div className="h-4 bg-white/10 rounded w-5/6 mb-6" />
+
+                {/* Divider */}
+                <div className="w-10 h-[1px] bg-white/10 my-6" />
+
+                {/* Avatar + text */}
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-full bg-white/10" />
+                  <div className="flex-1">
+                    <div className="h-4 bg-white/10 rounded w-1/2 mb-2" />
+                    <div className="h-3 bg-white/10 rounded w-1/3" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     );
   }
 
   if (!testimonials.length) return null;
 
   return (
-    <section className="relative bg-[var(--bg)] py-16 px-6 text-white">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-center text-5xl md:text-6xl font-light mb-16">
+    <section className="relative bg-[var(--bg)] py-16 text-white">
+      <div className="w-11/12 md:w-5/6 mx-auto">
+        <h2 className="text-center text-5xl md:text-6xl font-light mb-10">
           Client{" "}
           <span className="text-[var(--secondary)] italic font-serif">
             Experiences
@@ -130,7 +165,7 @@ function TestimonialCard({
       {/* Message */}
       <div>
         {/* Decorative Quote */}
-        <div className="absolute -top-6 left-6 text-[120px] text-[var(--secondary)]/10 font-serif select-none">
+        <div className="absolute -top-6 left-6 text-[120px] text-[var(--secondary)]/40 font-serif select-none">
           “
         </div>
         <p

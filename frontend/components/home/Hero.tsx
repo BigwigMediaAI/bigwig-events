@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Button2 from "../ui/Button2";
+import ServicePopup from "../layout/Popup";
 
 const images = [
   "/weding.png",
@@ -14,6 +15,7 @@ const images = [
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,13 +61,13 @@ export default function Hero() {
           perfection.
         </p>
 
-        <Button2 text="Explore Events" className="mt-8" />
+        <Button2
+          text="Get in Touch"
+          onClick={() => setOpen(true)}
+          className="mt-8"
+        />
       </div>
-
-      {/* Scroll Arrow */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white animate-bounce">
-        ⌄
-      </div>
+      <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </section>
   );
 }
