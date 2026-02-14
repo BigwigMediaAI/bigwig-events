@@ -3,8 +3,63 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { useState, FormEvent } from "react";
+
+type MessageType = {
+  type: "success" | "error";
+  text: string;
+} | null;
 
 export default function Footer() {
+  const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<MessageType>(null);
+
+  const handleSubscribe = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE}/subscribers`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        },
+      );
+
+      const data: { message?: string } = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      setMessage({
+        type: "success",
+        text: "Subscribed successfully!",
+      });
+
+      setEmail("");
+    } catch (error: unknown) {
+      let errorMessage = "Something went wrong";
+
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      setMessage({
+        type: "error",
+        text: errorMessage,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="relative bg-black text-white pt-16 pb-12 px-6 overflow-hidden">
       {/* Background glow */}
@@ -13,7 +68,6 @@ export default function Footer() {
       </div>
 
       <div className="relative max-w-7xl mx-auto">
-        {/* Glass container */}
         <div className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-[40px] p-12 shadow-2xl">
           {/* Top grid */}
           <div className="grid md:grid-cols-4 gap-12 border-b border-white/10 pb-16">
@@ -26,7 +80,6 @@ export default function Footer() {
                 height={80}
                 className="mb-6"
               />
-
               <p className="text-gray-400 leading-relaxed">
                 Crafting unforgettable corporate and wedding experiences with
                 elegance, precision, and luxury execution.
@@ -124,7 +177,6 @@ export default function Footer() {
               <p className="text-gray-400 mb-3">hello@bigwigevents.com</p>
               <p className="text-gray-400 mb-8">+91 98765 43210</p>
 
-              {/* Social glass icons */}
               <div className="flex gap-4">
                 {[FaFacebookF, FaInstagram, FaTwitter].map((Icon, i) => (
                   <div
@@ -135,6 +187,54 @@ export default function Footer() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* Email Subscriber Section */}
+          <div className="pt-12">
+            <div className="max-w-3xl mx-auto text-center">
+              <h3 className="text-2xl md:text-3xl font-semibold text-yellow-400 mb-4">
+                Stay Updated
+              </h3>
+
+              <p className="text-gray-400 mb-8">
+                Subscribe to receive updates on corporate events, luxury
+                weddings, and exclusive experiences.
+              </p>
+
+              <form
+                onSubmit={handleSubscribe}
+                className="flex flex-col md:flex-row gap-4 justify-center"
+              >
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  required
+                  className="w-full md:w-96 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition backdrop-blur-md"
+                />
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-8 py-3 rounded-full bg-yellow-400 text-black font-semibold hover:bg-yellow-300 transition shadow-lg disabled:opacity-60"
+                >
+                  {loading ? "Subscribing..." : "Subscribe"}
+                </button>
+              </form>
+
+              {message && (
+                <p
+                  className={`mt-6 text-sm ${
+                    message.type === "success"
+                      ? "text-green-400"
+                      : "text-red-400"
+                  }`}
+                >
+                  {message.text}
+                </p>
+              )}
             </div>
           </div>
 

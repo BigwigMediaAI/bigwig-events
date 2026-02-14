@@ -108,29 +108,42 @@ export default function Navbar() {
       </div>
       <ServicePopup isOpen={openForm} onClose={() => setOpenForm(false)} />
       {/* Mobile Menu */}
+      {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed top-0 left-0 w-full h-screen bg-black/95 backdrop-blur-xl transition-transform duration-500 ${
-          mobileOpen ? "translate-y-0" : "-translate-y-full"
+        className={`md:hidden fixed top-0 left-0 h-screen w-[80%] max-w-sm bg-black/95 backdrop-blur-xl shadow-2xl transform transition-transform duration-500 z-50 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-8 text-xl text-white">
+        {/* Close Icon */}
+        <div className="flex justify-end p-6">
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="text-white text-3xl hover:text-yellow-400 transition"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Menu Items */}
+        <div className="flex flex-col px-8 gap-8 text-xl text-white">
           <Link href="/" onClick={() => setMobileOpen(false)}>
             Home
           </Link>
+
           <Link href="/about" onClick={() => setMobileOpen(false)}>
             About Us
           </Link>
 
-          {/* Mobile dropdown */}
+          {/* Mobile Dropdown */}
           <button
             onClick={() => setMobileEventsOpen(!mobileEventsOpen)}
-            className="text-yellow-400"
+            className="text-yellow-400 text-left"
           >
             Big Events
           </button>
 
           {mobileEventsOpen && (
-            <div className="flex flex-col gap-3 text-gray-300 text-lg">
+            <div className="flex flex-col gap-4 text-gray-300 text-lg pl-4">
               {events.map((event) => (
                 <Link
                   key={event.href}
@@ -146,9 +159,11 @@ export default function Navbar() {
           <Link href="/portfolio" onClick={() => setMobileOpen(false)}>
             Big Folio
           </Link>
+
           <Link href="/clients" onClick={() => setMobileOpen(false)}>
             Big Clients
           </Link>
+
           <Link href="/contact" onClick={() => setMobileOpen(false)}>
             Contact
           </Link>
@@ -162,6 +177,14 @@ export default function Navbar() {
           />
         </div>
       </div>
+
+      {/* Overlay Background */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
     </nav>
   );
 }
