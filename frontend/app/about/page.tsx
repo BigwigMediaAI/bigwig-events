@@ -66,27 +66,18 @@ export default function AboutPage() {
 
       {/* ================= ABOUT SECTION ================= */}
       <section className="relative bg-[var(--bg)]">
-        {/* Subtle Dots Background */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-            backgroundSize: "24px 24px",
-          }}
-        />
-
         <div className="relative z-10 mx-auto w-11/12 md:w-5/6 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             {/* LEFT CONTENT */}
             <div className="lg:sticky lg:top-32 self-start">
-              <p className="mb-4 inline-block rounded-full border border-white/10 px-4 py-1 text-sm text-[var(--text)]">
-                About Bigwig Events
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-1 text-sm text-[var(--text)] backdrop-blur">
+                <span className="h-2 w-2 rounded-full bg-[var(--secondary)]" />
+                About Us
               </p>
 
-              <h2 className="mb-6 text-3xl md:text-4xl font-bold leading-tight text-[var(--white)]">
+              <h2 className="mb-6 text-3xl md:text-5xl font-light text-[var(--white)]">
                 A Creative Partner Built <br />
-                <span className="text-[var(--secondary)]">
+                <span className="text-[var(--secondary)] italic">
                   for Exceptional Celebrations
                 </span>
               </h2>
@@ -159,17 +150,12 @@ export default function AboutPage() {
               Why Choose Us
             </p>
 
-            <h2 className="text-3xl md:text-5xl font-bold text-[var(--white)]">
+            <h2 className="text-3xl md:text-5xl font-light text-[var(--white)]">
               What Makes Our Events
-              <span className="block text-[var(--secondary)]">
+              <span className="block text-[var(--secondary)]  italic">
                 Truly Exceptional
               </span>
             </h2>
-
-            <p className="mx-auto mt-5 max-w-2xl text-[var(--text)]">
-              We combine creativity, precision, and passion to deliver
-              extraordinary experiences tailored to your vision.
-            </p>
           </div>
 
           {/* FEATURE GRID */}
