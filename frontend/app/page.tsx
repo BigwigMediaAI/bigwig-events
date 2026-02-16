@@ -1,3 +1,4 @@
+import BlogSection from "@/components/home/BlogSection";
 import CTA from "@/components/home/CTA";
 import Gallery from "@/components/home/Gallery";
 import Hero from "@/components/home/Hero";
@@ -15,6 +16,8 @@ export default function Home() {
       <Gallery />
       <CTA />
       <Testimonials />
+      <BlogSection />
+
       <Footer />
     </main>
   );

@@ -80,6 +80,9 @@ export default function Navbar() {
           <Link href="/clients" className="nav-link">
             Big Clients
           </Link>
+          <Link href="/blog" className="nav-link">
+            Blogs
+          </Link>
           <Link href="/contact" className="nav-link">
             Contact Us
           </Link>
@@ -162,6 +165,9 @@ export default function Navbar() {
 
           <Link href="/clients" onClick={() => setMobileOpen(false)}>
             Big Clients
+          </Link>
+          <Link href="/blog" onClick={() => setMobileOpen(false)}>
+            Blogs
           </Link>
 
           <Link href="/contact" onClick={() => setMobileOpen(false)}>
