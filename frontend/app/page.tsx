@@ -14,9 +14,10 @@ export default function Home() {
       <Hero />
       <Services />
       <Gallery />
-      <CTA />
+
       <Testimonials />
       <BlogSection />
+      <CTA />
 
       <Footer />
     </main>
