@@ -1,18 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand Colors from logo */
-  --primary: #000000; /* deep black */
-  --secondary: #f4b400; /* premium gold */
+  /* BRAND COLORS */
+  --primary: #b89b5e; /* luxury gold */
+  --primary-dark: #9d8148; /* hover gold */
+
+  /* BACKGROUNDS */
+  --bg: #fdfbf7; /* soft ivory background */
+  --bg-secondary: #f7f2ea; /* warm section bg */
+  --card-bg: #ffffff;
+
+  /* TEXT COLORS */
+  --text: #1a1a1a; /* premium dark text */
+  --text-light: #6b6b6b; /* secondary text */
+  --muted: #9b9387;
+
+  /* BORDERS */
+  --border: #e8dfcf;
+
+  /* BASIC */
   --white: #ffffff;
-
-  /* UI Neutrals */
-  --bg: #000000;
-  --text: #b3b0af;
-  --muted: #9ca3af;
-
-  /* Gradient */
-  --gradient-gold: linear-gradient(135deg, #f4b400, #ffcc33);
+  --black: #000000;
 }
 
 .nav-link {

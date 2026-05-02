@@ -1,222 +1,152 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+
 import "swiper/css";
 
-interface Testimonial {
-  _id: string;
-  name: string;
-  message: string;
-  designation?: string;
-  image?: string;
-  rating?: number;
-  isActive: boolean;
-}
+const testimonials = [
+  {
+    name: "Ananya & Rishabh",
+    event: "Jaipur Wedding",
+    quote:
+      "Bigwig Events turned our vision into a dream come true. Every detail was perfect and the experience was beyond our expectations.",
+    image: "/image1.png",
+  },
+  {
+    name: "Rahul Mehta",
+    event: "Corporate Summit",
+    quote:
+      "From planning to execution, the entire event felt effortless. Truly world-class management and creativity.",
+    image: "/image2.png",
+  },
+  {
+    name: "Priya Kapoor",
+    event: "Destination Celebration",
+    quote:
+      "Every guest was amazed. The attention to detail and hospitality created memories for a lifetime.",
+    image: "/about.png",
+  },
+];
 
-export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [overflowMap, setOverflowMap] = useState<Record<string, boolean>>({});
+export default function TestimonialSection() {
+  const [active, setActive] = useState(0);
 
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE}/testimonial`,
-          { cache: "no-store" },
-        );
+  const nextSlide = () => {
+    setActive((prev) => (prev + 1) % testimonials.length);
+  };
 
-        const data = await res.json();
+  const prevSlide = () => {
+    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
 
-        if (res.ok && Array.isArray(data)) {
-          const activeTestimonials = data.filter(
-            (t: Testimonial) => t.isActive,
-          );
-          setTestimonials(activeTestimonials);
-        }
-      } catch (error) {
-        console.error("Failed to fetch testimonials", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTestimonials();
-  }, []);
-
-  if (loading) {
-    return (
-      <section className="relative bg-[var(--bg)] py-16 text-white">
-        <div className="w-11/12 md:w-5/6 mx-auto">
-          <h2 className="text-center text-5xl md:text-6xl font-light mb-10 opacity-30">
-            Client{" "}
-            <span className="text-[var(--secondary)] italic font-serif">
-              Experiences
-            </span>
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="bg-black/60 backdrop-blur-lg border border-white/10 p-8 rounded-3xl shadow-lg animate-pulse"
-              >
-                {/* Quote line */}
-                <div className="h-4 bg-white/10 rounded w-3/4 mb-4" />
-                <div className="h-4 bg-white/10 rounded w-full mb-3" />
-                <div className="h-4 bg-white/10 rounded w-5/6 mb-6" />
-
-                {/* Divider */}
-                <div className="w-10 h-[1px] bg-white/10 my-6" />
-
-                {/* Avatar + text */}
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-full bg-white/10" />
-                  <div className="flex-1">
-                    <div className="h-4 bg-white/10 rounded w-1/2 mb-2" />
-                    <div className="h-3 bg-white/10 rounded w-1/3" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!testimonials.length) return null;
+  const current = testimonials[active];
 
   return (
-    <section className="relative bg-[var(--bg)] py-16 text-white">
-      <div className="w-11/12 md:w-5/6 mx-auto">
-        <h2 className="text-center text-5xl md:text-6xl font-light mb-10">
-          Client{" "}
-          <span className="text-[var(--secondary)] italic font-serif">
-            Experiences
-          </span>
-        </h2>
-
+    <section className="w-full overflow-hidden border-y border-[var(--border)]">
+      {/* MOBILE */}
+      <div className="block md:hidden bg-[var(--bg-secondary)]">
         <Swiper
           modules={[Autoplay]}
+          slidesPerView={1}
+          spaceBetween={20}
+          loop={true}
           autoplay={{
-            delay: 3500,
+            delay: 4000,
             disableOnInteraction: false,
           }}
-          loop
-          spaceBetween={30}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
         >
-          {testimonials.map((t) => (
-            <SwiperSlide key={t._id} className="flex">
-              <TestimonialCard
-                testimonial={t}
-                expanded={expanded === t._id}
-                onToggle={() => setExpanded(expanded === t._id ? null : t._id)}
-                setOverflowMap={setOverflowMap}
-                overflowMap={overflowMap}
-              />
+          {testimonials.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div className="px-5 py-10 text-center">
+                <Quote
+                  size={28}
+                  className="text-[var(--primary)] mx-auto mb-4"
+                />
+
+                <p className="text-sm leading-7 text-[var(--text)]">
+                  {item.quote}
+                </p>
+
+                <div className="mt-5">
+                  <h4 className="uppercase tracking-[2px] text-xs font-semibold text-[var(--text)]">
+                    {item.name}
+                  </h4>
+
+                  <p className="mt-1 uppercase tracking-[2px] text-[10px] text-[var(--text-light)]">
+                    {item.event}
+                  </p>
+                </div>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-    </section>
-  );
-}
 
-/* ================= CARD COMPONENT ================= */
+      {/* DESKTOP */}
+      <div className="hidden md:grid grid-cols-2 h-[240px]">
+        {/* LEFT */}
+        <div className="bg-[var(--bg-secondary)] px-6 md:px-12 flex flex-col justify-center">
+          <Quote size={30} className="text-[var(--primary)] mb-4" />
 
-function TestimonialCard({
-  testimonial,
-  expanded,
-  onToggle,
-  overflowMap,
-  setOverflowMap,
-}: {
-  testimonial: Testimonial;
-  expanded: boolean;
-  onToggle: () => void;
-  overflowMap: Record<string, boolean>;
-  setOverflowMap: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
-}) {
-  const textRef = useRef<HTMLParagraphElement>(null);
+          <p className="text-sm md:text-base text-[var(--text)] leading-7 max-w-[500px]">
+            {current.quote}
+          </p>
 
-  useEffect(() => {
-    const el = textRef.current;
-    if (el) {
-      const isOverflowing = el.scrollHeight > el.clientHeight + 1;
-
-      setOverflowMap((prev) => ({
-        ...prev,
-        [testimonial._id]: isOverflowing,
-      }));
-    }
-  }, [testimonial.message, expanded]);
-
-  return (
-    <div className="group relative flex flex-col justify-between bg-black/60 backdrop-blur-lg border border-white/10 p-8 rounded-3xl transition duration-500 hover:border-[var(--secondary)] shadow-lg w-full min-h-[300px]">
-      {/* Message */}
-      <div>
-        {/* Decorative Quote */}
-        <div className="absolute -top-6 left-6 text-[120px] text-[var(--secondary)]/40 font-serif select-none">
-          “
-        </div>
-        <p
-          ref={textRef}
-          className={`mt-10 text-gray-300 leading-relaxed italic text-base transition-all duration-300 ${
-            expanded ? "" : "line-clamp-3"
-          }`}
-        >
-          {testimonial.message}
-        </p>
-
-        {/* Show button ONLY if overflowing */}
-        {overflowMap[testimonial._id] && (
-          <button
-            onClick={onToggle}
-            className="mt-3 text-sm text-[var(--secondary)] font-medium hover:underline"
-          >
-            {expanded ? "Read Less" : "Read More"}
-          </button>
-        )}
-      </div>
-
-      {/* Bottom Section */}
-      <div>
-        <div className="w-10 h-[1px] bg-[var(--secondary)]/50 my-6" />
-
-        <div className="flex items-center gap-4">
-          {testimonial.image ? (
-            <img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="w-11 h-11 rounded-full object-cover border border-white/10"
-            />
-          ) : (
-            <div className="w-11 h-11 rounded-full bg-[var(--secondary)] flex items-center justify-center text-black font-semibold">
-              {testimonial.name.charAt(0).toUpperCase()}
-            </div>
-          )}
-
-          <div>
-            <h4 className="text-lg font-semibold group-hover:text-[var(--secondary)] transition">
-              {testimonial.name}
+          <div className="mt-5">
+            <h4 className="uppercase tracking-[2px] text-xs font-semibold text-[var(--text)]">
+              {current.name}
             </h4>
-            {testimonial.designation && (
-              <p className="text-sm text-gray-400 italic">
-                {testimonial.designation}
-              </p>
-            )}
+
+            <p className="mt-1 uppercase tracking-[2px] text-[10px] text-[var(--text-light)]">
+              {current.event}
+            </p>
+          </div>
+
+          {/* Dots */}
+          <div className="flex gap-2 mt-4">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActive(index)}
+                className={`w-2 h-2 rounded-full ${
+                  active === index
+                    ? "bg-[var(--primary)]"
+                    : "bg-[var(--border)]"
+                }`}
+              />
+            ))}
           </div>
         </div>
+
+        {/* RIGHT */}
+        <div className="relative h-full">
+          <Image
+            src={current.image}
+            alt={current.name}
+            fill
+            className="object-cover"
+          />
+
+          <button
+            onClick={prevSlide}
+            className="absolute left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center"
+          >
+            <ChevronLeft className="text-[var(--primary)]" />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center"
+          >
+            <ChevronRight className="text-[var(--primary)]" />
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -2,195 +2,183 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
-import Button from "../ui/Button";
+import { useEffect, useState } from "react";
+import { Menu, X, Phone, Mail, Instagram } from "lucide-react";
+import { CgMenuLeft } from "react-icons/cg";
 import ServicePopup from "./Popup";
-import Button2 from "../ui/Button2";
 
-const events = [
-  { name: "Corporate Events", href: "/corporate-events" },
-  { name: "Corporate Travel", href: "/corporate-travel" },
-  { name: "Corporate Training", href: "/corporate-training" },
-  { name: "Corporate Festivities", href: "/corporate-festivities" },
-  { name: "Corporate Activation", href: "/corporate-activation" },
-  { name: "Weddings", href: "/weddings" },
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/" },
+  { name: "Services", href: "/" },
+  { name: "Portfolio", href: "/" },
+  { name: "Destinations", href: "/" },
+  { name: "Testimonials", href: "/" },
+  { name: "Blog", href: "/" },
+  { name: "Contact", href: "/" },
 ];
 
 export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [openForm, setOpenForm] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileEventsOpen, setMobileEventsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? "bg-black/80 backdrop-blur-md shadow-xl" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/">
-          <Image src="/logo.png" width={120} height={60} alt="BigWig logo" />
-        </Link>
-
-        {/* Center Menu */}
-        <div className="hidden md:flex items-center gap-8 text-white font-medium">
-          <Link href="/" className="nav-link">
-            Home
-          </Link>
-          <Link href="/about" className="nav-link">
-            About Us
-          </Link>
-
-          {/* Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
-          >
-            <span className="nav-link cursor-pointer">Big Events</span>
-
-            {open && (
-              <div className="absolute top-7 left-0 w-64 bg-black/90 backdrop-blur-lg border border-yellow-500/20 rounded-xl shadow-xl p-2">
-                {events.map((event) => (
-                  <Link
-                    key={event.href}
-                    href={event.href}
-                    className="block px-4 py-2  rounded-md hover:bg-yellow-500 hover:text-black transition"
-                  >
-                    {event.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <Link href="/portfolio" className="nav-link">
-            Big Folio
-          </Link>
-          <Link href="/clients" className="nav-link">
-            Big Clients
-          </Link>
-          <Link href="/blog" className="nav-link">
-            Blogs
-          </Link>
-          <Link href="/contact" className="nav-link">
-            Contact Us
-          </Link>
-        </div>
-
-        {/* Right Side */}
-        <div className="hidden md:flex items-center gap-5">
-          {/* Social Icons */}
-          <div className="flex gap-4 text-white text-sm">
-            <FaFacebookF className="cursor-pointer hover:text-yellow-400 transition" />
-            <FaTwitter className="cursor-pointer hover:text-yellow-400 transition" />
-            <FaInstagram className="cursor-pointer hover:text-yellow-400 transition" />
-          </div>
-
-          {/* Book Now */}
-          <Button2 onClick={() => setOpenForm(true)} text="Book Now" />
-        </div>
-
-        {/* Mobile */}
-        <div
-          className="md:hidden text-yellow-400 text-2xl cursor-pointer"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          ☰
-        </div>
-      </div>
-      <ServicePopup isOpen={openForm} onClose={() => setOpenForm(false)} />
-      {/* Mobile Menu */}
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden fixed top-0 left-0 h-screen w-[80%] max-w-sm bg-black/95 backdrop-blur-xl shadow-2xl transform transition-transform duration-500 z-50 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
+    <>
+      {/* Navbar */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${
+          scrolled
+            ? "bg-white/70 backdrop-blur-xl border-[var(--border)] shadow-sm"
+            : "bg-transparent border-transparent"
         }`}
       >
-        {/* Close Icon */}
-        <div className="flex justify-end p-6">
+        {" "}
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 h-[88px] flex items-center justify-between">
+          {/* Left Logo */}
+          <Link href="/" className="shrink-0">
+            <Image src="/logo.png" alt="Bigwig" width={140} height={60} />
+          </Link>
+
+          {/* Center Menu */}
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-[13px] uppercase tracking-wider text-black hover:text-[var(--primary)] transition"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-4">
+            {/* CTA */}
+            <button
+              onClick={() => setOpen(true)}
+              className="cursor-pointer hidden md:flex px-6 h-11 items-center justify-center border border-[#b89b5e] text-[#b89b5e] text-sm uppercase tracking-wider hover:bg-[#b89b5e] hover:text-white transition"
+            >
+              Let's Plan
+            </button>
+
+            {/* Menu Icon */}
+            <button onClick={() => setMenuOpen(true)}>
+              <CgMenuLeft size={28} className="text-[#b89b5e] cursor-pointer" />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 right-0 h-screen w-[340px] md:w-[420px] bg-[var(--white)] shadow-2xl z-[60] transform transition-all duration-500 overflow-y-auto ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Header */}
+        <div className="px-6 py-5 flex justify-between items-center border-b border-[var(--border)]">
+          <h2 className="text-xl font-semibold text-[var(--text)]">
+            Bigwig Events
+          </h2>
+
           <button
-            onClick={() => setMobileOpen(false)}
-            className="text-white text-3xl hover:text-yellow-400 transition"
+            onClick={() => setMenuOpen(false)}
+            className="text-[var(--text)] hover:text-[var(--primary)] transition"
           >
-            ✕
+            <X size={24} />
           </button>
         </div>
 
-        {/* Menu Items */}
-        <div className="flex flex-col px-8 gap-8 text-xl text-white">
-          <Link href="/" onClick={() => setMobileOpen(false)}>
-            Home
-          </Link>
+        <div className="p-6 space-y-8">
+          {/* Mobile Menu */}
+          <div className="lg:hidden flex flex-col gap-5">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-[var(--text)] text-lg hover:text-[var(--primary)] transition"
+              >
+                {item.name}
+              </Link>
+            ))}
 
-          <Link href="/about" onClick={() => setMobileOpen(false)}>
-            About Us
-          </Link>
+            <button
+              onClick={() => setOpen(true)}
+              className="mt-2 border border-[var(--primary)] text-[var(--primary)] h-11 px-5 hover:bg-[var(--primary)] hover:text-white transition"
+            >
+              Let's Plan
+            </button>
+          </div>
 
-          {/* Mobile Dropdown */}
-          <button
-            onClick={() => setMobileEventsOpen(!mobileEventsOpen)}
-            className="text-yellow-400 text-left"
-          >
-            Big Events
-          </button>
+          {/* Desktop Info */}
+          <div className="hidden lg:block space-y-6">
+            <div>
+              <h3 className="text-sm uppercase tracking-[3px] text-[var(--primary)] mb-3">
+                About Us
+              </h3>
 
-          {mobileEventsOpen && (
-            <div className="flex flex-col gap-4 text-gray-300 text-lg pl-4">
-              {events.map((event) => (
-                <Link
-                  key={event.href}
-                  href={event.href}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {event.name}
-                </Link>
-              ))}
+              <p className="text-[var(--text-light)] leading-7">
+                We craft unforgettable weddings, corporate gatherings,
+                destination celebrations and luxury experiences worldwide.
+              </p>
             </div>
-          )}
 
-          <Link href="/portfolio" onClick={() => setMobileOpen(false)}>
-            Big Folio
-          </Link>
+            <button
+              onClick={() => setOpen(true)}
+              className="border border-[var(--primary)] text-[var(--primary)] h-11 px-5 hover:bg-[var(--primary)] hover:text-white transition"
+            >
+              Let's Plan
+            </button>
+          </div>
 
-          <Link href="/clients" onClick={() => setMobileOpen(false)}>
-            Big Clients
-          </Link>
-          <Link href="/blog" onClick={() => setMobileOpen(false)}>
-            Blogs
-          </Link>
+          {/* Contact - shown once for both */}
+          <div className="border-t border-[var(--border)] pt-6 space-y-4">
+            <h3 className="text-sm uppercase tracking-[3px] text-[var(--primary)]">
+              Contact
+            </h3>
 
-          <Link href="/contact" onClick={() => setMobileOpen(false)}>
-            Contact
-          </Link>
+            <div className="flex items-center gap-3 text-[var(--text)]">
+              <Phone size={18} />
+              <span>+91 9876543210</span>
+            </div>
 
-          <Button
-            onClick={() => {
-              setOpenForm(true);
-              setMobileOpen(false);
-            }}
-            text="Book Now"
-          />
+            <div className="flex items-center gap-3 text-[var(--text)]">
+              <Mail size={18} />
+              <span>hello@bigwigevents.com</span>
+            </div>
+
+            <div className="flex items-center gap-3 text-[var(--text)]">
+              <Instagram size={18} />
+              <span>@bigwig.events</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Overlay Background */}
-      {mobileOpen && (
+      {/* Overlay */}
+      {menuOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
-          onClick={() => setMobileOpen(false)}
+          onClick={() => setMenuOpen(false)}
+          className="fixed inset-0 bg-black/40 z-50"
         />
       )}
-    </nav>
+      <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
