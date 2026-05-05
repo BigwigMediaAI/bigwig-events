@@ -1,7 +1,9 @@
 "use client";
 
 import CreateNewsletterModal from "@/components/CreateNewsLetter";
+
 import { Eye, Trash2, Plus, X, Mail } from "lucide-react";
+
 import { useEffect, useState } from "react";
 
 interface Attachment {
@@ -26,18 +28,23 @@ interface NewsletterDetails extends NewsletterListItem {
 
 const ITEMS_PER_PAGE = 10;
 
-const AdminNewsletter = () => {
+export default function AdminNewsletter() {
   const [newsletters, setNewsletters] = useState<NewsletterListItem[]>([]);
+
   const [currentPage, setCurrentPage] = useState(1);
+
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState("");
 
   const [selectedNewsletter, setSelectedNewsletter] =
     useState<NewsletterDetails | null>(null);
+
   const [viewLoading, setViewLoading] = useState(false);
+
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  // ================= FETCH LIST =================
+  /* Fetch */
   const fetchNewsletters = async () => {
     try {
       setLoading(true);
@@ -45,11 +52,16 @@ const AdminNewsletter = () => {
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE}/newsletter`,
-        { cache: "no-store" },
+        {
+          cache: "no-store",
+        },
       );
 
       const json = await res.json();
-      if (!res.ok) throw new Error(json.message);
+
+      if (!res.ok) {
+        throw new Error(json.message);
+      }
 
       setNewsletters(json.data);
     } catch (err) {
@@ -63,48 +75,45 @@ const AdminNewsletter = () => {
     fetchNewsletters();
   }, []);
 
-  // ================= FETCH SINGLE =================
+  /* View */
   const handleView = async (id: string) => {
     try {
       setViewLoading(true);
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE}/newsletter/${id}`,
-        { cache: "no-store" },
       );
 
       const json = await res.json();
-      if (!res.ok) throw new Error(json.message);
+
+      if (!res.ok) {
+        throw new Error(json.message);
+      }
 
       setSelectedNewsletter(json.data);
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to load newsletter");
+      alert(err instanceof Error ? err.message : "Failed");
     } finally {
       setViewLoading(false);
     }
   };
 
-  // ================= DELETE =================
+  /* Delete */
   const handleDelete = async (id: string) => {
-    if (!confirm("This will permanently delete the newsletter. Continue?"))
-      return;
+    if (!confirm("Delete this newsletter?")) return;
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE}/newsletter/${id}`,
-        { method: "DELETE" },
-      );
+      await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/newsletter/${id}`, {
+        method: "DELETE",
+      });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-
-      setNewsletters((prev) => prev.filter((n) => n._id !== id));
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Delete failed");
+      setNewsletters((prev) => prev.filter((item) => item._id !== id));
+    } catch {
+      alert("Delete failed");
     }
   };
 
-  // ================= PAGINATION =================
+  /* Pagination */
   const totalPages = Math.ceil(newsletters.length / ITEMS_PER_PAGE);
 
   const currentNewsletters = newsletters.slice(
@@ -112,225 +121,238 @@ const AdminNewsletter = () => {
     currentPage * ITEMS_PER_PAGE,
   );
 
+  /* Helpers */
   const getFileIcon = (type?: string) => {
     if (!type) return "📎";
     if (type.includes("pdf")) return "📄";
     if (type.includes("image")) return "🖼️";
-    if (type.includes("word")) return "📝";
-    if (type.includes("excel")) return "📊";
+
     return "📎";
   };
 
   const formatFileSize = (bytes?: number) => {
     if (!bytes) return "";
+
     const kb = bytes / 1024;
-    if (kb < 1024) return `${kb.toFixed(1)} KB`;
+
+    if (kb < 1024) {
+      return `${kb.toFixed(1)} KB`;
+    }
+
     return `${(kb / 1024).toFixed(1)} MB`;
   };
 
-  // ================= RENDER =================
   return (
-    <div className="h-screen bg-black text-white flex flex-col">
-      {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-black border-b border-gray-700">
-        <div className="p-4 sm:p-6 flex items-center justify-between">
-          <h1 className="text-2xl sm:text-3xl font-bold">Newsletters</h1>
+    <div>
+      {/* Header */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p className="uppercase tracking-[4px] text-xs text-[var(--primary)] mb-2">
+            Admin Panel
+          </p>
 
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="border hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] text-white px-4 py-2 rounded-full flex items-center gap-2 font-semibold"
-          >
-            <Plus size={18} /> Create Newsletter
-          </button>
+          <h1 className="font-serif text-4xl text-[var(--text)]">
+            Newsletters
+          </h1>
         </div>
+
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="
+            h-11 px-6
+            bg-[var(--primary)]
+            text-white
+            rounded-xl
+            flex items-center gap-2
+            hover:bg-[var(--primary-dark)]
+          "
+        >
+          <Plus size={16} />
+          Create Newsletter
+        </button>
       </div>
 
-      {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-        {loading ? (
-          /* ================= LOADER ================= */
-          <div className="flex items-center justify-center py-20">
-            <div className="flex flex-col items-center gap-3 text-gray-400">
-              <div className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm">Loading newsletters...</p>
-            </div>
-          </div>
-        ) : error ? (
-          /* ================= ERROR ================= */
-          <div className="flex items-center justify-center py-20">
-            <p className="text-red-400 text-sm">{error}</p>
-          </div>
-        ) : newsletters.length === 0 ? (
-          /* ================= EMPTY STATE ================= */
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-14 h-14 rounded-full bg-[#1e1e1e] flex items-center justify-center mb-4">
-              <Mail className="text-gray-400" size={24} />
-            </div>
+      {/* Loading */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center h-[300px]">
+          <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin mb-4" />
 
-            <h3 className="text-lg font-semibold text-white">
-              No newsletters found
-            </h3>
+          <p className="text-[var(--text-light)]">Loading...</p>
+        </div>
+      )}
 
-            <p className="text-sm text-gray-400 max-w-md mt-2">
-              You haven’t sent any newsletters yet.
-            </p>
-          </div>
-        ) : (
-          /* ================= TABLE ================= */
-          <>
-            <div className="overflow-x-auto">
-              <table className="w-full border border-gray-700 text-sm">
-                <thead className="bg-[#1e1e1e]">
-                  <tr>
-                    <th className="px-4 py-3 text-left border-b border-gray-700">
-                      Subject
-                    </th>
-                    <th className="px-4 py-3 text-left border-b border-gray-700">
-                      Sent At
-                    </th>
-                    <th className="px-4 py-3 text-center border-b border-gray-700">
-                      Recipients
-                    </th>
-                    <th className="px-4 py-3 text-center border-b border-gray-700">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
+      {/* Error */}
+      {!loading && error && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
+          <p className="text-red-500">{error}</p>
+        </div>
+      )}
 
-                <tbody>
-                  {currentNewsletters.map((n) => (
-                    <tr key={n._id} className="even:bg-[#111] hover:bg-[#222]">
-                      <td className="px-4 py-3 font-medium">{n.subject}</td>
-                      <td className="px-4 py-3">
-                        {new Date(n.sentAt).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {n.totalRecipients}
-                      </td>
-                      <td className="px-4 py-3 flex justify-center gap-3">
+      {/* Empty */}
+      {!loading && !error && newsletters.length === 0 && (
+        <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-12 text-center">
+          <Mail className="mx-auto text-[var(--muted)] mb-4" size={32} />
+
+          <h3 className="font-serif text-2xl text-[var(--text)] mb-2">
+            No newsletters
+          </h3>
+        </div>
+      )}
+
+      {/* Table */}
+      {!loading && newsletters.length > 0 && (
+        <>
+          <div className="overflow-x-auto bg-[var(--white)] border border-[var(--border)] rounded-2xl">
+            <table className="w-full">
+              <thead className="bg-[var(--bg-secondary)]">
+                <tr>
+                  <th className="px-5 py-4 text-left">Subject</th>
+
+                  <th className="px-5 py-4 text-left">Sent At</th>
+
+                  <th className="px-5 py-4 text-center">Recipients</th>
+
+                  <th className="px-5 py-4 text-center">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {currentNewsletters.map((item) => (
+                  <tr
+                    key={item._id}
+                    className="border-t border-[var(--border)] hover:bg-[var(--bg-secondary)]"
+                  >
+                    <td className="px-5 py-4">{item.subject}</td>
+
+                    <td className="px-5 py-4">
+                      {new Date(item.sentAt).toLocaleString()}
+                    </td>
+
+                    <td className="px-5 py-4 text-center">
+                      {item.totalRecipients}
+                    </td>
+
+                    <td className="px-5 py-4">
+                      <div className="flex justify-center gap-4">
                         <button
-                          onClick={() => handleView(n._id)}
-                          className="text-cyan-400 hover:text-cyan-300"
+                          onClick={() => handleView(item._id)}
+                          className="text-blue-500"
                         >
                           <Eye size={18} />
                         </button>
 
                         <button
-                          onClick={() => handleDelete(n._id)}
-                          className="text-red-400 hover:text-red-300"
+                          onClick={() => handleDelete(item._id)}
+                          className="text-red-500"
                         >
                           <Trash2 size={18} />
                         </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-end mt-8 gap-3">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    disabled:opacity-40
+                  "
+              >
+                Prev
+              </button>
+
+              <div className="h-10 px-5 flex items-center">{currentPage}</div>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    disabled:opacity-40
+                  "
+              >
+                Next
+              </button>
             </div>
+          )}
+        </>
+      )}
 
-            {/* PAGINATION */}
-            {totalPages > 1 && (
-              <div className="flex justify-end mt-6 gap-2">
-                <button
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((p) => p - 1)}
-                  className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-                >
-                  Prev
-                </button>
-
-                <span className="px-3 py-1 bg-[var(--primary-color)] rounded">
-                  {currentPage}
-                </span>
-
-                <button
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage((p) => p + 1)}
-                  className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-                >
-                  Next
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-
-      {/* VIEW MODAL */}
+      {/* View Modal */}
       {selectedNewsletter && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-4">
-          <div className="bg-[#111] w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden border border-gray-800">
-            {/* HEADER */}
-            <div className="flex justify-between items-start px-6 py-4 border-b border-gray-700">
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+          <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl w-full max-w-3xl overflow-hidden">
+            {/* Header */}
+            <div className="flex justify-between items-start p-6 border-b border-[var(--border)]">
               <div>
-                <h2 className="text-xl font-semibold">
+                <h2 className="font-serif text-2xl text-[var(--text)]">
                   {selectedNewsletter.subject}
                 </h2>
-                <p className="text-xs text-gray-400 mt-1">
-                  Sent on {new Date(selectedNewsletter.sentAt).toLocaleString()}
+
+                <p className="text-sm text-[var(--muted)] mt-2">
+                  {new Date(selectedNewsletter.sentAt).toLocaleString()}
                 </p>
               </div>
 
-              <button
-                onClick={() => setSelectedNewsletter(null)}
-                className="p-2 hover:bg-gray-800 rounded-lg"
-              >
+              <button onClick={() => setSelectedNewsletter(null)}>
                 <X size={18} />
               </button>
             </div>
 
-            {/* BODY */}
-            <div className="p-6 max-h-[70vh] overflow-y-auto space-y-8">
+            {/* Body */}
+            <div className="p-6 max-h-[70vh] overflow-y-auto">
               {viewLoading ? (
-                <p className="text-gray-400">Loading newsletter...</p>
+                <p>Loading...</p>
               ) : (
                 <>
-                  {/* EMAIL CONTENT */}
-                  <div className="bg-black rounded-lg p-4 border border-gray-800">
-                    <div
-                      className="prose prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{
-                        __html: selectedNewsletter.content,
-                      }}
-                    />
-                  </div>
+                  <div
+                    className="prose max-w-none text-[var(--text)]"
+                    dangerouslySetInnerHTML={{
+                      __html: selectedNewsletter.content,
+                    }}
+                  />
 
-                  {/* ATTACHMENTS */}
+                  {/* Attachments */}
                   {selectedNewsletter.attachments?.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-300 mb-3">
-                        Attachments
-                      </h4>
+                    <div className="mt-8">
+                      <h4 className="font-medium mb-4">Attachments</h4>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {selectedNewsletter.attachments.map((a, i) => (
-                          <div
+                      <div className="space-y-3">
+                        {selectedNewsletter.attachments.map((file, i) => (
+                          <a
                             key={i}
-                            className="flex items-center justify-between gap-3 bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 hover:border-gray-600 transition"
+                            href={file.url}
+                            target="_blank"
+                            className="flex items-center justify-between border border-[var(--border)] rounded-xl p-4 hover:bg-[var(--bg-secondary)]"
                           >
-                            <div className="flex items-center gap-3 min-w-0">
-                              <span className="text-xl">
-                                {getFileIcon(a.type)}
-                              </span>
+                            <div className="flex gap-3">
+                              <span>{getFileIcon(file.type)}</span>
 
-                              <div className="min-w-0">
-                                <p className="text-sm font-medium truncate">
-                                  {a.name}
-                                </p>
-                                <p className="text-xs text-gray-400">
-                                  {formatFileSize(a.size)}
+                              <div>
+                                <p>{file.name}</p>
+
+                                <p className="text-xs text-[var(--muted)]">
+                                  {formatFileSize(file.size)}
                                 </p>
                               </div>
                             </div>
 
-                            <a
-                              href={a.url}
-                              target="_blank"
-                              className="text-xs px-3 py-1 rounded bg-gray-800 hover:bg-gray-700"
-                            >
-                              Download
-                            </a>
-                          </div>
+                            <span className="text-sm text-[var(--primary)]">
+                              View
+                            </span>
+                          </a>
                         ))}
                       </div>
                     </div>
@@ -342,7 +364,7 @@ const AdminNewsletter = () => {
         </div>
       )}
 
-      {/* CREATE MODAL */}
+      {/* Create Modal */}
       {showCreateModal && (
         <CreateNewsletterModal
           onClose={() => setShowCreateModal(false)}
@@ -351,6 +373,4 @@ const AdminNewsletter = () => {
       )}
     </div>
   );
-};
-
-export default AdminNewsletter;
+}

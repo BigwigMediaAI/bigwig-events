@@ -13,9 +13,10 @@ interface Client {
 
 const ITEMS_PER_PAGE = 20;
 
-const AdminClient = () => {
+export default function AdminClient() {
   const [clients, setClients] = useState<Client[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -24,7 +25,7 @@ const AdminClient = () => {
 
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
-  /* ================= FETCH ================= */
+  /* Fetch */
   const fetchClients = async () => {
     try {
       setLoading(true);
@@ -40,7 +41,6 @@ const AdminClient = () => {
         throw new Error(result.message || "Fetch failed");
       }
 
-      // ✅ Correctly access result.data
       const sortedClients = result.data.sort(
         (a: Client, b: Client) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
@@ -58,8 +58,7 @@ const AdminClient = () => {
     fetchClients();
   }, []);
 
-  /* ================= CREATE / EDIT ================= */
-  /* ================= CREATE ================= */
+  /* Create */
   const handleCreate = async (formData: FormData) => {
     try {
       const res = await fetch(`${API_BASE}/client`, {
@@ -70,24 +69,21 @@ const AdminClient = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Failed to create client");
+        throw new Error(data.message || "Create failed");
       }
 
       setIsModalOpen(false);
-      setEditClient(null);
       await fetchClients();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Create failed");
+      alert("Create failed");
     }
   };
 
-  /* ================= EDIT ================= */
+  /* Edit */
   const handleEdit = async (formData: FormData) => {
     if (!editClient) return;
 
     try {
-      // ⚠️ IMPORTANT:
-      // If image was not changed, ClientModal should NOT append "image"
       const res = await fetch(`${API_BASE}/client/${editClient._id}`, {
         method: "PUT",
         body: formData,
@@ -96,210 +92,241 @@ const AdminClient = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Failed to update client");
+        throw new Error(data.message || "Update failed");
       }
 
-      setIsModalOpen(false);
       setEditClient(null);
+      setIsModalOpen(false);
+
       await fetchClients();
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Update failed");
+    } catch {
+      alert("Update failed");
     }
   };
 
-  /* ================= DELETE ================= */
+  /* Delete */
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this client?")) return;
 
-    await fetch(`${API_BASE}/client/${id}`, { method: "DELETE" });
+    await fetch(`${API_BASE}/client/${id}`, {
+      method: "DELETE",
+    });
+
     setClients((prev) => prev.filter((c) => c._id !== id));
   };
 
-  /* ================= PAGINATION ================= */
+  /* Pagination */
   const totalPages = Math.ceil(clients.length / ITEMS_PER_PAGE);
+
   const currentClients = clients.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
 
-  /* ================= RENDER ================= */
   return (
-    <div className="h-screen bg-black text-white flex flex-col">
-      {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-black border-b border-gray-700">
-        <div className="p-4 sm:p-6 flex justify-between items-center">
-          <h1 className="text-2xl sm:text-3xl font-bold">Clients</h1>
+    <div>
+      {/* Header */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p className="uppercase tracking-[4px] text-xs text-[var(--primary)] mb-2">
+            Admin Panel
+          </p>
 
-          <button
-            onClick={() => {
-              setEditClient(null);
-              setIsModalOpen(true);
-            }}
-            className="
-    border border-white/10
-    text-[var(--white)]
-    px-4 py-2
-    rounded-full
-    flex items-center gap-2
-    font-semibold
-    hover:border-[var(--secondary)]
-    hover:text-[var(--secondary)]
-    transition
-  "
-          >
-            <Plus size={16} />
-            Create Client
-          </button>
+          <h1 className="font-serif text-4xl text-[var(--text)]">Clients</h1>
         </div>
+
+        <button
+          onClick={() => {
+            setEditClient(null);
+            setIsModalOpen(true);
+          }}
+          className="
+            h-11 px-6
+            bg-[var(--primary)]
+            text-white
+            rounded-xl
+            flex items-center gap-2
+            hover:bg-[var(--primary-dark)]
+            transition-all
+          "
+        >
+          <Plus size={16} />
+          Create Client
+        </button>
       </div>
 
-      {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-        {loading ? (
-          /* ================= LOADING STATE ================= */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-gray-400">
-            <div className="w-10 h-10 border-4 border-gray-600 border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-sm tracking-wide">Loading clients…</p>
+      {/* Loading */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center h-[300px]">
+          <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin mb-4" />
+
+          <p className="text-[var(--text-light)]">Loading clients...</p>
+        </div>
+      )}
+
+      {/* Error */}
+      {!loading && error && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
+          <h3 className="text-red-600 font-semibold mb-2">
+            Failed to load clients
+          </h3>
+
+          <p className="text-red-500 text-sm">{error}</p>
+        </div>
+      )}
+
+      {/* Empty */}
+      {!loading && !error && clients.length === 0 && (
+        <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-12 text-center">
+          <h3 className="text-2xl font-serif text-[var(--text)] mb-3">
+            No Clients Found
+          </h3>
+
+          <p className="text-[var(--text-light)]">Create your first client.</p>
+        </div>
+      )}
+
+      {/* Mobile Cards */}
+      {!loading && clients.length > 0 && (
+        <>
+          <div className="md:hidden space-y-4">
+            {currentClients.map((client) => (
+              <div
+                key={client._id}
+                className="
+                    bg-[var(--white)]
+                    border border-[var(--border)]
+                    rounded-2xl
+                    p-5
+                  "
+              >
+                <div className="flex justify-between mb-4">
+                  <h3 className="font-semibold text-[var(--text)]">
+                    {client.name}
+                  </h3>
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        setEditClient(client);
+                        setIsModalOpen(true);
+                      }}
+                      className="text-blue-500"
+                    >
+                      <Pencil size={16} />
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(client._id)}
+                      className="text-red-500"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+
+                <img src={client.image} className="h-16 object-contain" />
+              </div>
+            ))}
           </div>
-        ) : error ? (
-          /* ================= ERROR STATE ================= */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center text-red-400">
-            <h3 className="text-lg font-semibold mb-2">
-              Failed to load clients
-            </h3>
-            <p className="text-sm max-w-sm">{error}</p>
-          </div>
-        ) : clients.length === 0 ? (
-          /* ================= EMPTY STATE ================= */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center text-gray-400">
-            <div className="text-5xl mb-4">🧾</div>
-            <h3 className="text-lg font-semibold text-gray-300">
-              No Clients Found
-            </h3>
-            <p className="text-sm max-w-sm mt-2">
-              You haven’t added any clients yet. Click{" "}
-              <strong>Create Client</strong> to add your first one.
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* ================= MOBILE CARDS ================= */}
-            <div className="md:hidden space-y-4">
-              {currentClients.map((client) => (
-                <div
-                  key={client._id}
-                  className="bg-[#111] border border-gray-700 rounded-xl p-4 space-y-3"
-                >
-                  <div className="flex justify-between">
-                    <h3 className="font-semibold">{client.name}</h3>
-                    <div className="flex gap-3">
+
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto bg-[var(--white)] border border-[var(--border)] rounded-2xl">
+            <table className="w-full">
+              <thead className="bg-[var(--bg-secondary)]">
+                <tr>
+                  <th className="px-5 py-4 text-left">Logo</th>
+
+                  <th className="px-5 py-4 text-left">Name</th>
+
+                  <th className="px-5 py-4 text-left">Created</th>
+
+                  <th className="px-5 py-4 text-left">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {currentClients.map((client) => (
+                  <tr
+                    key={client._id}
+                    className="border-t border-[var(--border)] hover:bg-[var(--bg-secondary)]"
+                  >
+                    <td className="px-5 py-4">
+                      <img src={client.image} className="h-10 object-contain" />
+                    </td>
+
+                    <td className="px-5 py-4 text-[var(--text)]">
+                      {client.name}
+                    </td>
+
+                    <td className="px-5 py-4 text-[var(--text-light)]">
+                      {new Date(client.createdAt).toLocaleDateString()}
+                    </td>
+
+                    <td className="px-5 py-4 flex gap-4">
                       <button
                         onClick={() => {
                           setEditClient(client);
                           setIsModalOpen(true);
                         }}
-                        className="text-blue-500 hover:text-blue-400"
+                        className="text-blue-500"
                       >
-                        <Pencil size={16} />
+                        <Pencil size={18} />
                       </button>
+
                       <button
                         onClick={() => handleDelete(client._id)}
-                        className="text-red-500 hover:text-red-400"
+                        className="text-red-500"
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={18} />
                       </button>
-                    </div>
-                  </div>
-
-                  <img
-                    src={client.image}
-                    className="h-16 object-contain bg-black rounded p-2"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* ================= DESKTOP TABLE ================= */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full border border-gray-700 text-sm">
-                <thead className="bg-[#1e1e1e]">
-                  <tr>
-                    <th className="px-4 py-3 text-left">Logo</th>
-                    <th className="px-4 py-3 text-left">Name</th>
-                    <th className="px-4 py-3 text-left">Created</th>
-                    <th className="px-4 py-3 text-left">Actions</th>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {currentClients.map((client) => (
-                    <tr
-                      key={client._id}
-                      className="even:bg-[#111] hover:bg-[#222]"
-                    >
-                      <td className="px-4 py-3">
-                        <img
-                          src={client.image}
-                          className="h-10 object-contain"
-                        />
-                      </td>
-
-                      <td className="px-4 py-3">{client.name}</td>
-
-                      <td className="px-4 py-3">
-                        {new Date(client.createdAt).toLocaleDateString()}
-                      </td>
-
-                      <td className="px-4 py-3 flex gap-4">
-                        <button
-                          onClick={() => {
-                            setEditClient(client);
-                            setIsModalOpen(true);
-                          }}
-                          className="text-blue-500 hover:text-blue-400"
-                        >
-                          <Pencil size={18} />
-                        </button>
-
-                        <button
-                          onClick={() => handleDelete(client._id)}
-                          className="text-red-500 hover:text-red-400"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-
-        {/* ================= PAGINATION ================= */}
-        {totalPages > 1 && (
-          <div className="flex justify-end mt-6 gap-2">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
-
-            <span className="px-3 py-1 bg-gray-800 rounded">{currentPage}</span>
-
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-            >
-              Next
-            </button>
+                ))}
+              </tbody>
+            </table>
           </div>
-        )}
-      </div>
 
-      {/* MODAL */}
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-end mt-8 gap-3">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    hover:border-[var(--primary)]
+                    hover:text-[var(--primary)]
+                    disabled:opacity-40
+                  "
+              >
+                Prev
+              </button>
+
+              <div className="h-10 px-5 flex items-center">{currentPage}</div>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    hover:border-[var(--primary)]
+                    hover:text-[var(--primary)]
+                    disabled:opacity-40
+                  "
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Modal */}
       <ClientModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -315,6 +342,4 @@ const AdminClient = () => {
       />
     </div>
   );
-};
-
-export default AdminClient;
+}

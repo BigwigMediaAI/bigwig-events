@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 import Navbar from "@/components/layout/Navbar";
 import Button from "@/components/ui/Button";
 import Footer from "@/components/layout/Footer";
@@ -26,27 +27,26 @@ const BLOGS_PER_PAGE = 10;
 
 function BlogSkeleton() {
   return (
-    <div className="mx-auto max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-5 gap-12">
-      {/* LEFT */}
+    <div className="mx-auto max-w-[1400px] px-6 grid grid-cols-1 lg:grid-cols-5 gap-12">
       <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8">
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden animate-pulse"
+            className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] overflow-hidden animate-pulse"
           >
-            <div className="h-48 bg-white/10" />
+            <div className="h-48 bg-[var(--bg-secondary)]" />
+
             <div className="p-6 space-y-3">
-              <div className="h-4 w-3/4 bg-white/10 rounded" />
-              <div className="h-3 w-full bg-white/10 rounded" />
-              <div className="h-3 w-5/6 bg-white/10 rounded" />
+              <div className="h-4 w-3/4 rounded bg-[var(--bg-secondary)]" />
+              <div className="h-3 w-full rounded bg-[var(--bg-secondary)]" />
+              <div className="h-3 w-5/6 rounded bg-[var(--bg-secondary)]" />
             </div>
           </div>
         ))}
       </div>
 
-      {/* RIGHT */}
       <div className="lg:col-span-2">
-        <div className="h-[420px] rounded-2xl bg-white/[0.04] border border-white/10 animate-pulse" />
+        <div className="h-[420px] rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] animate-pulse" />
       </div>
     </div>
   );
@@ -60,17 +60,20 @@ export default function BlogPage() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  /* ================= FETCH BLOGS ================= */
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const res = await fetch(`${API_BASE}/blog/viewblog`, {
           cache: "no-store",
         });
+
         const data = await res.json();
-        if (res.ok) setBlogs(data);
+
+        if (res.ok) {
+          setBlogs(data || []);
+        }
       } catch (error) {
-        console.error("Failed to fetch blogs");
+        console.error("Failed to fetch blogs", error);
       } finally {
         setLoading(false);
       }
@@ -79,7 +82,6 @@ export default function BlogPage() {
     fetchBlogs();
   }, []);
 
-  /* ================= PAGINATION ================= */
   const totalPages = Math.ceil(blogs.length / BLOGS_PER_PAGE);
 
   const paginatedBlogs = blogs.slice(
@@ -88,68 +90,63 @@ export default function BlogPage() {
   );
 
   return (
-    <div className="relative bg-black">
+    <div className="bg-[var(--bg)]">
       <Navbar />
 
-      {/* ================= HERO ================= */}
-      <section className="relative h-[90vh] w-full overflow-hidden">
-        <Image
-          src="/acti.png"
-          alt="Insights & digital growth stories"
-          fill
-          priority
-          className="object-cover"
+      {/* HERO */}
+      <section className="relative min-h-screen w-full overflow-hidden pt-12">
+        {/* Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/image3.png')",
+          }}
         />
-        <div className="absolute inset-0 bg-black/80" />
-        <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-primary)]/20 blur-[200px]" />
 
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6">
-          <div className="max-w-3xl">
-            <div className="mb-4 flex items-center gap-2 text-sm text-[var(--text-muted)]">
-              <Link href="/" className="hover:text-[var(--accent-primary)]">
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-[var(--text-secondary)]">Blog</span>
-            </div>
+        {/* Content */}
+        <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12 lg:px-16">
+          <div className="max-w-[650px]">
+            <p className="text-[var(--primary)] uppercase tracking-[5px] text-xs md:text-sm mb-5">
+              Latest Insights
+            </p>
 
-            <h1 className="mb-6 text-4xl md:text-6xl font-bold text-[var(--text-primary)]">
-              Insights, Ideas & <br />
-              <span className="text-[var(--accent-primary)]">
-                Digital Growth Stories
-              </span>
+            <h1 className="font-serif text-[38px] md:text-[56px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
+              Ideas That
+              <br />
+              <span className="italic text-[var(--primary)]">Drive Growth</span>
             </h1>
 
-            <p className="max-w-xl text-lg text-[var(--text-secondary)]">
-              Expert perspectives on digital marketing, branding, SEO and
-              performance-driven growth.
+            <p className="mt-6 text-[var(--text-light)] text-base md:text-lg leading-8 max-w-[540px]">
+              Expert insights on branding, digital strategy, business growth,
+              and premium marketing experiences that create lasting impact.
             </p>
+
+            <button
+              onClick={() => setOpen(true)}
+              className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
+            >
+              Let's Talk
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ================= CONTENT ================= */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-primary)]/15 blur-[200px]" />
-        </div>
-
+      {/* CONTENT */}
+      <section className="py-24">
         {/* LOADING */}
         {loading && <BlogSkeleton />}
 
         {/* EMPTY */}
         {!loading && blogs.length === 0 && (
-          <div className="mx-auto max-w-5xl px-6">
-            <div className="relative rounded-3xl border border-white/10 bg-white/[0.02] p-12 text-center backdrop-blur-xl shadow-2xl">
-              <div className="pointer-events-none absolute -top-24 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-[var(--accent-primary)]/25 blur-[120px]" />
-
-              <h2 className="mb-4 text-2xl md:text-4xl font-bold text-[var(--text-primary)]">
-                Insights Are On the Way
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="rounded-3xl border border-[var(--border)] bg-[var(--card-bg)] p-14 text-center shadow-sm">
+              <h2 className="font-serif text-4xl text-[var(--text)] mb-4">
+                Blogs Coming Soon
               </h2>
 
-              <p className="mx-auto mb-8 max-w-xl text-lg text-[var(--text-secondary)]">
-                We’re crafting high-quality articles and growth-focused
-                insights. Stay tuned — quality takes time.
+              <p className="text-lg text-[var(--text-light)] mb-8 max-w-xl mx-auto">
+                We're preparing insightful articles, creative stories, and
+                business growth ideas. Stay connected.
               </p>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -159,7 +156,7 @@ export default function BlogPage() {
                 />
 
                 <Link href="/portfolio">
-                  <button className="rounded-full border border-white/20 px-8 py-3 text-sm text-white/80 transition hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]">
+                  <button className="h-12 px-8 border border-[var(--border)] text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all">
                     View Portfolio
                   </button>
                 </Link>
@@ -170,7 +167,7 @@ export default function BlogPage() {
 
         {/* BLOGS */}
         {!loading && blogs.length > 0 && (
-          <div className="mx-auto w-11/12 md:w-5/6 grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+          <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
             {/* LEFT */}
             <div className="lg:col-span-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -178,27 +175,27 @@ export default function BlogPage() {
                   <Link
                     key={blog._id}
                     href={`/blog/${blog.slug}`}
-                    className="group rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden hover:border-[var(--accent-primary)] transition"
+                    className="group rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
                   >
-                    <div className="relative h-48">
+                    <div className="relative h-56 overflow-hidden">
                       <Image
                         src={blog.coverImage}
                         alt={blog.title}
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-110 transition duration-700"
                       />
                     </div>
 
                     <div className="p-6">
-                      <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-white group-hover:text-[var(--accent-primary)]">
+                      <h3 className="line-clamp-2 text-xl font-semibold text-[var(--text)] group-hover:text-[var(--primary)] transition mb-3">
                         {blog.title}
                       </h3>
 
-                      <p className="text-sm text-[var(--text-secondary)] line-clamp-3">
+                      <p className="line-clamp-3 text-[var(--text-light)] leading-7">
                         {blog.excerpt}
                       </p>
 
-                      <span className="mt-4 block text-xs text-[var(--text-muted)]">
+                      <span className="block mt-5 text-sm text-[var(--muted)]">
                         {new Date(blog.datePublished).toLocaleDateString()}
                       </span>
                     </div>
@@ -208,23 +205,23 @@ export default function BlogPage() {
 
               {/* PAGINATION */}
               {totalPages > 1 && (
-                <div className="mt-12 flex justify-center gap-4">
+                <div className="mt-16 flex justify-center gap-4">
                   <button
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage((p) => p - 1)}
-                    className="px-4 py-2 rounded-full border border-white/20 text-white/70 transition hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] disabled:opacity-40"
+                    className="h-11 px-6 border border-[var(--border)] text-[var(--text-light)] hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-40 transition-all"
                   >
                     Prev
                   </button>
 
-                  <span className="px-4 py-2 text-sm text-white/70">
-                    Page {currentPage} of {totalPages}
-                  </span>
+                  <div className="h-11 px-6 flex items-center text-[var(--text)]">
+                    {currentPage} / {totalPages}
+                  </div>
 
                   <button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage((p) => p + 1)}
-                    className="px-4 py-2 rounded-full border border-white/20 text-white/70 transition hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] disabled:opacity-40"
+                    className="h-11 px-6 border border-[var(--border)] text-[var(--text-light)] hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-40 transition-all"
                   >
                     Next
                   </button>
@@ -233,7 +230,7 @@ export default function BlogPage() {
             </div>
 
             {/* RIGHT */}
-            <div className="lg:col-span-2 lg:sticky lg:top-28 self-start">
+            <div className="lg:col-span-2 lg:sticky lg:top-28">
               <ContactFormCard />
             </div>
           </div>
@@ -241,7 +238,9 @@ export default function BlogPage() {
       </section>
 
       <CTA />
+
       <Footer />
+
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

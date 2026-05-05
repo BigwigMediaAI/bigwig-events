@@ -1,27 +1,27 @@
 "use client";
+
 import {
   FaBars,
   FaTimes,
   FaSignOutAlt,
-  FaBuilding,
   FaMailBulk,
   FaQuoteRight,
-  FaQuestion,
 } from "react-icons/fa";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+
 import {
-  Building,
   GalleryThumbnails,
   Gauge,
-  Notebook,
   NotebookPen,
   User2,
   Users,
   Users2,
 } from "lucide-react";
+
 import Cookies from "js-cookie";
 
 export default function AdminLayout({
@@ -31,11 +31,20 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { icon: <Gauge size={18} />, label: "Dashboard", to: "/admin" },
-    { icon: <Users size={18} />, label: "Leads", to: "/admin/lead" },
+    {
+      icon: <Gauge size={18} />,
+      label: "Dashboard",
+      to: "/admin",
+    },
+    {
+      icon: <Users size={18} />,
+      label: "Leads",
+      to: "/admin/lead",
+    },
     {
       icon: <User2 size={18} />,
       label: "Subscribers",
@@ -46,7 +55,6 @@ export default function AdminLayout({
       label: "Clients",
       to: "/admin/clients",
     },
-    // { icon: <Notebook size={18} />, label: "Blogs", to: "/admin/blogs" },
     {
       icon: <FaMailBulk size={18} />,
       label: "Newsletter",
@@ -67,11 +75,6 @@ export default function AdminLayout({
       label: "Blogs",
       to: "/admin/blogs",
     },
-    // {
-    //   icon: <FaQuestion size={18} />,
-    //   label: "FAQ",
-    //   to: "/admin/faq",
-    // },
   ];
 
   const handleLogout = () => {
@@ -80,128 +83,159 @@ export default function AdminLayout({
   };
 
   return (
-    <div className="h-screen flex flex-col lg:flex-row overflow-hidden bg-[var(--bg)] text-[var(--white)] font-raleway relative">
-      {/* ===== MOBILE TOP NAV ===== */}
-      <div className="lg:hidden bg-[var(--bg)] flex items-center justify-between px-5 py-4 shadow-md border-b border-white/10">
+    <div className="h-screen flex flex-col lg:flex-row overflow-hidden bg-[var(--bg)] text-[var(--text)]">
+      {/* MOBILE TOP BAR */}
+      <div className="lg:hidden bg-[var(--white)] flex items-center justify-between px-5 py-4 shadow-sm border-b border-[var(--border)]">
         <div className="flex items-center gap-2">
           <Image
-            src="/logo.png"
+            src="/logo2.png"
             alt="logo"
             width={40}
             height={40}
             className="object-contain"
-            style={{ height: "auto" }}
           />
-          <span className="text-lg font-semibold tracking-wide text-[var(--white)]">
+
+          <span className="text-lg font-semibold text-[var(--text)]">
             Admin
           </span>
         </div>
+
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="text-[var(--white)] text-2xl"
+          className="text-[var(--text)] text-2xl"
         >
           {mobileMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
 
-      {/* ===== MOBILE SLIDE-OUT MENU ===== */}
+      {/* MOBILE SIDEBAR */}
       <div
-        className={`fixed top-0 left-0 w-3/4 sm:w-2/5 h-full bg-[var(--bg)] z-50 transform transition-transform duration-300 ease-in-out 
-        ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`
+          fixed top-0 left-0 h-full z-50
+          w-3/4 sm:w-2/5
+          bg-[var(--white)]
+          border-r border-[var(--border)]
+          shadow-xl
+          transform transition-transform duration-300
+          ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border)]">
           <div className="flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="logo"
-              width={40}
-              height={40}
-              className="object-contain"
-              style={{ height: "auto" }}
-            />
-            <span className="text-lg font-semibold tracking-wide text-[var(--white)]">
+            <Image src="/logo2.png" alt="logo" width={40} height={40} />
+
+            <span className="text-lg font-semibold text-[var(--text)]">
               Admin
             </span>
           </div>
+
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="text-[var(--white)] text-2xl"
+            className="text-[var(--text)] text-2xl"
           >
             <FaTimes />
           </button>
         </div>
 
-        <nav className="flex flex-col mt-6 space-y-1">
+        {/* Nav */}
+        <nav className="flex flex-col mt-6 px-3 gap-2">
           {navItems.map(({ icon, label, to }) => (
             <Link
               key={to}
               href={to}
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all duration-200 
-              ${
-                pathname === to
-                  ? "bg-[var(--secondary)] text-black shadow-md"
-                  : "text-[var(--muted)] hover:bg-black/40 hover:text-[var(--white)]"
-              }`}
+              className={`
+                  flex items-center gap-3
+                  px-4 py-3 rounded-xl
+                  text-sm font-medium
+                  transition-all duration-300
+                  ${
+                    pathname === to
+                      ? "bg-[var(--primary)] text-white shadow-[0_8px_20px_rgba(184,155,94,0.25)]"
+                      : "text-[var(--text-light)] hover:bg-[var(--bg-secondary)] hover:text-[var(--primary)]"
+                  }
+                `}
             >
               {icon}
-              <span>{label}</span>
+              {label}
             </Link>
           ))}
+        </nav>
 
-          {/* Logout Button (Mobile) */}
+        {/* Logout */}
+        <div className="absolute bottom-5 left-0 w-full px-3">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-6 py-3 mt-4 text-sm font-medium text-red-400 hover:text-red-500 border-t border-white/10"
+            className="
+              w-full flex items-center gap-3
+              px-4 py-3 rounded-xl
+              text-red-500
+              hover:bg-red-50
+              transition-all
+            "
           >
             <FaSignOutAlt />
             Logout
           </button>
-        </nav>
+        </div>
       </div>
 
-      {/* ===== DESKTOP SIDEBAR ===== */}
-      <aside className="hidden lg:flex lg:flex-col w-64 bg-[var(--bg)] border-r border-white/10 shadow-lg p-5 fixed h-full">
-        <div className="flex items-center gap-3 mb-8">
+      {/* DESKTOP SIDEBAR */}
+      <aside className="hidden lg:flex flex-col w-64 bg-[var(--white)] border-r border-[var(--border)] p-5 fixed h-full">
+        {/* Logo */}
+        <div className="mb-8">
           <Image
-            src="/logo.png"
+            src="/logo2.png"
             alt="logo"
             width={140}
             height={100}
             className="object-contain"
-            style={{ height: "auto" }}
           />
         </div>
 
-        <nav className="flex flex-col gap-1 text-sm font-medium overflow-y-auto flex-1 hide-scrollbar">
+        {/* Nav */}
+        <nav className="flex flex-col gap-2 flex-1">
           {navItems.map(({ icon, label, to }) => (
             <Link
               key={to}
               href={to}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-md transition-all duration-200 ${
-                pathname === to
-                  ? "bg-[var(--secondary)] text-black shadow-md"
-                  : "text-[var(--muted)] hover:bg-black/40 hover:text-[var(--white)]"
-              }`}
+              className={`
+                  flex items-center gap-3
+                  px-4 py-3 rounded-xl
+                  text-sm font-medium
+                  transition-all duration-300
+                  ${
+                    pathname === to
+                      ? "bg-[var(--primary)] text-white shadow-[0_8px_20px_rgba(184,155,94,0.25)]"
+                      : "text-[var(--text-light)] hover:bg-[var(--bg-secondary)] hover:text-[var(--primary)]"
+                  }
+                `}
             >
               {icon}
-              <span>{label}</span>
+              {label}
             </Link>
           ))}
         </nav>
 
-        {/* Logout Button (Desktop) */}
+        {/* Logout */}
         <button
           onClick={handleLogout}
-          className="cursor-pointer flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium text-red-400 hover:text-red-500 transition-all duration-200 border-t border-white/10"
+          className="
+            flex items-center gap-3
+            px-4 py-3 rounded-xl
+            text-red-500
+            hover:bg-red-50
+            transition-all
+          "
         >
           <FaSignOutAlt />
           Logout
         </button>
       </aside>
 
-      {/* ===== MAIN CONTENT AREA ===== */}
-      <main className="flex-1 lg:ml-64 overflow-y-auto p-5 sm:p-8 bg-[var(--bg)] text-[var(--white)] min-h-screen">
+      {/* MAIN CONTENT */}
+      <main className="flex-1 lg:ml-64 overflow-y-auto p-5 sm:p-8 bg-[var(--bg)] text-[var(--text)] min-h-screen">
         {children}
       </main>
     </div>

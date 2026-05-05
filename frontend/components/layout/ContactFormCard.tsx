@@ -27,7 +27,6 @@ const ContactFormCard = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  /* ================= SEND OTP ================= */
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -47,7 +46,10 @@ const ContactFormCard = () => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
 
       setStep("OTP");
     } catch (err) {
@@ -57,7 +59,6 @@ const ContactFormCard = () => {
     }
   };
 
-  /* ================= VERIFY OTP ================= */
   const handleVerifyOTP = async () => {
     setError("");
 
@@ -79,9 +80,13 @@ const ContactFormCard = () => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
 
       setStep("FORM");
+
       setForm({
         name: "",
         email: "",
@@ -91,8 +96,10 @@ const ContactFormCard = () => {
         eventLocation: "",
         message: "",
       });
+
       setOtp("");
-      alert("✅ Thank you! Your event inquiry has been submitted.");
+
+      alert("Thank you! Your inquiry has been submitted.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "OTP verification failed");
     } finally {
@@ -101,20 +108,24 @@ const ContactFormCard = () => {
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
-      <h3 className="mb-6 text-2xl font-semibold text-white">
-        Plan Your Event
+    <div className="bg-white border border-[var(--border)] rounded-3xl p-8 md:p-10 shadow-sm">
+      <p className="text-[var(--primary)] uppercase tracking-[5px] text-sm font-medium mb-3">
+        Start Your Journey
+      </p>
+
+      <h3 className="font-serif text-[34px] md:text-[42px] leading-[1.2] text-[var(--text)] font-light mb-8">
+        Plan Your
+        <span className="italic text-[var(--primary)]"> Dream Event</span>
       </h3>
 
       {error && (
-        <p className="mb-4 text-sm text-red-400 bg-red-400/10 px-3 py-2 rounded">
+        <p className="mb-5 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
           {error}
         </p>
       )}
 
       {step === "FORM" && (
-        <form onSubmit={handleSendOTP} className="space-y-5">
-          {/* NAME + PHONE */}
+        <form onSubmit={handleSendOTP} className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               label="Full Name"
@@ -122,33 +133,31 @@ const ContactFormCard = () => {
               value={form.name}
               onChange={handleChange}
             />
+
             <Input
-              label="Phone"
+              label="Phone Number"
               name="phone"
               value={form.phone}
               onChange={handleChange}
             />
           </div>
 
-          {/* EMAIL */}
           <Input
-            label="Email"
+            label="Email Address"
             name="email"
             type="email"
             value={form.email}
             onChange={handleChange}
           />
 
-          {/* EVENT TYPE */}
           <Input
             label="Event Type"
             name="eventType"
             value={form.eventType}
             onChange={handleChange}
-            placeholder="Wedding / Corporate / Birthday"
+            placeholder="Wedding / Corporate / Celebration"
           />
 
-          {/* DATE + LOCATION */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               label="Event Date"
@@ -157,24 +166,30 @@ const ContactFormCard = () => {
               value={form.eventDate}
               onChange={handleChange}
             />
+
             <Input
-              label="Event Location"
+              label="Location"
               name="eventLocation"
               value={form.eventLocation}
               onChange={handleChange}
-              placeholder="Dubai, UAE"
+              placeholder="Delhi / Dubai / Destination"
             />
           </div>
 
-          {/* MESSAGE */}
-          <textarea
-            name="message"
-            rows={4}
-            value={form.message}
-            onChange={handleChange}
-            placeholder="Tell us about your event..."
-            className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)]/40"
-          />
+          <div>
+            <label className="mb-2 block text-sm text-[var(--text)]">
+              Tell Us About Your Event
+            </label>
+
+            <textarea
+              name="message"
+              rows={3}
+              value={form.message}
+              onChange={handleChange}
+              placeholder="Share your vision, guest count, ideas..."
+              className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] focus:outline-none focus:border-[var(--primary)]"
+            />
+          </div>
 
           <Button
             type="submit"
@@ -184,9 +199,9 @@ const ContactFormCard = () => {
       )}
 
       {step === "OTP" && (
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Input
-            label="Enter 6-digit OTP"
+            label="Enter 6-Digit OTP"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
           />
@@ -203,7 +218,7 @@ const ContactFormCard = () => {
 
 export default ContactFormCard;
 
-/* ================= INPUT ================= */
+/* INPUT */
 
 interface InputProps {
   label: string;
@@ -224,14 +239,15 @@ const Input = ({
 }: InputProps) => {
   return (
     <div>
-      <label className="mb-2 block text-sm text-gray-300">{label}</label>
+      <label className="mb-2 block text-sm text-[var(--text)]">{label}</label>
+
       <input
         name={name}
         value={value}
         onChange={onChange}
         type={type}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)]/40"
+        className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] focus:outline-none focus:border-[var(--primary)]"
       />
     </div>
   );

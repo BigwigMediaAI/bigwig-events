@@ -1,7 +1,9 @@
 "use client";
 
 import TestimonialModal from "@/components/CreateTestimonial";
+
 import { Eye, Trash2, Plus, X, Pencil, MessageSquare } from "lucide-react";
+
 import { useEffect, useState } from "react";
 
 interface Testimonial {
@@ -16,28 +18,36 @@ interface Testimonial {
 
 const ITEMS_PER_PAGE = 10;
 
-const AdminTestimonials = () => {
+export default function AdminTestimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+
   const [selected, setSelected] = useState<Testimonial | null>(null);
 
   const [showModal, setShowModal] = useState(false);
+
   const [editData, setEditData] = useState<Testimonial | null>(null);
 
   const [loading, setLoading] = useState(true);
+
   const [currentPage, setCurrentPage] = useState(1);
 
-  // ================= FETCH =================
+  /* Fetch */
   const fetchTestimonials = async () => {
     try {
       setLoading(true);
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE}/testimonial`,
-        { cache: "no-store" },
+        {
+          cache: "no-store",
+        },
       );
+
       const data = await res.json();
+
       setTestimonials(data);
     } catch (err) {
-      console.error("Failed to fetch testimonials", err);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -47,224 +57,260 @@ const AdminTestimonials = () => {
     fetchTestimonials();
   }, []);
 
-  // ================= DELETE =================
+  /* Delete */
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this testimonial permanently?")) return;
+    if (!confirm("Delete this testimonial?")) return;
 
     await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/testimonial/${id}`, {
       method: "DELETE",
     });
 
-    setTestimonials((prev) => prev.filter((t) => t._id !== id));
+    setTestimonials((prev) => prev.filter((item) => item._id !== id));
   };
 
-  // ================= PAGINATION =================
+  /* Pagination */
   const totalPages = Math.ceil(testimonials.length / ITEMS_PER_PAGE);
+
   const visibleItems = testimonials.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
 
   return (
-    <div className="h-screen bg-[var(--bg)] text-[var(--white)] flex flex-col">
-      {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-[var(--bg)] border-b border-white/10">
-        <div className="p-6 flex justify-between">
-          <h1 className="text-3xl font-bold">Testimonials</h1>
+    <div>
+      {/* Header */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p className="uppercase tracking-[4px] text-xs text-[var(--primary)] mb-2">
+            Admin Panel
+          </p>
 
-          <button
-            onClick={() => {
-              setEditData(null);
-              setShowModal(true);
-            }}
-            className="
-            border border-white/10
-            hover:border-[var(--secondary)]
-            hover:text-[var(--secondary)]
-            text-[var(--white)]
-            px-4 py-2
-            rounded-full
-            flex items-center gap-2
-            font-semibold
-            transition
-          "
-          >
-            <Plus size={18} /> Add Testimonial
-          </button>
+          <h1 className="font-serif text-4xl text-[var(--text)]">
+            Testimonials
+          </h1>
         </div>
+
+        <button
+          onClick={() => {
+            setEditData(null);
+
+            setShowModal(true);
+          }}
+          className="
+            h-11 px-6
+            bg-[var(--primary)]
+            text-white
+            rounded-xl
+            flex items-center gap-2
+            hover:bg-[var(--primary-dark)]
+          "
+        >
+          <Plus size={16} />
+          Add Testimonial
+        </button>
       </div>
-      {/* CONTENT */}
-      <div className="flex-1 p-6 overflow-y-auto">
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="flex flex-col items-center gap-3 text-[var(--muted)]">
-              <div className="w-8 h-8 border-2 border-white/20 border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm">Loading testimonials...</p>
-            </div>
-          </div>
-        ) : visibleItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4">
-              <MessageSquare className="text-[var(--muted)]" size={24} />
-            </div>
 
-            <h3 className="text-lg font-semibold">No testimonials found</h3>
+      {/* Loading */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center h-[300px]">
+          <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin mb-4" />
 
-            <p className="text-sm text-[var(--muted)] max-w-md mt-2">
-              Add your first testimonial to build trust with your clients.
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* TABLE */}
-            <table className="w-full border border-white/10 text-sm">
-              <thead className="bg-white/5">
+          <p className="text-[var(--text-light)]">Loading...</p>
+        </div>
+      )}
+
+      {/* Empty */}
+      {!loading && visibleItems.length === 0 && (
+        <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-12 text-center">
+          <MessageSquare
+            size={32}
+            className="mx-auto text-[var(--muted)] mb-4"
+          />
+
+          <h3 className="font-serif text-2xl text-[var(--text)]">
+            No Testimonials
+          </h3>
+        </div>
+      )}
+
+      {/* Table */}
+      {!loading && visibleItems.length > 0 && (
+        <>
+          <div className="overflow-x-auto bg-[var(--white)] border border-[var(--border)] rounded-2xl">
+            <table className="w-full">
+              <thead className="bg-[var(--bg-secondary)]">
                 <tr>
-                  <th className="px-4 py-3 text-left w-1/4">Client</th>
-                  <th className="px-4 py-3 text-left w-2/4">Message</th>
-                  <th className="px-4 py-3 text-center w-1/8">Status</th>
-                  <th className="px-4 py-3 text-center w-1/8">Actions</th>
+                  <th className="px-5 py-4 text-left">Client</th>
+
+                  <th className="px-5 py-4 text-left">Message</th>
+
+                  <th className="px-5 py-4 text-center">Status</th>
+
+                  <th className="px-5 py-4 text-center">Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {visibleItems.map((t) => (
+                {visibleItems.map((item) => (
                   <tr
-                    key={t._id}
-                    className="even:bg-white/5 hover:bg-white/10 transition"
+                    key={item._id}
+                    className="border-t border-[var(--border)] hover:bg-[var(--bg-secondary)]"
                   >
-                    {/* CLIENT */}
-                    <td className="px-4 py-3">
+                    {/* Client */}
+                    <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full overflow-hidden bg-[var(--secondary)]/20 flex items-center justify-center">
-                          {t.image ? (
+                        <div className="w-12 h-12 rounded-full overflow-hidden bg-[var(--bg-secondary)] flex items-center justify-center">
+                          {item.image ? (
                             <img
-                              src={t.image}
+                              src={item.image}
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <span className="font-semibold">
-                              {t.name.charAt(0).toUpperCase()}
+                            <span className="font-semibold text-[var(--primary)]">
+                              {item.name.charAt(0).toUpperCase()}
                             </span>
                           )}
                         </div>
 
                         <div>
-                          <p className="font-medium">{t.name}</p>
-                          <p className="text-xs text-[var(--muted)]">
-                            {t.designation}
+                          <p className="font-medium text-[var(--text)]">
+                            {item.name}
                           </p>
+
+                          {item.designation && (
+                            <p className="text-xs text-[var(--muted)]">
+                              {item.designation}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </td>
 
-                    {/* MESSAGE */}
-                    <td className="px-4 py-3 text-[var(--muted)]">
-                      <div className="line-clamp-2 break-words">
-                        {t.message}
+                    {/* Message */}
+                    <td className="px-5 py-4 text-[var(--text-light)]">
+                      <div className="line-clamp-2 max-w-md">
+                        {item.message}
                       </div>
                     </td>
 
-                    {/* STATUS */}
-                    <td className="px-4 py-3 text-center">
+                    {/* Status */}
+                    <td className="px-5 py-4 text-center">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          t.isActive
-                            ? "bg-[var(--secondary)] text-black"
-                            : "bg-white/10 text-[var(--muted)]"
-                        }`}
+                        className={`
+                              px-3 py-1 rounded-full text-xs font-medium
+                              ${
+                                item.isActive
+                                  ? "bg-green-50 text-green-700"
+                                  : "bg-red-50 text-red-600"
+                              }
+                            `}
                       >
-                        {t.isActive ? "Active" : "Inactive"}
+                        {item.isActive ? "Active" : "Inactive"}
                       </span>
                     </td>
 
-                    {/* ACTIONS */}
-                    <td className="px-4 py-3 flex justify-center gap-4">
-                      <button
-                        onClick={() => setSelected(t)}
-                        className="text-[var(--muted)] hover:text-[var(--secondary)] transition"
-                        title="View"
-                      >
-                        <Eye size={18} />
-                      </button>
+                    {/* Actions */}
+                    <td className="px-5 py-4">
+                      <div className="flex justify-center gap-4">
+                        <button
+                          onClick={() => setSelected(item)}
+                          className="text-blue-500"
+                        >
+                          <Eye size={18} />
+                        </button>
 
-                      <button
-                        onClick={() => {
-                          setEditData(t);
-                          setShowModal(true);
-                        }}
-                        className="text-blue-500 hover:text-[var(--secondary)] transition"
-                        title="Edit"
-                      >
-                        <Pencil size={18} />
-                      </button>
+                        <button
+                          onClick={() => {
+                            setEditData(item);
 
-                      <button
-                        onClick={() => handleDelete(t._id)}
-                        className="text-red-500 hover:text-red-600 transition"
-                        title="Delete"
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                            setShowModal(true);
+                          }}
+                          className="text-amber-500"
+                        >
+                          <Pencil size={18} />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="text-red-500"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
 
-            {/* PAGINATION */}
-            {totalPages > 1 && (
-              <div className="flex justify-end mt-6 gap-2">
-                <button
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((p) => p - 1)}
-                  className="px-3 py-1 bg-white/5 rounded disabled:opacity-50"
-                >
-                  Prev
-                </button>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-end mt-8 gap-3">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    disabled:opacity-40
+                  "
+              >
+                Prev
+              </button>
 
-                <span className="px-3 py-1 bg-[var(--secondary)] text-black rounded">
-                  {currentPage}
-                </span>
-
-                <button
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage((p) => p + 1)}
-                  className="px-3 py-1 bg-white/5 rounded disabled:opacity-50"
-                >
-                  Next
-                </button>
+              <div className="h-10 px-5 flex items-center text-[var(--text)]">
+                {currentPage}
               </div>
-            )}
-          </>
-        )}
-      </div>
-      {/* VIEW MODAL */}{" "}
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    disabled:opacity-40
+                  "
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* View Modal */}
       {selected && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
-          {" "}
-          <div className="bg-[#111] w-full max-w-xl rounded-xl border border-gray-800">
-            {" "}
-            <div className="flex justify-between p-5 border-b border-gray-700">
-              {" "}
-              <h2 className="text-xl font-semibold">{selected.name}</h2>{" "}
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+          <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl w-full max-w-xl overflow-hidden">
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b border-[var(--border)]">
+              <h2 className="font-serif text-2xl text-[var(--text)]">
+                {selected.name}
+              </h2>
+
               <button onClick={() => setSelected(null)}>
-                {" "}
-                <X size={18} />{" "}
-              </button>{" "}
-            </div>{" "}
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Body */}
             <div className="p-6 space-y-4">
-              {" "}
-              <p className="text-gray-300">{selected.message}</p>{" "}
-              <p className="text-sm text-gray-400">
-                {" "}
-                Status: {selected.isActive ? "Active" : "Inactive"}{" "}
-              </p>{" "}
-            </div>{" "}
-          </div>{" "}
+              <p className="text-[var(--text-light)] leading-8">
+                {selected.message}
+              </p>
+
+              <p className="text-sm text-[var(--muted)]">
+                Status: {selected.isActive ? "Active" : "Inactive"}
+              </p>
+            </div>
+          </div>
         </div>
-      )}{" "}
-      {/* CREATE + EDIT MODAL */}{" "}
+      )}
+
+      {/* Create / Edit Modal */}
       {showModal && (
         <TestimonialModal
           initialData={editData}
@@ -274,6 +320,4 @@ const AdminTestimonials = () => {
       )}
     </div>
   );
-};
-
-export default AdminTestimonials;
+}

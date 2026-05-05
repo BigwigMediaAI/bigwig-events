@@ -18,11 +18,10 @@ interface Portfolio {
 
 const categories = [
   "All",
-  "Corporate Events",
-  "Corporate Travels",
-  "Corporate Training",
-  "Corporate Festivities",
-  "Corporate Activations",
+  "Weddings",
+  "Corporate",
+  "Social Events",
+  "Destinations",
 ];
 
 export default function PortfolioPage() {
@@ -31,7 +30,6 @@ export default function PortfolioPage() {
   const [open, setOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  /* ================= FETCH PORTFOLIO ================= */
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
@@ -57,7 +55,6 @@ export default function PortfolioPage() {
     fetchPortfolio();
   }, []);
 
-  /* ================= FILTER ================= */
   const filteredProjects =
     activeCategory === "All"
       ? projects
@@ -67,84 +64,114 @@ export default function PortfolioPage() {
         );
 
   return (
-    <div className="relative bg-[var(--bg)] text-[var(--white)]">
+    <div className="bg-[var(--secondary-bg)]">
       <Navbar />
 
-      {/* ================= HERO ================= */}
-      <section className="relative h-[90vh] w-full overflow-hidden">
-        <Image
-          src="/acti.png"
-          alt="Corporate event portfolio showcase"
-          fill
-          priority
-          className="object-cover"
+      {/* HERO SECTION */}
+      <section className="relative min-h-screen w-full overflow-hidden pt-12">
+        {/* Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/image1.png')",
+          }}
         />
 
-        <div className="absolute inset-0 bg-black/80" />
-        <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--secondary)]/20 blur-[200px]" />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-white/20" />
 
-        <div className="relative z-10 mx-auto flex h-full w-11/12 md:w-5/6 items-center">
-          <div className="max-w-3xl">
-            <div className="mb-4 flex items-center gap-2 text-sm text-[var(--muted)]">
-              <Link href="/" className="hover:text-[var(--secondary)]">
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-[var(--muted)]">Portfolio</span>
-            </div>
+        {/* Content */}
+        <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12 lg:px-16">
+          <div className="max-w-[650px]">
+            <p className="text-[var(--primary)] uppercase tracking-[5px] text-xs md:text-sm mb-5">
+              Our Portfolio
+            </p>
 
-            <h1 className="mb-6 text-4xl md:text-6xl font-bold">
-              Events We’ve <br />
-              <span className="text-[var(--secondary)]">
-                Designed & Delivered
-              </span>
+            <h1 className="font-serif text-[38px] md:text-[58px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
+              Celebrations
+              <br />
+              We’re{" "}
+              <span className="italic text-[var(--primary)]">Proud Of</span>
             </h1>
 
-            <p className="max-w-xl text-lg text-[var(--muted)]">
-              Explore our corporate events, activations, and travel experiences
-              crafted with precision and creativity.
+            <p className="mt-6 text-[var(--text-light)] text-base md:text-lg leading-8 max-w-[540px]">
+              A glimpse into the extraordinary experiences we’ve designed, the
+              unforgettable celebrations we’ve curated, and the timeless
+              memories we’ve helped create.
             </p>
+
+            <button
+              onClick={() => setOpen(true)}
+              className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
+            >
+              Let’s Plan
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ================= PORTFOLIO SECTION ================= */}
-      <section className="relative overflow-hidden bg-[var(--bg)] py-16">
-        <div className="absolute left-1/2 top-24 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[var(--secondary)]/12 blur-[200px]" />
-
-        <div className="relative z-10 mx-auto w-11/12 md:w-5/6">
+      {/* PORTFOLIO */}
+      <section className="py-20 bg-[var(--secondary-bg)]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
           {loading ? (
-            <div className="py-24 text-center text-[var(--muted)]">
-              Loading our events...
+            <div className="py-24 text-center text-[var(--text-light)]">
+              Loading our celebrations...
             </div>
           ) : projects.length === 0 ? (
-            <div className="mx-auto max-w-3xl py-16 text-center">
-              <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-[var(--secondary)]/15 text-4xl">
-                ✨
+            <div className="mx-auto max-w-[900px] py-24 text-center">
+              {/* Icon */}
+              <div className="mb-8 flex justify-center">
+                <div className="h-24 w-24 rounded-full border border-[var(--primary)]/20 bg-[var(--primary)]/5 flex items-center justify-center">
+                  <span className="text-4xl text-[var(--primary)]">✦</span>
+                </div>
               </div>
 
-              <h3 className="mb-4 text-2xl font-semibold">
-                Our Next Corporate Experience Could Be Yours
-              </h3>
-
-              <p className="mb-8 text-[var(--muted)]">
-                Let’s build something extraordinary together.
+              {/* Label */}
+              <p className="text-[var(--primary)] uppercase tracking-[5px] text-sm font-medium mb-5">
+                Portfolio Coming Soon
               </p>
 
-              <Button onClick={() => setOpen(true)} text="Plan Your Event" />
+              {/* Heading */}
+              <h2 className="font-serif text-[38px] md:text-[58px] leading-[1.2] text-[var(--text)] font-light">
+                Our Finest
+                <br />
+                <span className="italic text-[var(--primary)]">
+                  Moments Are Being Curated
+                </span>
+              </h2>
+
+              {/* Description */}
+              <p className="mt-6 text-[var(--text-light)] text-base md:text-lg leading-8 max-w-[680px] mx-auto">
+                Behind every celebration is a story worth remembering. We’re
+                currently preparing a showcase of our weddings, destination
+                events, luxury celebrations, and unforgettable experiences.
+              </p>
+
+              {/* CTA */}
+              <div className="mt-10">
+                <Button
+                  onClick={() => setOpen(true)}
+                  text="Let's Create Yours"
+                />
+              </div>
+
+              {/* Quote */}
+              <p className="mt-12 font-serif italic text-xl text-[var(--primary)]">
+                Your celebration could be our next masterpiece.
+              </p>
             </div>
           ) : (
             <>
-              {/* ================= FILTER BUTTONS ================= */}
-              <div className="flex flex-wrap justify-center gap-3 mb-12">
+              {/* FILTER */}
+              <div className="flex flex-wrap justify-center gap-4 mb-14">
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-5 py-2 rounded-full text-sm border transition ${
+                    className={`px-6 py-2 text-sm uppercase tracking-[2px] border transition-all duration-300 ${
                       activeCategory === cat
-                        ? "bg-[var(--secondary)] text-black border-[var(--secondary)]"
-                        : "border-white/10 text-[var(--muted)] hover:border-[var(--secondary)]"
+                        ? "bg-[var(--primary)] text-white border-[var(--primary)]"
+                        : "border-[var(--border)] text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
                     }`}
                   >
                     {cat}
@@ -152,32 +179,28 @@ export default function PortfolioPage() {
                 ))}
               </div>
 
-              {/* ================= GRID ================= */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+              {/* GRID */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProjects.map((project) => (
-                  <div
-                    key={project._id}
-                    className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.6)]"
-                  >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      width={600}
-                      height={400}
-                      className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                  <div key={project._id} className="group cursor-pointer">
+                    <div className="overflow-hidden">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={600}
+                        height={450}
+                        className="w-full h-[350px] object-cover transition duration-700 group-hover:scale-105"
+                      />
+                    </div>
 
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-500" />
+                    <div className="mt-4">
+                      <p className="text-xs uppercase tracking-[3px] text-[var(--primary)] mb-2">
+                        {project.category}
+                      </p>
 
-                    {/* Category Badge */}
-                    <span className="absolute top-4 left-4 px-3 py-1 text-xs rounded-full bg-[var(--secondary)] text-black font-medium">
-                      {project.category}
-                    </span>
-
-                    {/* Title */}
-                    <div className="absolute bottom-0 left-0 p-6">
-                      <h3 className="text-lg font-semibold">{project.title}</h3>
+                      <h3 className="font-serif text-2xl text-[var(--text)]">
+                        {project.title}
+                      </h3>
                     </div>
                   </div>
                 ))}

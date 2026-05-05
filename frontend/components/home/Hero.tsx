@@ -96,7 +96,7 @@ export default function Hero() {
                 Let's Plan
               </button>
 
-              <Link href="/">
+              <Link href="/portfolio">
                 <button className="h-11 px-6 border border-[var(--border)] text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition">
                   View Our Work
                 </button>

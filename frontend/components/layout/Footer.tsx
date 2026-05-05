@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 import {
   Instagram,
   Facebook,
@@ -12,11 +16,11 @@ import {
 
 const quickLinks = [
   { name: "Home", href: "/" },
-  { name: "About Us", href: "/" },
+  { name: "About Us", href: "/about" },
   { name: "Services", href: "/" },
-  { name: "Portfolio", href: "/" },
-  { name: "Blog", href: "/" },
-  { name: "Contact", href: "/" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const services = [
@@ -28,13 +32,60 @@ const services = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubscribe = async () => {
+    if (!email.trim()) {
+      setMessage("Please enter email");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE}/subscribers`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+          }),
+        },
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage("Subscribed successfully");
+        setEmail("");
+      } else {
+        setMessage(data.message || "Subscription failed");
+      }
+    } catch (error) {
+      setMessage("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="bg-[var(--bg-secondary)] border-t border-[var(--border)]">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* BRAND */}
           <div className="lg:col-span-1">
-            <Image src="/logo.png" alt="Bigwig Events" width={70} height={70} />
+            <Image
+              src="/logo2.png"
+              alt="Bigwig Events"
+              width={70}
+              height={70}
+            />
 
             <h3 className="font-serif text-3xl text-[var(--text)] mt-5 leading-tight">
               Let's Create Something
@@ -46,7 +97,6 @@ export default function Footer() {
               Crafting experiences that stay with you.
             </p>
 
-            {/* Social */}
             <div className="flex gap-3 mt-6">
               {[Instagram, Facebook, Linkedin].map((Icon, index) => (
                 <button
@@ -139,14 +189,24 @@ export default function Footer() {
             <div className="flex border border-[var(--border)] h-12">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="flex-1 px-4 outline-none text-sm bg-transparent text-[var(--text)] placeholder:text-[var(--muted)]"
               />
 
-              <button className="w-12 flex items-center justify-center hover:text-[var(--primary)] transition">
+              <button
+                onClick={handleSubscribe}
+                disabled={loading}
+                className="cursor-pointer w-12 flex items-center justify-center hover:text-[var(--primary)] transition"
+              >
                 <ArrowRight size={18} className="text-[var(--text)]" />
               </button>
             </div>
+
+            {message && (
+              <p className="text-xs text-[var(--primary)] mt-3">{message}</p>
+            )}
           </div>
         </div>
 

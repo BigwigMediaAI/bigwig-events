@@ -2,7 +2,6 @@
 
 import { X, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import Button from "./ui/Button";
 
 interface ClientModalProps {
   isOpen: boolean;
@@ -20,19 +19,23 @@ interface ClientInput {
   preview?: string;
 }
 
-const ClientModal = ({
+export default function ClientModal({
   isOpen,
   onClose,
   onSubmit,
   initialData,
-}: ClientModalProps) => {
+}: ClientModalProps) {
   const [clients, setClients] = useState<ClientInput[]>([
-    { name: "", image: null },
+    {
+      name: "",
+      image: null,
+    },
   ]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  /* ================= INITIALIZE ================= */
+  /* Initialize */
   useEffect(() => {
     if (initialData) {
       setClients([
@@ -43,7 +46,12 @@ const ClientModal = ({
         },
       ]);
     } else {
-      setClients([{ name: "", image: null }]);
+      setClients([
+        {
+          name: "",
+          image: null,
+        },
+      ]);
     }
 
     setError("");
@@ -51,23 +59,30 @@ const ClientModal = ({
 
   if (!isOpen) return null;
 
-  /* ================= ADD FIELD ================= */
+  /* Add */
   const addClientField = () => {
-    setClients((prev) => [...prev, { name: "", image: null }]);
+    setClients((prev) => [
+      ...prev,
+      {
+        name: "",
+        image: null,
+      },
+    ]);
   };
 
-  /* ================= REMOVE FIELD ================= */
+  /* Remove */
   const removeClientField = (index: number) => {
     setClients((prev) => prev.filter((_, i) => i !== index));
   };
 
-  /* ================= HANDLE CHANGE ================= */
+  /* Change */
   const handleChange = (
     index: number,
     field: "name" | "image",
     value: string | File | null,
   ) => {
     const updated = [...clients];
+
     if (field === "name") {
       updated[index].name = value as string;
     } else {
@@ -76,27 +91,27 @@ const ClientModal = ({
         ? URL.createObjectURL(value as File)
         : undefined;
     }
+
     setClients(updated);
   };
 
-  /* ================= SUBMIT ================= */
+  /* Submit */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     try {
       setLoading(true);
+      setError("");
 
       const formData = new FormData();
 
-      clients.forEach((client, index) => {
+      clients.forEach((client) => {
         if (!client.name.trim()) {
           throw new Error("All client names are required");
         }
 
         formData.append("names", client.name.trim());
 
-        // 🔴 Require image only for CREATE
         if (!initialData && !client.image) {
           throw new Error("All client images are required");
         }
@@ -107,6 +122,7 @@ const ClientModal = ({
       });
 
       await onSubmit(formData);
+
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -116,81 +132,95 @@ const ClientModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-4 overflow-y-auto">
-      <div className="bg-[var(--bg)] border border-white/10 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl my-10">
-        {/* HEADER */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-white/10">
-          <h2 className="text-lg font-semibold text-[var(--white)]">
-            {initialData ? "Edit Client" : "Create Client(s)"}
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+      <div
+        className="
+          w-full max-w-2xl
+          bg-[var(--white)]
+          border border-[var(--border)]
+          rounded-2xl
+          shadow-2xl
+          overflow-hidden
+        "
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-5 border-b border-[var(--border)]">
+          <h2 className="font-serif text-2xl text-[var(--text)]">
+            {initialData ? "Edit Client" : "Create Client"}
           </h2>
 
           <button
             onClick={onClose}
-            className="text-[var(--muted)] hover:text-[var(--secondary)] transition"
+            className="text-[var(--muted)] hover:text-[var(--primary)]"
           >
             <X size={18} />
           </button>
         </div>
 
-        {/* BODY */}
-        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-6">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Error */}
           {error && (
-            <p className="text-sm text-red-400 bg-red-400/10 px-3 py-2 rounded">
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm">
               {error}
-            </p>
+            </div>
           )}
 
+          {/* Fields */}
           {clients.map((client, index) => (
             <div
               key={index}
-              className="border border-white/10 rounded-xl p-4 space-y-4 bg-black/30 backdrop-blur-sm"
+              className="
+                  border border-[var(--border)]
+                  rounded-2xl
+                  p-5
+                  bg-[var(--bg-secondary)]
+                "
             >
-              <div className="flex justify-between items-center">
-                <h3 className="text-sm text-[var(--muted)]">
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-sm text-[var(--muted)]">
                   Client {index + 1}
-                </h3>
+                </p>
 
                 {!initialData && clients.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removeClientField(index)}
-                    className="text-red-500 hover:text-red-400 transition"
+                    className="text-red-500"
                   >
                     <Trash2 size={16} />
                   </button>
                 )}
               </div>
 
-              {/* NAME */}
+              {/* Name */}
               <input
                 value={client.name}
                 onChange={(e) => handleChange(index, "name", e.target.value)}
                 placeholder="Client name"
                 className="
-                w-full
-                bg-black/40
-                border border-white/10
-                rounded-lg px-3 py-2
-                text-[var(--white)]
-                placeholder-[var(--muted)]
-                focus:outline-none
-                focus:ring-1 focus:ring-[var(--secondary)]
-                transition
-              "
+                    w-full h-12 px-4 mb-4
+                    border border-[var(--border)]
+                    bg-[var(--white)]
+                    text-[var(--text)]
+                    outline-none
+                    focus:border-[var(--primary)]
+                  "
               />
 
-              {/* IMAGE */}
+              {/* Upload */}
               {!initialData && (
                 <label
                   className="
-                  flex flex-col items-center justify-center
-                  w-full h-28
-                  border-2 border-dashed border-white/10
-                  rounded-xl cursor-pointer
-                  bg-black/40
-                  hover:border-[var(--secondary)]
-                  transition
-                "
+                      flex items-center justify-center
+                      h-28
+                      border-2 border-dashed border-[var(--border)]
+                      rounded-2xl
+                      bg-[var(--white)]
+                      cursor-pointer
+                      hover:border-[var(--primary)]
+                      transition
+                    "
                 >
                   {client.preview ? (
                     <img src={client.preview} className="h-16 object-contain" />
@@ -213,50 +243,55 @@ const ClientModal = ({
             </div>
           ))}
 
-          {/* ADD BUTTON */}
+          {/* Add */}
           {!initialData && (
             <button
               type="button"
               onClick={addClientField}
               className="
-              flex items-center gap-2 text-sm
-              text-[var(--muted)]
-              hover:text-[var(--secondary)]
-              transition
-            "
+                flex items-center gap-2
+                text-sm
+                text-[var(--primary)]
+              "
             >
               <Plus size={16} />
               Add Another Client
             </button>
           )}
 
-          {/* FOOTER */}
-          <div className="pt-4 border-t border-white/10 flex justify-end gap-3">
+          {/* Footer */}
+          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
             <button
               type="button"
               onClick={onClose}
               className="
-              px-4 py-2 rounded-lg text-sm
-              text-[var(--muted)]
-              border border-white/10
-              hover:border-[var(--secondary)]
-              hover:text-[var(--secondary)]
-              transition
-            "
+                h-11 px-6
+                border border-[var(--border)]
+                text-[var(--text-light)]
+                hover:border-[var(--primary)]
+                hover:text-[var(--primary)]
+              "
             >
               Cancel
             </button>
 
-            <Button
-              text={loading ? "Saving..." : "Save"}
+            <button
               type="submit"
-              className="bg-[var(--secondary)] text-black hover:opacity-90"
-            />
+              disabled={loading}
+              className="
+                h-11 px-6
+                bg-[var(--primary)]
+                text-white
+                rounded-xl
+                hover:bg-[var(--primary-dark)]
+                transition
+              "
+            >
+              {loading ? "Saving..." : "Save"}
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
-};
-
-export default ClientModal;
+}

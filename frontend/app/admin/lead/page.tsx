@@ -1,4 +1,5 @@
 "use client";
+
 import { Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -11,14 +12,13 @@ interface LeadRequest {
   eventDate?: string;
   eventLocation?: string;
   message?: string;
-  verified?: boolean;
   marked?: boolean;
   createdAt: string;
 }
 
 const ITEMS_PER_PAGE = 20;
 
-const AdminLead = () => {
+export default function AdminLead() {
   const [contacts, setContacts] = useState<LeadRequest[]>([]);
   const [filteredContacts, setFilteredContacts] = useState<LeadRequest[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
@@ -27,7 +27,7 @@ const AdminLead = () => {
 
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
-  /* ================= FETCH LEADS ================= */
+  /* Fetch */
   useEffect(() => {
     setLoading(true);
 
@@ -42,15 +42,11 @@ const AdminLead = () => {
         setContacts(sorted);
         setFilteredContacts(sorted);
       })
-      .catch((err) => {
-        console.error("Error fetching leads:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch((err) => console.error("Lead Error:", err))
+      .finally(() => setLoading(false));
   }, []);
 
-  /* ================= FILTER BY DATE ================= */
+  /* Filter */
   useEffect(() => {
     if (!selectedDate) {
       setFilteredContacts(contacts);
@@ -67,193 +63,223 @@ const AdminLead = () => {
   }, [selectedDate, contacts]);
 
   const totalPages = Math.ceil(filteredContacts.length / ITEMS_PER_PAGE);
+
   const currentContacts = filteredContacts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
 
-  /* ================= MARK / UNMARK LEAD ================= */
+  /* Mark */
   const handleMark = async (id: string, marked: boolean) => {
     try {
-      const res = await fetch(`${API_BASE}/lead/${id}/mark`, {
+      await fetch(`${API_BASE}/lead/${id}/mark`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ marked }),
+        body: JSON.stringify({
+          marked,
+        }),
       });
 
-      if (!res.ok) throw new Error("Failed to update lead");
-
       setContacts((prev) =>
-        prev.map((lead) => (lead._id === id ? { ...lead, marked } : lead)),
+        prev.map((lead) =>
+          lead._id === id
+            ? {
+                ...lead,
+                marked,
+              }
+            : lead,
+        ),
       );
-    } catch (err) {
-      console.error("Error updating lead:", err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  /* ================= DELETE LEAD ================= */
+  /* Delete */
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this lead?")) return;
+    if (!confirm("Delete this lead?")) return;
 
     try {
-      const res = await fetch(`${API_BASE}/lead/${id}`, {
+      await fetch(`${API_BASE}/lead/${id}`, {
         method: "DELETE",
       });
-      if (!res.ok) throw new Error("Failed to delete lead");
 
       setContacts((prev) => prev.filter((lead) => lead._id !== id));
-    } catch (err) {
-      console.error("Error deleting lead:", err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <div className="h-screen bg-black text-white flex flex-col">
-      {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-black p-4 md:py-6 border-b border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-2xl sm:text-3xl font-bold">Leads</h1>
+    <div>
+      {/* Header */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p className="uppercase tracking-[4px] text-xs text-[var(--primary)] mb-2">
+            Admin Panel
+          </p>
 
-        <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-400">Filter by Date:</label>
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
-          />
+          <h1 className="font-serif text-4xl text-[var(--text)]">Leads</h1>
         </div>
+
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          className="
+            h-11 px-4
+            border border-[var(--border)]
+            bg-[var(--white)]
+            text-[var(--text)]
+            outline-none
+          "
+        />
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 md:py-6">
-        {loading ? (
-          /* ================= LOADING STATE ================= */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-gray-400">
-            <div className="w-10 h-10 border-4 border-gray-600 border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-sm tracking-wide">Loading leads…</p>
-          </div>
-        ) : filteredContacts.length === 0 ? (
-          /* ================= EMPTY STATE ================= */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center text-gray-400">
-            <div className="text-5xl mb-4">📭</div>
-            <h3 className="text-lg font-semibold text-gray-300">
-              No Leads Found
-            </h3>
-            <p className="text-sm max-w-sm mt-2">
-              There are no lead requests available yet. New inquiries will
-              appear here automatically.
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 space-y-4">
-              {currentContacts.map((contact) => (
-                <div
-                  key={contact._id}
-                  className="bg-[#111] border border-gray-700 rounded-xl p-4 space-y-2 "
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-semibold text-lg">{contact.name}</h3>
-                      <p className="text-sm text-gray-400">
-                        {new Date(contact.createdAt).toLocaleString()}
-                      </p>
-                    </div>
+      {/* Loading */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center h-[300px]">
+          <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin mb-4" />
 
-                    <button
-                      onClick={() => handleDelete(contact._id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
+          <p className="text-[var(--text-light)]">Loading leads...</p>
+        </div>
+      )}
 
-                  <div className="text-sm space-y-1">
-                    <p>
-                      <span className="text-gray-400">Email:</span>{" "}
-                      <a
-                        href={`mailto:${contact.email}`}
-                        className="text-cyan-400"
-                      >
-                        {contact.email}
-                      </a>
-                    </p>
-                    <p>
-                      <span className="text-gray-400">Phone:</span>{" "}
-                      {contact.phone}
-                    </p>
-                    <p>
-                      <span className="text-gray-400">Event Type:</span>{" "}
-                      {contact.eventType || "—"}
-                    </p>
+      {/* Empty */}
+      {!loading && filteredContacts.length === 0 && (
+        <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-12 text-center">
+          <h3 className="text-2xl font-serif text-[var(--text)] mb-3">
+            No Leads Found
+          </h3>
 
-                    <p>
-                      <span className="text-gray-400">Event Date:</span>{" "}
-                      {contact.eventDate
-                        ? new Date(contact.eventDate).toLocaleString("en-IN", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })
-                        : "—"}
-                    </p>
+          <p className="text-[var(--text-light)]">
+            New leads will appear here.
+          </p>
+        </div>
+      )}
 
-                    <p>
-                      <span className="text-gray-400">Location:</span>{" "}
-                      {contact.eventLocation || "—"}
-                    </p>
+      {/* Leads */}
+      {!loading && filteredContacts.length > 0 && (
+        <>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {currentContacts.map((contact) => (
+              <div
+                key={contact._id}
+                className="
+                      bg-[var(--white)]
+                      border border-[var(--border)]
+                      rounded-2xl
+                      p-6
+                      shadow-sm
+                    "
+              >
+                {/* Top */}
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="font-semibold text-xl text-[var(--text)]">
+                      {contact.name}
+                    </h3>
 
-                    <p>
-                      <span className="text-gray-400">Message:</span>{" "}
-                      {contact.message || "—"}
+                    <p className="text-sm text-[var(--muted)] mt-1">
+                      {new Date(contact.createdAt).toLocaleString()}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 pt-2">
-                    <input
-                      type="checkbox"
-                      checked={contact.marked || false}
-                      onChange={(e) =>
-                        handleMark(contact._id, e.target.checked)
-                      }
-                    />
-
-                    <span className="text-sm text-gray-400">Mark as done</span>
-                  </div>
+                  <button
+                    onClick={() => handleDelete(contact._id)}
+                    className="text-red-500 hover:text-red-600"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
-              ))}
-            </div>
-          </>
-        )}
 
-        {/* PAGINATION */}
-        {totalPages > 1 && (
-          <div className="flex justify-end mt-6 gap-2">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
+                {/* Details */}
+                <div className="space-y-2 text-sm">
+                  <p>
+                    <span className="text-[var(--muted)]">Email:</span>{" "}
+                    <span className="text-[var(--text)]">{contact.email}</span>
+                  </p>
 
-            <span className="px-3 py-1 bg-gray-800 rounded">{currentPage}</span>
+                  <p>
+                    <span className="text-[var(--muted)]">Phone:</span>{" "}
+                    {contact.phone}
+                  </p>
 
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-            >
-              Next
-            </button>
+                  <p>
+                    <span className="text-[var(--muted)]">Event:</span>{" "}
+                    {contact.eventType || "—"}
+                  </p>
+
+                  <p>
+                    <span className="text-[var(--muted)]">Location:</span>{" "}
+                    {contact.eventLocation || "—"}
+                  </p>
+
+                  <p>
+                    <span className="text-[var(--muted)]">Message:</span>{" "}
+                    {contact.message || "—"}
+                  </p>
+                </div>
+
+                {/* Checkbox */}
+                <div className="flex items-center gap-3 mt-5 pt-5 border-t border-[var(--border)]">
+                  <input
+                    type="checkbox"
+                    checked={contact.marked || false}
+                    onChange={(e) => handleMark(contact._id, e.target.checked)}
+                    className="accent-[var(--primary)]"
+                  />
+
+                  <span className="text-sm text-[var(--text-light)]">
+                    Mark as done
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-end mt-8 gap-3">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    hover:border-[var(--primary)]
+                    hover:text-[var(--primary)]
+                    disabled:opacity-40
+                  "
+              >
+                Prev
+              </button>
+
+              <div className="h-10 px-5 flex items-center text-[var(--text)]">
+                {currentPage}
+              </div>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    hover:border-[var(--primary)]
+                    hover:text-[var(--primary)]
+                    disabled:opacity-40
+                  "
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
-};
-
-export default AdminLead;
+}

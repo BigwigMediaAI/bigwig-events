@@ -2,6 +2,7 @@
 
 import { X, ImageIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+
 import Button from "./ui/Button";
 
 interface TestimonialData {
@@ -20,34 +21,49 @@ interface Props {
   onSuccess: () => void;
 }
 
-const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
+export default function TestimonialModal({
+  initialData,
+  onClose,
+  onSuccess,
+}: Props) {
   const [name, setName] = useState("");
+
   const [message, setMessage] = useState("");
+
   const [designation, setDesignation] = useState("");
-  const [rating, setRating] = useState<number>(5);
+
+  const [rating, setRating] = useState(5);
+
   const [isActive, setIsActive] = useState(true);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
+
   const [existingImage, setExistingImage] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
 
-  // PREFILL (EDIT MODE)
+  /* Prefill */
   useEffect(() => {
     if (initialData) {
       setName(initialData.name);
+
       setMessage(initialData.message);
+
       setDesignation(initialData.designation || "");
-      setRating(initialData.rating ?? 5);
+
+      setRating(initialData.rating || 5);
+
       setIsActive(initialData.isActive);
+
       setExistingImage(initialData.image || null);
     }
   }, [initialData]);
 
-  // SUBMIT
+  /* Submit */
   const handleSubmit = async () => {
-    if (!name || !message) {
+    if (!name.trim() || !message.trim()) {
       alert("Name and message are required");
+
       return;
     }
 
@@ -55,13 +71,20 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
       setLoading(true);
 
       const formData = new FormData();
+
       formData.append("name", name);
+
       formData.append("message", message);
+
       formData.append("designation", designation);
+
       formData.append("rating", String(rating));
+
       formData.append("isActive", String(isActive));
 
-      if (imageFile) formData.append("image", imageFile);
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
       const url = initialData
         ? `${process.env.NEXT_PUBLIC_API_BASE}/testimonial/${initialData._id}`
@@ -69,45 +92,64 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
 
       const res = await fetch(url, {
         method: initialData ? "PUT" : "POST",
+
         body: formData,
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
 
       onSuccess();
       onClose();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to save testimonial");
+      alert(err instanceof Error ? err.message : "Failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-4">
-      <div className="bg-[#111] text-white w-full max-w-2xl rounded-2xl shadow-2xl border border-gray-700 flex flex-col max-h-[95vh] overflow-hidden">
-        {/* ================= HEADER ================= */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-gray-700">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+      <div
+        className="
+          bg-[var(--white)]
+          border border-[var(--border)]
+          rounded-2xl
+          w-full max-w-2xl
+          max-h-[95vh]
+          overflow-hidden
+          flex flex-col
+          shadow-2xl
+        "
+      >
+        {/* Header */}
+        <div className="flex justify-between items-start px-6 py-5 border-b border-[var(--border)]">
           <div>
-            <h2 className="text-lg font-semibold">
+            <h2 className="font-serif text-2xl text-[var(--text)]">
               {initialData ? "Edit Testimonial" : "Create Testimonial"}
             </h2>
-            <p className="text-xs text-gray-400 mt-1">
-              Client feedback displayed on your website
+
+            <p className="text-sm text-[var(--muted)] mt-1">
+              Client feedback shown on your website
             </p>
           </div>
 
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="text-[var(--muted)] hover:text-[var(--primary)]"
+          >
             <X size={18} />
           </button>
         </div>
 
-        {/* ================= BODY ================= */}
-        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-8 scrollbar-hide">
-          {/* BASIC INFO */}
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+          {/* Client Info */}
           <section className="space-y-4">
-            <h3 className="text-xs uppercase text-gray-400 tracking-wide">
+            <h3 className="text-xs uppercase tracking-[2px] text-[var(--muted)]">
               Client Details
             </h3>
 
@@ -115,64 +157,97 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
               placeholder="Client name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+              className="
+                w-full h-12 px-4
+                border border-[var(--border)]
+                bg-[var(--white)]
+                text-[var(--text)]
+                outline-none
+                focus:border-[var(--primary)]
+              "
             />
 
             <input
               placeholder="Designation (optional)"
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+              className="
+                w-full h-12 px-4
+                border border-[var(--border)]
+                bg-[var(--white)]
+                text-[var(--text)]
+                outline-none
+                focus:border-[var(--primary)]
+              "
             />
           </section>
 
-          {/* MESSAGE */}
-          <section className="space-y-3">
-            <h3 className="text-xs uppercase text-gray-400 tracking-wide">
-              Testimonial Message
+          {/* Message */}
+          <section className="space-y-4">
+            <h3 className="text-xs uppercase tracking-[2px] text-[var(--muted)]">
+              Message
             </h3>
 
             <textarea
-              rows={4}
-              placeholder="Write the testimonial message..."
+              rows={5}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 resize-none"
+              placeholder="Write client feedback..."
+              className="
+                w-full p-4
+                border border-[var(--border)]
+                bg-[var(--white)]
+                text-[var(--text)]
+                outline-none
+                resize-none
+                focus:border-[var(--primary)]
+              "
             />
           </section>
 
-          {/* META */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Meta */}
+          <section className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="text-xs uppercase text-gray-400 tracking-wide mb-1 block">
+              <label className="text-xs uppercase tracking-[2px] text-[var(--muted)] block mb-2">
                 Rating
               </label>
+
               <select
                 value={rating}
                 onChange={(e) => setRating(Number(e.target.value))}
-                className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+                className="
+                  w-full h-12 px-4
+                  border border-[var(--border)]
+                  bg-[var(--white)]
+                  text-[var(--text)]
+                  outline-none
+                "
               >
-                {[1, 2, 3, 4, 5].map((r) => (
-                  <option key={r} value={r}>
-                    {r} Star{r > 1 && "s"}
+                {[1, 2, 3, 4, 5].map((item) => (
+                  <option key={item} value={item}>
+                    {item} Star
+                    {item > 1 && "s"}
                   </option>
                 ))}
               </select>
             </div>
 
-            <label className="flex items-center gap-3 text-sm mt-6">
-              <input
-                type="checkbox"
-                checked={isActive}
-                onChange={(e) => setIsActive(e.target.checked)}
-              />
-              Active (visible on website)
-            </label>
+            <div className="flex items-end">
+              <label className="flex items-center gap-3 text-sm text-[var(--text)] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.checked)}
+                  className="accent-[var(--primary)]"
+                />
+                Active on website
+              </label>
+            </div>
           </section>
 
-          {/* IMAGE UPLOAD */}
+          {/* Upload */}
           <section>
-            <label className="text-xs uppercase text-gray-400 tracking-wide mb-2 block">
+            <label className="text-xs uppercase tracking-[2px] text-[var(--muted)] block mb-3">
               Client Image
             </label>
 
@@ -180,10 +255,13 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
               htmlFor="testimonial-image"
               className="
                 flex flex-col items-center justify-center
-                w-full h-40
-                border-2 border-dashed border-gray-700
-                rounded-xl cursor-pointer
-                bg-black hover:border-gray-500 transition
+                h-40
+                border-2 border-dashed border-[var(--border)]
+                rounded-2xl
+                bg-[var(--bg-secondary)]
+                cursor-pointer
+                hover:border-[var(--primary)]
+                transition
               "
             >
               {imageFile ? (
@@ -198,12 +276,10 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
                 />
               ) : (
                 <>
-                  <ImageIcon className="text-gray-500 mb-2" />
-                  <p className="text-sm text-gray-400">
-                    Click to upload client image
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    JPG or PNG • Square works best
+                  <ImageIcon size={24} className="text-[var(--muted)] mb-2" />
+
+                  <p className="text-sm text-[var(--text-light)]">
+                    Upload client image
                   </p>
                 </>
               )}
@@ -212,18 +288,24 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
                 id="testimonial-image"
                 type="file"
                 accept="image/*"
-                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
                 className="hidden"
+                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
               />
             </label>
           </section>
         </div>
 
-        {/* ================= FOOTER ================= */}
-        <div className="border-t border-gray-700 px-6 py-4 flex justify-end gap-3">
+        {/* Footer */}
+        <div className="border-t border-[var(--border)] px-6 py-4 flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg border border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
+            className="
+              h-11 px-6
+              border border-[var(--border)]
+              text-[var(--text-light)]
+              hover:border-[var(--primary)]
+              hover:text-[var(--primary)]
+            "
           >
             Cancel
           </button>
@@ -242,6 +324,4 @@ const TestimonialModal = ({ initialData, onClose, onSuccess }: Props) => {
       </div>
     </div>
   );
-};
-
-export default TestimonialModal;
+}

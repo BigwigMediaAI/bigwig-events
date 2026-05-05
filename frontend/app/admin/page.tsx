@@ -1,11 +1,10 @@
 "use client";
-import { EarthIcon, Handshake, User2, Users } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { JSX, useEffect, useState } from "react";
-import { FaBook, FaBuilding, FaUser, FaUsers } from "react-icons/fa";
+
+import { useEffect, useState } from "react";
+import { User2, Users } from "lucide-react";
+import { FaUsers } from "react-icons/fa";
 
 const Dashboard = () => {
-  const router = useRouter();
   const [counts, setCounts] = useState({
     leads: 0,
     clients: 0,
@@ -13,10 +12,11 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    // ✅ Fetch data only if logged in
     Promise.all([
       fetch(`${process.env.NEXT_PUBLIC_API_BASE}/lead`).then((r) => r.json()),
+
       fetch(`${process.env.NEXT_PUBLIC_API_BASE}/client`).then((r) => r.json()),
+
       fetch(`${process.env.NEXT_PUBLIC_API_BASE}/subscribers`).then((r) =>
         r.json(),
       ),
@@ -24,38 +24,54 @@ const Dashboard = () => {
       .then(([leads, clients, subscribers]) => {
         setCounts({
           leads: Array.isArray(leads) ? leads.length : 0,
+
           clients: typeof clients === "object" ? clients.count : 0,
 
           subscribers: typeof subscribers === "object" ? subscribers.count : 0,
         });
       })
-
       .catch((error) => {
-        console.error("Error loading dashboard data:", error);
+        console.error("Dashboard Error:", error);
       });
-  }, [router]);
+  }, []);
 
   const cards = [
-    { title: "Leads", icon: <FaUsers />, count: counts.leads },
-    { title: "Clients", icon: <Users />, count: counts.clients },
-    { title: "Subscribers", icon: <User2 />, count: counts.subscribers },
+    {
+      title: "Leads",
+      icon: <FaUsers />,
+      count: counts.leads,
+    },
+    {
+      title: "Clients",
+      icon: <Users size={34} />,
+      count: counts.clients,
+    },
+    {
+      title: "Subscribers",
+      icon: <User2 size={34} />,
+      count: counts.subscribers,
+    },
   ];
 
   return (
-    <section className="px-4 py-8 space-y-10">
-      <h2 className="text-2xl font-bold text-center text-gray-200">
-        Admin Dashboard
-      </h2>
+    <section className="px-4 py-8">
+      {/* Header */}
+      <div className="mb-10">
+        <p className="uppercase tracking-[4px] text-xs text-[var(--primary)] mb-3">
+          Admin Panel
+        </p>
 
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 justify-items-center">
+        <h2 className="font-serif text-4xl text-[var(--text)]">
+          Dashboard Overview
+        </h2>
+      </div>
+
+      {/* Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
         {cards.map((card) => (
           <StatCard key={card.title} {...card} />
         ))}
       </div>
-      {/* <div className="mt-10">
-        <LeadGraph />
-      </div> */}
     </section>
   );
 };
@@ -66,14 +82,44 @@ const StatCard = ({
   count,
 }: {
   title: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   count: number;
-}) => (
-  <div className="w-full max-w-sm rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-white border border-[#0a2342] bg-neutral-900 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300">
-    <div className="text-4xl mb-3">{icon}</div>
-    <h3 className="text-lg font-semibold mb-1 text-center">{title}</h3>
-    <p className="text-3xl font-bold">{count}</p>
-  </div>
-);
+}) => {
+  return (
+    <div
+      className="
+        bg-[var(--white)]
+        border border-[var(--border)]
+        rounded-2xl
+        p-8
+        shadow-sm
+        hover:shadow-xl
+        hover:-translate-y-1
+        transition-all duration-300
+      "
+    >
+      {/* Icon */}
+      <div
+        className="
+          h-16 w-16
+          rounded-2xl
+          bg-[var(--bg-secondary)]
+          text-[var(--primary)]
+          flex items-center justify-center
+          text-2xl
+          mb-6
+        "
+      >
+        {icon}
+      </div>
+
+      {/* Title */}
+      <p className="text-[var(--text-light)] text-sm mb-2">{title}</p>
+
+      {/* Count */}
+      <h3 className="font-serif text-4xl text-[var(--text)]">{count}</h3>
+    </div>
+  );
+};
 
 export default Dashboard;

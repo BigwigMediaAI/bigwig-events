@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { ImageIcon, X } from "lucide-react";
-import "react-quill-new/dist/quill.snow.css"; // ✅ FIXED
+
+import "react-quill-new/dist/quill.snow.css";
+
 import Button from "./ui/Button";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
@@ -20,15 +22,13 @@ interface BlogPost {
   coverImageAlt?: string;
 }
 
-const AddBlog = ({
-  onClose,
-  onSuccess,
-  existingBlog = null,
-}: {
+interface Props {
   onClose: () => void;
   onSuccess: () => void;
   existingBlog?: BlogPost | null;
-}) => {
+}
+
+const AddBlog = ({ onClose, onSuccess, existingBlog = null }: Props) => {
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -41,9 +41,10 @@ const AddBlog = ({
   });
 
   const [preview, setPreview] = useState<string | null>(null);
+
   const [submitting, setSubmitting] = useState(false);
 
-  // ================= LOAD EXISTING =================
+  /* Load Existing */
   useEffect(() => {
     if (existingBlog) {
       setFormData({
@@ -63,7 +64,7 @@ const AddBlog = ({
     }
   }, [existingBlog]);
 
-  // ================= INPUT =================
+  /* Input */
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -76,22 +77,34 @@ const AddBlog = ({
         .trim()
         .replace(/\s+/g, "-");
 
-      setFormData((p) => ({ ...p, title: value, slug: autoSlug }));
+      setFormData((prev) => ({
+        ...prev,
+        title: value,
+        slug: autoSlug,
+      }));
     } else {
-      setFormData((p) => ({ ...p, [name]: value }));
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
-  // ================= IMAGE =================
+  /* Image */
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const file = e.target.files[0];
-      setFormData((p) => ({ ...p, coverImage: file }));
+
+      setFormData((prev) => ({
+        ...prev,
+        coverImage: file,
+      }));
+
       setPreview(URL.createObjectURL(file));
     }
   };
 
-  // ================= SANITIZE =================
+  /* Sanitize */
   const sanitizeHtml = (html: string) => {
     return html
       .replace(/&nbsp;/g, " ")
@@ -99,14 +112,15 @@ const AddBlog = ({
       .trim();
   };
 
-  // ================= SUBMIT =================
+  /* Submit */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (submitting) return;
-    setSubmitting(true);
 
     try {
+      setSubmitting(true);
+
       const blogData = new FormData();
 
       const cleanedContent = sanitizeHtml(formData.content);
@@ -126,36 +140,45 @@ const AddBlog = ({
           : `${process.env.NEXT_PUBLIC_API_BASE}/blog/add`,
         {
           method: existingBlog ? "PUT" : "POST",
+
           body: blogData,
         },
       );
 
-      if (!res.ok) throw new Error("Failed");
+      if (!res.ok) {
+        throw new Error("Failed");
+      }
 
-      alert(existingBlog ? "Blog updated" : "Blog added");
       onSuccess();
       onClose();
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert("Something went wrong");
     } finally {
       setSubmitting(false);
     }
   };
 
-  // ================= QUILL =================
+  /* Editor */
   const quillModules = {
     toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["blockquote", "code-block"],
+      [
+        {
+          header: [1, 2, 3, false],
+        },
+      ],
+      ["bold", "italic", "underline"],
+      [
+        {
+          list: "ordered",
+        },
+        {
+          list: "bullet",
+        },
+      ],
+      ["blockquote"],
       ["link"],
       ["clean"],
     ],
-    clipboard: {
-      matchVisual: false,
-    },
   };
 
   const quillFormats = [
@@ -163,160 +186,195 @@ const AddBlog = ({
     "bold",
     "italic",
     "underline",
-    "strike",
-    "color",
-    "background",
-    "list", // ✅ FIXED (removed bullet)
+    "list",
     "blockquote",
-    "code-block",
     "link",
   ];
 
-  // ================= DISABLE WARNINGS =================
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.execCommand("enableObjectResizing", false, "false");
-      document.execCommand("enableInlineTableEditing", false, "false");
-    }
-  }, []);
-
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-4">
-      <div className="bg-[#111] text-white w-full max-w-3xl rounded-2xl shadow-2xl border border-gray-700 flex flex-col max-h-[95vh] overflow-hidden">
-        {/* HEADER */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-gray-700">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+      <div
+        className="
+          bg-[var(--white)]
+          border border-[var(--border)]
+          rounded-2xl
+          w-full max-w-4xl
+          shadow-2xl
+          flex flex-col
+          max-h-[95vh]
+          overflow-hidden
+        "
+      >
+        {/* Header */}
+        <div className="flex justify-between items-start px-6 py-5 border-b border-[var(--border)]">
           <div>
-            <h2 className="text-lg font-semibold">
+            <h2 className="font-serif text-2xl text-[var(--text)]">
               {existingBlog ? "Edit Blog" : "Create Blog"}
             </h2>
-            <p className="text-xs text-gray-400 mt-1">
-              {existingBlog
-                ? "Update blog content and SEO details"
-                : "Write and publish a new blog post"}
+
+            <p className="text-sm text-[var(--muted)] mt-1">
+              Manage blog content and SEO
             </p>
           </div>
 
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="text-[var(--muted)] hover:text-[var(--primary)]"
+          >
             <X size={18} />
           </button>
         </div>
 
-        {/* BODY */}
+        {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="flex-1 overflow-y-auto px-6 py-5 space-y-8"
+          className="flex-1 overflow-y-auto px-6 py-6 space-y-8"
         >
-          {/* BASIC */}
+          {/* Basic */}
           <section className="space-y-4">
-            <h3 className="text-xs uppercase text-gray-400 tracking-wide">
+            <h3 className="text-xs uppercase tracking-[2px] text-[var(--muted)]">
               Basic Information
             </h3>
 
             <input
               name="title"
-              placeholder="Blog title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+              placeholder="Blog title"
               required
+              className="
+                w-full h-12 px-4
+                border border-[var(--border)]
+                outline-none
+                focus:border-[var(--primary)]
+              "
             />
 
             <input
               name="slug"
-              placeholder="Slug"
               value={formData.slug}
               onChange={handleChange}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+              placeholder="Slug"
               required
+              className="
+                w-full h-12 px-4
+                border border-[var(--border)]
+                outline-none
+                focus:border-[var(--primary)]
+              "
             />
 
             <textarea
-              name="excerpt"
-              placeholder="Short description / meta excerpt"
               rows={3}
+              name="excerpt"
               value={formData.excerpt}
               onChange={handleChange}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+              placeholder="Meta description"
               required
+              className="
+                w-full p-4
+                border border-[var(--border)]
+                outline-none
+                resize-none
+                focus:border-[var(--primary)]
+              "
             />
           </section>
 
-          {/* CONTENT */}
-          <section className="space-y-3">
-            <h3 className="text-xs uppercase text-gray-400 tracking-wide">
+          {/* Content */}
+          <section>
+            <h3 className="text-xs uppercase tracking-[2px] text-[var(--muted)] mb-3">
               Blog Content
             </h3>
 
-            <div className="border border-gray-700 rounded-xl bg-black overflow-hidden">
-              <div className="h-[230px] overflow-y-auto">
-                {" "}
-                {/* ✅ FIXED HEIGHT */}
-                <ReactQuill
-                  theme="snow"
-                  value={formData.content}
-                  onChange={(value) =>
-                    setFormData((prev) => ({ ...prev, content: value }))
-                  }
-                  modules={quillModules}
-                  formats={quillFormats}
-                  placeholder="Write your blog content here..."
-                  className="newsletter-editor"
-                />
-              </div>
+            <div className="border border-[var(--border)] rounded-2xl overflow-hidden">
+              <ReactQuill
+                theme="snow"
+                value={formData.content}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    content: value,
+                  }))
+                }
+                modules={quillModules}
+                formats={quillFormats}
+                className="newsletter-editor"
+              />
             </div>
           </section>
 
           {/* SEO */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <section className="grid md:grid-cols-2 gap-4">
             <input
               name="author"
-              placeholder="Author name"
               value={formData.author}
               onChange={handleChange}
-              className="bg-black border border-gray-700 rounded-lg px-4 py-3"
+              placeholder="Author name"
               required
+              className="
+                h-12 px-4
+                border border-[var(--border)]
+                outline-none
+              "
             />
 
             <input
               name="tags"
-              placeholder="Tags (comma separated)"
               value={formData.tags}
               onChange={handleChange}
-              className="bg-black border border-gray-700 rounded-lg px-4 py-3"
+              placeholder="Tags"
+              className="
+                h-12 px-4
+                border border-[var(--border)]
+                outline-none
+              "
             />
 
             <input
               name="coverImageAlt"
-              placeholder="Cover image alt text (SEO)"
               value={formData.coverImageAlt}
               onChange={handleChange}
-              className="bg-black border border-gray-700 rounded-lg px-4 py-3 md:col-span-2"
+              placeholder="Cover image alt text"
+              className="
+                md:col-span-2
+                h-12 px-4
+                border border-[var(--border)]
+                outline-none
+              "
             />
           </section>
 
-          {/* IMAGE */}
+          {/* Image */}
           <section>
-            <label className="text-xs uppercase text-gray-400 tracking-wide mb-2 block">
+            <h3 className="text-xs uppercase tracking-[2px] text-[var(--muted)] mb-3">
               Cover Image
-            </label>
+            </h3>
 
             <label
               htmlFor="cover-image"
-              className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-700 rounded-xl cursor-pointer bg-black hover:border-gray-500 transition"
+              className="
+                flex flex-col items-center justify-center
+                h-48
+                border-2 border-dashed border-[var(--border)]
+                rounded-2xl
+                bg-[var(--bg-secondary)]
+                cursor-pointer
+                hover:border-[var(--primary)]
+                transition
+              "
             >
               {preview ? (
                 <img
                   src={preview}
-                  className="max-h-36 object-cover rounded-lg"
+                  className="max-h-40 object-cover rounded-xl"
                 />
               ) : (
                 <>
-                  <ImageIcon className="text-gray-500 mb-2" />
-                  <p className="text-sm text-gray-400">
-                    Click to upload cover image
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    JPG, PNG • Recommended 1200×630
+                  <ImageIcon className="text-[var(--muted)] mb-2" />
+
+                  <p className="text-sm text-[var(--text-light)]">
+                    Upload cover image
                   </p>
                 </>
               )}
@@ -332,12 +390,16 @@ const AddBlog = ({
             </label>
           </section>
 
-          {/* FOOTER */}
-          <div className="border-t border-gray-700 px-6 py-4 flex justify-end gap-3">
+          {/* Footer */}
+          <div className="border-t border-[var(--border)] pt-6 flex justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
+              className="
+                h-11 px-6
+                border border-[var(--border)]
+                text-[var(--text-light)]
+              "
             >
               Cancel
             </button>

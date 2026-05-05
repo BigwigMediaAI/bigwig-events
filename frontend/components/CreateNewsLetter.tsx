@@ -3,7 +3,9 @@
 import { X, ImageIcon } from "lucide-react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+
 import "react-quill-new/dist/quill.snow.css";
+
 import Button from "./ui/Button";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
@@ -13,33 +15,46 @@ interface Props {
   onSuccess: () => void;
 }
 
-const CreateNewsletterModal = ({ onClose, onSuccess }: Props) => {
+export default function CreateNewsletterModal({ onClose, onSuccess }: Props) {
   const [subject, setSubject] = useState("");
+
   const [content, setContent] = useState("");
+
   const [files, setFiles] = useState<File[]>([]);
+
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!subject || !content) {
+    if (!subject.trim() || !content.trim()) {
       alert("Subject and content are required");
+
       return;
     }
-
-    const formData = new FormData();
-    formData.append("subject", subject);
-    formData.append("content", content);
-    files.forEach((f) => formData.append("attachments", f));
 
     try {
       setLoading(true);
 
+      const formData = new FormData();
+
+      formData.append("subject", subject);
+
+      formData.append("content", content);
+
+      files.forEach((file) => formData.append("attachments", file));
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE}/newsletter`,
-        { method: "POST", body: formData },
+        {
+          method: "POST",
+          body: formData,
+        },
       );
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+      const json = await res.json();
+
+      if (!res.ok) {
+        throw new Error(json.message);
+      }
 
       onSuccess();
       onClose();
@@ -51,57 +66,92 @@ const CreateNewsletterModal = ({ onClose, onSuccess }: Props) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-4">
-      <div className="bg-[#111] text-white w-full max-w-3xl rounded-2xl shadow-2xl border border-gray-700 flex flex-col max-h-[95vh] overflow-hidden">
-        {/* ================= HEADER ================= */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-gray-700">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+      <div
+        className="
+          bg-[var(--white)]
+          border border-[var(--border)]
+          rounded-2xl
+          w-full max-w-4xl
+          shadow-2xl
+          max-h-[95vh]
+          overflow-hidden
+          flex flex-col
+        "
+      >
+        {/* Header */}
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)]">
           <div>
-            <h2 className="text-lg font-semibold">Create Newsletter</h2>
-            <p className="text-xs text-gray-400 mt-1">
-              Write and send an email to all subscribers
+            <h2 className="font-serif text-2xl text-[var(--text)]">
+              Create Newsletter
+            </h2>
+
+            <p className="text-sm text-[var(--muted)] mt-1">
+              Write and send to all subscribers
             </p>
           </div>
 
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="text-[var(--muted)] hover:text-[var(--primary)]"
+          >
             <X size={18} />
           </button>
         </div>
 
-        {/* ================= BODY ================= */}
-        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-8">
-          {/* SUBJECT */}
-          <section className="space-y-2">
-            <h3 className="text-xs uppercase text-gray-400 tracking-wide">
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+          {/* Subject */}
+          <section>
+            <label className="block text-xs uppercase tracking-[2px] text-[var(--muted)] mb-3">
               Subject
-            </h3>
+            </label>
+
             <input
               type="text"
-              placeholder="Newsletter subject"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3"
+              placeholder="Newsletter subject"
+              className="
+                w-full h-12 px-4
+                border border-[var(--border)]
+                bg-[var(--white)]
+                text-[var(--text)]
+                outline-none
+                focus:border-[var(--primary)]
+              "
             />
           </section>
 
-          {/* CONTENT */}
-          <section className="space-y-3">
-            <h3 className="text-xs uppercase text-gray-400 tracking-wide">
+          {/* Editor */}
+          <section>
+            <label className="block text-xs uppercase tracking-[2px] text-[var(--muted)] mb-3">
               Newsletter Content
-            </h3>
+            </label>
 
-            <div className="border border-gray-700 rounded-xl bg-black overflow-hidden">
+            <div className="border border-[var(--border)] rounded-2xl overflow-hidden bg-[var(--white)]">
               <ReactQuill
                 theme="snow"
                 value={content}
                 onChange={setContent}
                 placeholder="Write newsletter content here..."
-                className=" newsletter-editor"
+                className="newsletter-editor"
                 modules={{
                   toolbar: [
-                    [{ header: [1, 2, 3, false] }],
-                    ["bold", "italic", "underline", "strike"],
-                    [{ list: "ordered" }, { list: "bullet" }],
-                    [{ color: [] }, { background: [] }],
+                    [
+                      {
+                        header: [1, 2, 3, false],
+                      },
+                    ],
+                    ["bold", "italic", "underline"],
+                    [
+                      {
+                        list: "ordered",
+                      },
+                      {
+                        list: "bullet",
+                      },
+                    ],
                     ["link"],
                     ["clean"],
                   ],
@@ -110,52 +160,70 @@ const CreateNewsletterModal = ({ onClose, onSuccess }: Props) => {
             </div>
           </section>
 
-          {/* ATTACHMENTS */}
+          {/* Upload */}
           <section>
-            <label className="text-xs uppercase text-gray-400 tracking-wide mb-2 block">
-              Attachments (optional)
+            <label className="block text-xs uppercase tracking-[2px] text-[var(--muted)] mb-3">
+              Attachments
             </label>
 
             <label
               htmlFor="newsletter-files"
               className="
                 flex flex-col items-center justify-center
-                w-full h-40
-                border-2 border-dashed border-gray-700
-                rounded-xl cursor-pointer
-                bg-black hover:border-gray-500 transition
+                h-40
+                border-2 border-dashed border-[var(--border)]
+                rounded-2xl
+                bg-[var(--bg-secondary)]
+                cursor-pointer
+                hover:border-[var(--primary)]
+                transition
               "
             >
-              <ImageIcon className="text-gray-500 mb-2" />
-              <p className="text-sm text-gray-400">Click to upload files</p>
-              <p className="text-xs text-gray-500 mt-1">Images or documents</p>
+              <ImageIcon size={26} className="text-[var(--muted)] mb-3" />
+
+              <p className="text-sm text-[var(--text-light)]">
+                Click to upload files
+              </p>
+
+              <p className="text-xs text-[var(--muted)] mt-1">
+                Images or documents
+              </p>
 
               <input
                 id="newsletter-files"
                 type="file"
                 multiple
+                className="hidden"
                 onChange={(e) =>
                   setFiles(e.target.files ? Array.from(e.target.files) : [])
                 }
-                className="hidden"
               />
             </label>
 
+            {/* Files */}
             {files.length > 0 && (
-              <ul className="mt-3 text-sm text-gray-400 space-y-1">
-                {files.map((f, i) => (
-                  <li key={i}>• {f.name}</li>
+              <div className="mt-4 space-y-2">
+                {files.map((file, i) => (
+                  <p key={i} className="text-sm text-[var(--text-light)]">
+                    • {file.name}
+                  </p>
                 ))}
-              </ul>
+              </div>
             )}
           </section>
         </div>
 
-        {/* ================= FOOTER ================= */}
-        <div className="border-t border-gray-700 px-6 py-4 flex justify-end gap-3">
+        {/* Footer */}
+        <div className="border-t border-[var(--border)] px-6 py-4 flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg border border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
+            className="
+              h-11 px-6
+              border border-[var(--border)]
+              text-[var(--text-light)]
+              hover:border-[var(--primary)]
+              hover:text-[var(--primary)]
+            "
           >
             Cancel
           </button>
@@ -168,6 +236,4 @@ const CreateNewsletterModal = ({ onClose, onSuccess }: Props) => {
       </div>
     </div>
   );
-};
-
-export default CreateNewsletterModal;
+}

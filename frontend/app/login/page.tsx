@@ -41,12 +41,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+    <div className="min-h-screen bg-[var(--bg-secondary)] text-[var(--text)]">
       <Navbar />
 
       {/* TOP STRIP */}
       <section className="relative h-[16vh] w-full overflow-hidden">
-        <div className="absolute inset-0 bg-black/85" />
+        <div className="absolute inset-0 bg-[var(--bg)] " />
 
         {/* Gold glow */}
         <div
@@ -68,10 +68,10 @@ export default function LoginPage() {
         w-full max-w-5xl
         grid grid-cols-1 md:grid-cols-2
         bg-white/5
-        backdrop-blur-2xl
+        backdrop-blur-xl
         border border-white/10
         rounded-3xl
-        shadow-[0_0_60px_rgba(0,0,0,0.85)]
+        shadow-[0_0_20px_rgba(0,0,0,0.45)]
         overflow-hidden
       "
           >
@@ -175,11 +175,12 @@ export default function LoginPage() {
                   <p className="text-sm text-red-500 text-center">{error}</p>
                 )}
 
-                <Button
+                <button
                   type="submit"
-                  className="w-full bg-[var(--secondary)] text-black hover:opacity-90"
-                  text={loading ? "Authenticating..." : "Login"}
-                />
+                  className="w-full cursor-pointer hidden md:flex px-6 h-11 items-center justify-center border border-[#b89b5e] text-[#b89b5e] text-sm uppercase tracking-wider hover:bg-[#b89b5e] hover:text-white transition"
+                >
+                  {loading ? "Authenticating..." : "Login"}
+                </button>
               </form>
 
               <p className="text-xs text-[var(--muted)] text-center mt-10">

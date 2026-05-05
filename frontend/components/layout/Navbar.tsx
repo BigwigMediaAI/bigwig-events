@@ -9,13 +9,13 @@ import ServicePopup from "./Popup";
 
 const navItems = [
   { name: "Home", href: "/" },
-  { name: "About Us", href: "/" },
+  { name: "About Us", href: "/about" },
   { name: "Services", href: "/" },
-  { name: "Portfolio", href: "/" },
+  { name: "Portfolio", href: "/portfolio" },
   { name: "Destinations", href: "/" },
-  { name: "Testimonials", href: "/" },
-  { name: "Blog", href: "/" },
-  { name: "Contact", href: "/" },
+  { name: "Testimonials", href: "/testimonial" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -50,7 +50,7 @@ export default function Navbar() {
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 h-[88px] flex items-center justify-between">
           {/* Left Logo */}
           <Link href="/" className="shrink-0">
-            <Image src="/logo.png" alt="Bigwig" width={140} height={60} />
+            <Image src="/logo2.png" alt="Bigwig" width={140} height={60} />
           </Link>
 
           {/* Center Menu */}
@@ -92,9 +92,7 @@ export default function Navbar() {
       >
         {/* Header */}
         <div className="px-6 py-5 flex justify-between items-center border-b border-[var(--border)]">
-          <h2 className="text-xl font-semibold text-[var(--text)]">
-            Bigwig Events
-          </h2>
+          <Image src="/logo2.png" alt="Bigwig" width={140} height={60} />
 
           <button
             onClick={() => setMenuOpen(false)}

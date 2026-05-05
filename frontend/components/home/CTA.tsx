@@ -8,37 +8,52 @@ import { useState } from "react";
 export default function CTA() {
   const [open, setOpen] = useState(false);
   return (
-    <section className="relative bg-black py-16 px-6 text-white overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute inset-0 flex justify-center items-center">
-        <div className="w-[600px] h-[600px] bg-yellow-400/10 blur-[160px] rounded-full" />
-      </div>
+    <section className="relative py-20 overflow-hidden">
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/about.png')",
+        }}
+      />
 
-      <div className="relative max-w-4xl mx-auto text-center">
-        {/* Heading */}
-        <h2 className="text-5xl md:text-6xl font-light leading-tight">
-          Ready to Create Your
-          <span className="block text-yellow-400 italic">Next Big Event?</span>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/65" />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-[1000px] mx-auto px-6 text-center">
+        <p className="text-[var(--primary)] uppercase tracking-[5px] text-sm font-medium mb-5">
+          Let's Create Something Extraordinary
+        </p>
+
+        <h2 className="font-serif text-white text-[36px] md:text-[58px] leading-[1.2] font-light">
+          Ready To Turn Your
+          <br />
+          Dream Event Into Reality?
         </h2>
 
-        {/* Subtext */}
-        <p className="mt-8 text-gray-300 text-lg">
-          From luxury weddings to corporate experiences — we design moments that
-          stay unforgettable.
+        <p className="mt-6 text-white/80 text-base md:text-lg leading-8 max-w-[700px] mx-auto">
+          From intimate celebrations to grand luxury experiences, we bring your
+          vision to life with creativity, elegance, and flawless execution.
         </p>
 
         {/* Buttons */}
-        <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center">
-          <Button onClick={() => setOpen(true)} text="Book Your Event" />
-
-          <Link
-            href="/portfolio"
-            className="px-10 py-4 border border-yellow-400 text-yellow-400 rounded-full hover:bg-yellow-400 hover:text-black transition duration-300"
+        <div className="flex flex-wrap justify-center gap-4 mt-10">
+          <button
+            onClick={() => setOpen(true)}
+            className="h-12 px-8 bg-[var(--primary)] text-white uppercase tracking-[2px] text-sm hover:opacity-90 transition"
           >
-            View Portfolio
+            Let's Plan
+          </button>
+
+          <Link href="/contact">
+            <button className="h-12 px-8 border border-white text-white uppercase tracking-[2px] text-sm hover:bg-white hover:text-black transition">
+              Contact Us
+            </button>
           </Link>
         </div>
       </div>
+
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </section>
   );

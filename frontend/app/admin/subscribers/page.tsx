@@ -12,17 +12,19 @@ interface Subscriber {
 
 const ITEMS_PER_PAGE = 20;
 
-const AdminSubscriber = () => {
+export default function AdminSubscriber() {
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [filteredSubscribers, setFilteredSubscribers] = useState<Subscriber[]>(
     [],
   );
+
   const [selectedDate, setSelectedDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ================= FETCH =================
+  /* Fetch */
   const fetchSubscribers = async () => {
     try {
       setLoading(true);
@@ -30,7 +32,9 @@ const AdminSubscriber = () => {
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE}/subscribers`,
-        { cache: "no-store" },
+        {
+          cache: "no-store",
+        },
       );
 
       const json = await res.json();
@@ -57,7 +61,7 @@ const AdminSubscriber = () => {
     fetchSubscribers();
   }, []);
 
-  // ================= DATE FILTER =================
+  /* Date filter */
   useEffect(() => {
     if (!selectedDate) {
       setFilteredSubscribers(subscribers);
@@ -70,34 +74,28 @@ const AdminSubscriber = () => {
     );
 
     setFilteredSubscribers(filtered);
+
     setCurrentPage(1);
   }, [selectedDate, subscribers]);
 
-  // ================= HARD DELETE =================
+  /* Delete */
   const handleDelete = async (id: string) => {
-    if (!confirm("This will permanently delete the subscriber. Continue?"))
-      return;
+    if (!confirm("Delete this subscriber?")) return;
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE}/subscribers/${id}`,
-        { method: "DELETE" },
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Delete failed");
-      }
+      await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/subscribers/${id}`, {
+        method: "DELETE",
+      });
 
       setSubscribers((prev) => prev.filter((s) => s._id !== id));
+
       setFilteredSubscribers((prev) => prev.filter((s) => s._id !== id));
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Delete failed");
+    } catch (error) {
+      alert("Delete failed");
     }
   };
 
-  // ================= PAGINATION =================
+  /* Pagination */
   const totalPages = Math.ceil(filteredSubscribers.length / ITEMS_PER_PAGE);
 
   const currentSubscribers = filteredSubscribers.slice(
@@ -105,110 +103,125 @@ const AdminSubscriber = () => {
     currentPage * ITEMS_PER_PAGE,
   );
 
-  // ================= RENDER =================
   return (
-    <div className="h-screen bg-black text-white flex flex-col">
-      {/* ================= HEADER (STICKY) ================= */}
-      <div className="sticky top-0 z-20 bg-black border-b border-gray-700">
-        <div className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h1 className="text-2xl sm:text-3xl font-bold">
-            Newsletter Subscribers
-          </h1>
+    <div>
+      {/* Header */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p className="uppercase tracking-[4px] text-xs text-[var(--primary)] mb-2">
+            Admin Panel
+          </p>
 
-          <div className="flex items-center gap-2">
-            <label className="text-sm text-gray-400">Filter by date:</label>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
-            />
-          </div>
+          <h1 className="font-serif text-4xl text-[var(--text)]">
+            Subscribers
+          </h1>
         </div>
+
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          className="
+            h-11 px-4
+            border border-[var(--border)]
+            bg-[var(--white)]
+            text-[var(--text)]
+            outline-none
+          "
+        />
       </div>
 
-      {/* ================= SCROLLABLE CONTENT ================= */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-        {/* STATES */}
-        {/* ================= STATES ================= */}
-        {loading ? (
-          /* LOADING STATE */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-gray-400">
-            <div className="w-10 h-10 border-4 border-gray-600 border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-sm tracking-wide">
-              Loading newsletter subscribers…
-            </p>
-          </div>
-        ) : error ? (
-          /* ERROR STATE */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center text-red-400">
-            <h3 className="text-lg font-semibold mb-2">Something went wrong</h3>
-            <p className="text-sm max-w-sm">{error}</p>
-          </div>
-        ) : filteredSubscribers.length === 0 ? (
-          /* EMPTY STATE */
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center text-gray-400">
-            <div className="text-5xl mb-4">📭</div>
-            <h3 className="text-lg font-semibold text-gray-300">
-              No Subscribers Found
-            </h3>
-            <p className="text-sm max-w-sm mt-2">
-              No one has subscribed to the newsletter yet. New subscribers will
-              appear here automatically.
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border border-gray-700 text-sm">
-              <thead className="bg-[#1e1e1e]">
+      {/* Loading */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center h-[300px]">
+          <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin mb-4" />
+
+          <p className="text-[var(--text-light)]">Loading subscribers...</p>
+        </div>
+      )}
+
+      {/* Error */}
+      {!loading && error && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
+          <h3 className="text-red-600 font-semibold mb-2">
+            Something went wrong
+          </h3>
+
+          <p className="text-red-500 text-sm">{error}</p>
+        </div>
+      )}
+
+      {/* Empty */}
+      {!loading && !error && filteredSubscribers.length === 0 && (
+        <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-12 text-center">
+          <h3 className="text-2xl font-serif text-[var(--text)] mb-3">
+            No Subscribers Found
+          </h3>
+
+          <p className="text-[var(--text-light)]">
+            New subscribers will appear here.
+          </p>
+        </div>
+      )}
+
+      {/* Table */}
+      {!loading && !error && filteredSubscribers.length > 0 && (
+        <>
+          <div className="overflow-x-auto bg-[var(--white)] border border-[var(--border)] rounded-2xl">
+            <table className="w-full">
+              <thead className="bg-[var(--bg-secondary)]">
                 <tr>
-                  <th className="px-4 py-3 text-left border-b border-gray-700">
+                  <th className="px-5 py-4 text-left text-sm text-[var(--text)]">
                     Email
                   </th>
-                  <th className="px-4 py-3 text-left border-b border-gray-700">
+
+                  <th className="px-5 py-4 text-left text-sm text-[var(--text)]">
                     Subscribed At
                   </th>
-                  <th className="px-4 py-3 text-left border-b border-gray-700">
+
+                  <th className="px-5 py-4 text-left text-sm text-[var(--text)]">
                     Status
                   </th>
-                  <th className="px-4 py-3 text-center border-b border-gray-700">
-                    Actions
+
+                  <th className="px-5 py-4 text-center text-sm text-[var(--text)]">
+                    Action
                   </th>
                 </tr>
               </thead>
 
               <tbody>
                 {currentSubscribers.map((sub) => (
-                  <tr key={sub._id} className="even:bg-[#111] hover:bg-[#222]">
-                    <td className="px-4 py-3">
-                      <a
-                        href={`mailto:${sub.email}`}
-                        className="text-cyan-400 hover:underline"
-                      >
-                        {sub.email}
-                      </a>
+                  <tr
+                    key={sub._id}
+                    className="border-t border-[var(--border)] hover:bg-[var(--bg-secondary)] transition"
+                  >
+                    <td className="px-5 py-4 text-sm text-[var(--text)]">
+                      {sub.email}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-4 text-sm text-[var(--text-light)]">
                       {new Date(sub.createdAt).toLocaleString()}
                     </td>
 
-                    <td className="px-4 py-3">
-                      <button
-                        className={`px-2 py-1 rounded text-xs font-medium ${
-                          sub.isActive
-                            ? "bg-green-600/20 text-green-400"
-                            : "bg-red-600/20 text-red-400"
-                        }`}
+                    <td className="px-5 py-4">
+                      <span
+                        className={`
+                              px-3 py-1 rounded-full text-xs font-medium
+                              ${
+                                sub.isActive
+                                  ? "bg-green-50 text-green-700"
+                                  : "bg-red-50 text-red-600"
+                              }
+                            `}
                       >
                         {sub.isActive ? "Active" : "Inactive"}
-                      </button>
+                      </span>
                     </td>
 
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-5 py-4 text-center">
                       <button
                         onClick={() => handleDelete(sub._id)}
-                        className="text-red-400 hover:text-red-300"
+                        className="text-red-500 hover:text-red-600"
                       >
                         <Trash2 size={18} />
                       </button>
@@ -218,35 +231,47 @@ const AdminSubscriber = () => {
               </tbody>
             </table>
           </div>
-        )}
 
-        {/* PAGINATION */}
-        {totalPages > 1 && (
-          <div className="flex justify-end mt-6 gap-2">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-end mt-8 gap-3">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    hover:border-[var(--primary)]
+                    hover:text-[var(--primary)]
+                    disabled:opacity-40
+                  "
+              >
+                Prev
+              </button>
 
-            <span className="px-3 py-1 bg-[var(--primary-color)] rounded">
-              {currentPage}
-            </span>
+              <div className="h-10 px-5 flex items-center text-[var(--text)]">
+                {currentPage}
+              </div>
 
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
-        )}
-      </div>
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="
+                    h-10 px-5
+                    border border-[var(--border)]
+                    text-[var(--text-light)]
+                    hover:border-[var(--primary)]
+                    hover:text-[var(--primary)]
+                    disabled:opacity-40
+                  "
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
-};
-
-export default AdminSubscriber;
+}
