@@ -10,12 +10,13 @@ import ServicePopup from "./Popup";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: "Services", href: "/" },
+  { name: " Events", href: "/corporate-events" },
+  { name: "Social ", href: "/social-celebrations" },
+  { name: "Wedding", href: "/wedding" },
+  { name: "Travel", href: "/travel" },
+  { name: "Digital", href: "/" },
   { name: "Portfolio", href: "/portfolio" },
-  { name: "Destinations", href: "/" },
-  { name: "Testimonials", href: "/testimonial" },
   { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {

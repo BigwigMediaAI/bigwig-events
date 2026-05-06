@@ -16,8 +16,9 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
-      <FeatureStrip />
       <About />
+      <FeatureStrip />
+
       <FeaturedWork />
       <WhyChooseUs />
       <Testimonials />

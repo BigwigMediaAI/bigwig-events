@@ -1,47 +1,50 @@
 "use client";
+
 import Image from "next/image";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import Button from "@/components/ui/Button";
-import {
-  Lightbulb,
-  ShieldCheck,
-  Settings,
-  BarChart3,
-  Users,
-  Search,
-  ClipboardCheck,
-  Megaphone,
-} from "lucide-react";
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 
+import {
+  MapPinned,
+  Plane,
+  Hotel,
+  Compass,
+  Camera,
+  MessageCircle,
+  ClipboardCheck,
+  Settings,
+  Heart,
+  Search,
+} from "lucide-react";
+
 const features = [
   {
-    icon: Users,
-    title: "Strategic Planning",
-    desc: "Thoughtful planning aligned with your business goals.",
+    icon: MapPinned,
+    title: "Dream Destinations",
+    desc: "Curated locations that match your vision and style.",
   },
   {
-    icon: Lightbulb,
-    title: "Creative Concepts",
-    desc: "Unique ideas that leave a lasting impression.",
+    icon: Plane,
+    title: "Travel Planning",
+    desc: "Flights, transfers and logistics managed perfectly.",
   },
   {
-    icon: Settings,
-    title: "Seamless Execution",
-    desc: "Flawless execution down to every detail.",
+    icon: Hotel,
+    title: "Luxury Stays",
+    desc: "Premium resorts, villas and unforgettable hospitality.",
   },
   {
-    icon: ShieldCheck,
-    title: "Experienced Team",
-    desc: "Professional team with industry expertise.",
+    icon: Compass,
+    title: "Local Experiences",
+    desc: "Authentic experiences crafted for your celebration.",
   },
   {
-    icon: BarChart3,
-    title: "Measurable Impact",
-    desc: "Events that drive engagement and results.",
+    icon: Camera,
+    title: "Memories Forever",
+    desc: "Beautiful moments captured for a lifetime.",
   },
 ];
 
@@ -49,55 +52,56 @@ const process = [
   {
     icon: Search,
     title: "Discover",
-    desc: "Understand your goals, audience and objectives.",
+    desc: "We understand your dream destination and expectations.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Consult",
+    desc: "We discuss experiences, budget and guest planning.",
   },
   {
     icon: ClipboardCheck,
     title: "Plan",
-    desc: "Craft a tailored event strategy and roadmap.",
+    desc: "Travel, stay, venues and activities planned perfectly.",
   },
   {
     icon: Settings,
     title: "Execute",
-    desc: "Managing every detail with precision.",
+    desc: "Our team manages every detail seamlessly.",
   },
   {
-    icon: Megaphone,
-    title: "Engage",
-    desc: "Create memorable experiences that connect.",
-  },
-  {
-    icon: BarChart3,
-    title: "Deliver",
-    desc: "Ensuring impact and long-lasting results.",
+    icon: Heart,
+    title: "Explore",
+    desc: "Celebrate, relax and create lifelong memories.",
   },
 ];
 
 const projects = [
   {
     image: "/training.png",
-    title: "Leadership Summit 2024",
-    location: "New Delhi",
+    title: "Beach Celebration",
+    location: "Maldives",
   },
   {
     image: "/training.png",
-    title: "Annual Business Conference",
-    location: "Mumbai",
+    title: "Mountain Retreat",
+    location: "Switzerland",
   },
   {
     image: "/training.png",
-    title: "Product Launch Event",
-    location: "Bengaluru",
+    title: "Royal Experience",
+    location: "Udaipur",
   },
   {
     image: "/training.png",
-    title: "Corporate Offsite Retreat",
-    location: "Goa",
+    title: "Island Escape",
+    location: "Bali",
   },
 ];
 
-export default function CorporateEvents() {
+export default function TravelDestinations() {
   const [open, setOpen] = useState(false);
+
   return (
     <div className="bg-[var(--bg)]">
       <Navbar />
@@ -116,28 +120,29 @@ export default function CorporateEvents() {
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              Corporate Events
+              Travel & Destinations
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[58px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
-              Events That{" "}
-              <span className="italic text-[var(--primary)]">Inspire.</span>
+            <h1 className="font-serif text-[32px] md:text-[48px] lg:text-[62px] leading-[1.15] text-[var(--text)] font-light max-w-[650px]">
+              Explore The World.
               <br />
-              Connections That{" "}
-              <span className="italic text-[var(--primary)]">Last.</span>
+              Celebrate In{" "}
+              <span className="italic text-[var(--primary)]">
+                Extraordinary Places.
+              </span>
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
-              From conferences to product launches, we create impactful
-              corporate events that engage, inspire and deliver business
-              results.
+              From exotic beaches to royal palaces and mountain escapes, we
+              create destination experiences filled with elegance, adventure and
+              unforgettable memories.
             </p>
 
             <button
               onClick={() => setOpen(true)}
               className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
             >
-              Let’s Plan
+              Plan Your Journey
             </button>
           </div>
         </div>
@@ -172,10 +177,10 @@ export default function CorporateEvents() {
       {/* ABOUT */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[500px]  overflow-hidden">
+          <div className="relative h-[500px] overflow-hidden">
             <Image
               src="/about.png"
-              alt="Corporate event"
+              alt="Destination"
               fill
               className="object-cover"
             />
@@ -183,28 +188,26 @@ export default function CorporateEvents() {
 
           <div>
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Corporate Events
+              About Destination Experiences
             </p>
 
             <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              Purposeful Events.
-              <br />
-              Powerful Outcomes.
+              Every Journey.
+              <br />A Story Worth Telling.
             </h2>
 
             <p className="mt-6 text-[var(--text-light)] leading-8">
-              We partner with brands to create corporate experiences that
-              communicate your vision, strengthen relationships, and elevate
-              your business presence.
+              We create immersive destination experiences where travel,
+              celebration and luxury come together beautifully.
             </p>
 
             <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Conferences</p>
-              <p>• Award Ceremonies</p>
-              <p>• Product Launches</p>
-              <p>• Team Offsites</p>
-              <p>• Seminars</p>
-              <p>• Corporate Parties</p>
+              <p>• Luxury Destinations</p>
+              <p>• Guest Hospitality</p>
+              <p>• Travel Management</p>
+              <p>• Venue Planning</p>
+              <p>• Local Experiences</p>
+              <p>• Lifetime Memories</p>
             </div>
           </div>
         </div>
@@ -215,11 +218,11 @@ export default function CorporateEvents() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-10">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Approach
+              Our Journey
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Vision To Impact
+              From Planning To Paradise
             </h2>
           </div>
 
@@ -229,27 +232,22 @@ export default function CorporateEvents() {
 
               return (
                 <div key={i} className="text-center relative">
-                  {/* connector line */}
                   {i !== process.length - 1 && (
                     <div className="hidden md:block absolute top-10 left-[60%] w-full h-[1px] bg-[rgba(0,0,0,0.08)] z-0" />
                   )}
 
-                  {/* icon circle */}
                   <div className="relative z-10 w-20 h-20 rounded-full bg-white border border-[rgba(0,0,0,0.08)] flex items-center justify-center mx-auto">
                     <Icon size={28} className="text-[var(--primary)]" />
                   </div>
 
-                  {/* number */}
                   <p className="mt-5 text-sm font-medium text-[var(--primary)]">
                     {String(i + 1).padStart(2, "0")}
                   </p>
 
-                  {/* title */}
                   <h3 className="mt-2 font-semibold text-[var(--text)] uppercase tracking-[1px]">
                     {item.title}
                   </h3>
 
-                  {/* description */}
                   <p className="mt-3 text-sm leading-7 text-[var(--text-light)] max-w-[180px] mx-auto">
                     {item.desc}
                   </p>
@@ -260,16 +258,16 @@ export default function CorporateEvents() {
         </div>
       </section>
 
-      {/* PROJECTS */}
+      {/* DESTINATIONS */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Recent Corporate Events
+              Destinations We've Crafted
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Moments That Made Impact
+              Travel. Celebrate. Remember.
             </h2>
           </div>
 
@@ -300,6 +298,7 @@ export default function CorporateEvents() {
 
       <CTA />
       <Footer />
+
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

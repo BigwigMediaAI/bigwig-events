@@ -5,98 +5,101 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import Button from "@/components/ui/Button";
 import {
-  Lightbulb,
-  ShieldCheck,
-  Settings,
-  BarChart3,
+  Cake,
+  Heart,
   Users,
-  Search,
+  Award,
+  Wine,
+  Camera,
+  MessageCircle,
+  Lightbulb,
   ClipboardCheck,
-  Megaphone,
+  Settings,
+  HeartHandshake,
 } from "lucide-react";
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 
 const features = [
   {
+    icon: Cake,
+    title: "Birthday Parties",
+    desc: "Unique themes and setups that make every birthday extra special.",
+  },
+  {
+    icon: Heart,
+    title: "Anniversary Events",
+    desc: "Celebrate your journey with elegant and memorable moments.",
+  },
+  {
     icon: Users,
-    title: "Strategic Planning",
-    desc: "Thoughtful planning aligned with your business goals.",
+    title: "Family Gatherings",
+    desc: "Thoughtfully planned celebrations that bring loved ones together.",
   },
   {
-    icon: Lightbulb,
-    title: "Creative Concepts",
-    desc: "Unique ideas that leave a lasting impression.",
+    icon: Award,
+    title: "Festive Celebrations",
+    desc: "Traditional and modern celebrations with style.",
   },
   {
-    icon: Settings,
-    title: "Seamless Execution",
-    desc: "Flawless execution down to every detail.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Experienced Team",
-    desc: "Professional team with industry expertise.",
-  },
-  {
-    icon: BarChart3,
-    title: "Measurable Impact",
-    desc: "Events that drive engagement and results.",
+    icon: Wine,
+    title: "Private Parties",
+    desc: "Personalized experiences with flawless execution.",
   },
 ];
 
 const process = [
   {
-    icon: Search,
-    title: "Discover",
-    desc: "Understand your goals, audience and objectives.",
+    icon: MessageCircle,
+    title: "Understand",
+    desc: "We understand your ideas, style and expectations.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Design",
+    desc: "Creative concepts tailored to your celebration.",
   },
   {
     icon: ClipboardCheck,
     title: "Plan",
-    desc: "Craft a tailored event strategy and roadmap.",
+    desc: "Every detail planned with precision and care.",
   },
   {
     icon: Settings,
     title: "Execute",
-    desc: "Managing every detail with precision.",
+    desc: "Our team delivers a seamless celebration.",
   },
   {
-    icon: Megaphone,
-    title: "Engage",
-    desc: "Create memorable experiences that connect.",
-  },
-  {
-    icon: BarChart3,
-    title: "Deliver",
-    desc: "Ensuring impact and long-lasting results.",
+    icon: HeartHandshake,
+    title: "Celebrate",
+    desc: "Relax and enjoy while we create memories.",
   },
 ];
 
 const projects = [
   {
     image: "/training.png",
-    title: "Leadership Summit 2024",
+    title: "Surprise Birthday Party",
     location: "New Delhi",
   },
   {
     image: "/training.png",
-    title: "Annual Business Conference",
-    location: "Mumbai",
+    title: "Silver Anniversary",
+    location: "Jaipur",
   },
   {
     image: "/training.png",
-    title: "Product Launch Event",
-    location: "Bengaluru",
-  },
-  {
-    image: "/training.png",
-    title: "Corporate Offsite Retreat",
+    title: "Family Get-Together",
     location: "Goa",
+  },
+  {
+    image: "/training.png",
+    title: "Private Celebration",
+    location: "Mumbai",
   },
 ];
 
-export default function CorporateEvents() {
+export default function SocialCelebrations() {
   const [open, setOpen] = useState(false);
   return (
     <div className="bg-[var(--bg)]">
@@ -116,21 +119,24 @@ export default function CorporateEvents() {
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              Corporate Events
+              Social Celebrations
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[58px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
-              Events That{" "}
-              <span className="italic text-[var(--primary)]">Inspire.</span>
+            <h1 className="font-serif text-[38px] md:text-[52px] lg:text-[62px] leading-[1.1] text-[var(--text)] font-light">
+              Celebrate Life’s{" "}
+              <span className="italic text-[var(--primary)]">
+                Beautiful Moments.
+              </span>
               <br />
-              Connections That{" "}
-              <span className="italic text-[var(--primary)]">Last.</span>
+              We Make Them{" "}
+              <span className="italic text-[var(--primary)]">
+                Unforgettable.
+              </span>
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
-              From conferences to product launches, we create impactful
-              corporate events that engage, inspire and deliver business
-              results.
+              From birthdays to anniversaries and intimate gatherings, we bring
+              your special moments to life with creativity, elegance and care.
             </p>
 
             <button
@@ -183,28 +189,28 @@ export default function CorporateEvents() {
 
           <div>
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Corporate Events
+              About Social Celebrations
             </p>
 
             <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              Purposeful Events.
+              Every Celebration
               <br />
-              Powerful Outcomes.
+              Tells A Story.
             </h2>
 
             <p className="mt-6 text-[var(--text-light)] leading-8">
-              We partner with brands to create corporate experiences that
-              communicate your vision, strengthen relationships, and elevate
-              your business presence.
+              We believe every celebration is unique. Our team listens,
+              understands your vision, and creates unforgettable experiences
+              that reflect your personality and joy.
             </p>
 
             <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Conferences</p>
-              <p>• Award Ceremonies</p>
-              <p>• Product Launches</p>
-              <p>• Team Offsites</p>
-              <p>• Seminars</p>
-              <p>• Corporate Parties</p>
+              <p>• Personalized Themes</p>
+              <p>• Event Planning</p>
+              <p>• Vendor Management</p>
+              <p>• Decoration & Styling</p>
+              <p>• Entertainment</p>
+              <p>• Lifetime Memories</p>
             </div>
           </div>
         </div>
@@ -265,11 +271,11 @@ export default function CorporateEvents() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Recent Corporate Events
+              Celebrations We've Crafted
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Moments That Made Impact
+              Moments Of Joy. Memories For A Lifetime.
             </h2>
           </div>
 

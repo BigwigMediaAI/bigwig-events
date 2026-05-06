@@ -5,98 +5,101 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import Button from "@/components/ui/Button";
 import {
-  Lightbulb,
-  ShieldCheck,
-  Settings,
-  BarChart3,
+  ClipboardPenLine,
+  MapPin,
+  Flower2,
   Users,
-  Search,
+  Bell,
+  Camera,
+  MessageCircle,
+  Pencil,
   ClipboardCheck,
-  Megaphone,
+  Settings,
+  Heart,
 } from "lucide-react";
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 
 const features = [
   {
+    icon: ClipboardPenLine,
+    title: "Bespoke Planning",
+    desc: "Customized wedding experiences crafted around your vision.",
+  },
+  {
+    icon: MapPin,
+    title: "Venue Selection",
+    desc: "Handpicked venues that match your dream celebration.",
+  },
+  {
+    icon: Flower2,
+    title: "Design & Decor",
+    desc: "Beautiful designs and magical decor experiences.",
+  },
+  {
     icon: Users,
-    title: "Strategic Planning",
-    desc: "Thoughtful planning aligned with your business goals.",
+    title: "Vendor Management",
+    desc: "Trusted vendors and flawless coordination.",
   },
   {
-    icon: Lightbulb,
-    title: "Creative Concepts",
-    desc: "Unique ideas that leave a lasting impression.",
-  },
-  {
-    icon: Settings,
-    title: "Seamless Execution",
-    desc: "Flawless execution down to every detail.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Experienced Team",
-    desc: "Professional team with industry expertise.",
-  },
-  {
-    icon: BarChart3,
-    title: "Measurable Impact",
-    desc: "Events that drive engagement and results.",
+    icon: Bell,
+    title: "Hospitality",
+    desc: "Exceptional guest experiences with premium care.",
   },
 ];
 
 const process = [
   {
-    icon: Search,
-    title: "Discover",
-    desc: "Understand your goals, audience and objectives.",
+    icon: MessageCircle,
+    title: "Consult",
+    desc: "We understand your story, preferences and vision.",
+  },
+  {
+    icon: Pencil,
+    title: "Design",
+    desc: "We create a concept that reflects your dream wedding.",
   },
   {
     icon: ClipboardCheck,
     title: "Plan",
-    desc: "Craft a tailored event strategy and roadmap.",
+    desc: "Every detail is planned with precision and care.",
   },
   {
     icon: Settings,
     title: "Execute",
-    desc: "Managing every detail with precision.",
+    desc: "We bring everything together seamlessly.",
   },
   {
-    icon: Megaphone,
-    title: "Engage",
-    desc: "Create memorable experiences that connect.",
-  },
-  {
-    icon: BarChart3,
-    title: "Deliver",
-    desc: "Ensuring impact and long-lasting results.",
+    icon: Heart,
+    title: "Celebrate",
+    desc: "You enjoy every moment while we handle everything.",
   },
 ];
 
 const projects = [
   {
     image: "/training.png",
-    title: "Leadership Summit 2024",
+    title: "Royal Palace Wedding",
+    location: "Udaipur",
+  },
+  {
+    image: "/training.png",
+    title: "Beachside Wedding",
+    location: "Goa",
+  },
+  {
+    image: "/training.png",
+    title: "Luxury Ballroom Wedding",
     location: "New Delhi",
   },
   {
     image: "/training.png",
-    title: "Annual Business Conference",
-    location: "Mumbai",
-  },
-  {
-    image: "/training.png",
-    title: "Product Launch Event",
-    location: "Bengaluru",
-  },
-  {
-    image: "/training.png",
-    title: "Corporate Offsite Retreat",
-    location: "Goa",
+    title: "Garden Wedding",
+    location: "Jaipur",
   },
 ];
 
-export default function CorporateEvents() {
+export default function Wedding() {
   const [open, setOpen] = useState(false);
   return (
     <div className="bg-[var(--bg)]">
@@ -116,21 +119,22 @@ export default function CorporateEvents() {
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              Corporate Events
+              Weddings
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[58px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
-              Events That{" "}
-              <span className="italic text-[var(--primary)]">Inspire.</span>
+            <h1 className="font-serif text-[38px] md:text-[52px] lg:text-[64px] leading-[1.1] text-[var(--text)] font-light">
+              Your Dream{" "}
+              <span className="italic text-[var(--primary)]">Wedding.</span>
               <br />
-              Connections That{" "}
-              <span className="italic text-[var(--primary)]">Last.</span>
+              Our Passion To{" "}
+              <span className="italic text-[var(--primary)]">
+                Make It Perfect.
+              </span>
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
-              From conferences to product launches, we create impactful
-              corporate events that engage, inspire and deliver business
-              results.
+              From intimate ceremonies to grand celebrations, we design and
+              execute weddings as unique as your love story.
             </p>
 
             <button
@@ -183,28 +187,27 @@ export default function CorporateEvents() {
 
           <div>
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Corporate Events
+              About Our Weddings
             </p>
 
             <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              Purposeful Events.
+              We Don't Just Plan Weddings,
               <br />
-              Powerful Outcomes.
+              We Create Timeless Stories.
             </h2>
 
             <p className="mt-6 text-[var(--text-light)] leading-8">
-              We partner with brands to create corporate experiences that
-              communicate your vision, strengthen relationships, and elevate
-              your business presence.
+              We blend creativity, tradition and flawless execution to design
+              weddings that reflect your personality and leave lasting memories.
             </p>
 
             <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Conferences</p>
-              <p>• Award Ceremonies</p>
-              <p>• Product Launches</p>
-              <p>• Team Offsites</p>
-              <p>• Seminars</p>
-              <p>• Corporate Parties</p>
+              <p>• Personalized Wedding Concepts</p>
+              <p>• End-to-End Planning</p>
+              <p>• Attention To Every Detail</p>
+              <p>• Stress-Free Experience</p>
+              <p>• Luxury Guest Management</p>
+              <p>• Memories Forever</p>
             </div>
           </div>
         </div>
@@ -215,11 +218,11 @@ export default function CorporateEvents() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-10">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Approach
+              Our Process
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Vision To Impact
+              From Dream To I Do
             </h2>
           </div>
 
@@ -265,11 +268,11 @@ export default function CorporateEvents() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Recent Corporate Events
+              Weddings We've Crafted
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Moments That Made Impact
+              Real Weddings. Real Love Stories.
             </h2>
           </div>
 
