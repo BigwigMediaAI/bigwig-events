@@ -14,7 +14,7 @@ const navItems = [
   { name: "Social ", href: "/social-celebrations" },
   { name: "Wedding", href: "/wedding" },
   { name: "Travel", href: "/travel" },
-  { name: "Digital", href: "/" },
+  { name: "Digital", href: "/digital" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Blog", href: "/blog" },
 ];

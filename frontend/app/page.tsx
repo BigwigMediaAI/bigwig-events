@@ -1,3 +1,4 @@
+import FloatingContact from "@/components/Floating";
 import About from "../components/home/about";
 import BlogSection from "@/components/home/BlogSection";
 import CTA from "@/components/home/CTA";
@@ -10,6 +11,7 @@ import Testimonials from "@/components/home/Testimonials";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import ClientsSection from "@/components/home/Client";
 
 export default function Home() {
   return (
@@ -21,9 +23,10 @@ export default function Home() {
 
       <FeaturedWork />
       <WhyChooseUs />
+      <ClientsSection />
       <Testimonials />
       <InstagramSection />
-
+      <FloatingContact />
       <Footer />
     </main>
   );

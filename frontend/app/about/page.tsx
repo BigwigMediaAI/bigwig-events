@@ -262,6 +262,86 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="py-20 bg-white">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          {/* HEADER */}
+          <div className="text-center mb-10">
+            <p className="uppercase tracking-[5px] text-xs text-[var(--primary)] font-medium">
+              Recognition
+            </p>
+
+            <h2 className="mt-4 font-serif text-[38px] md:text-[56px] text-[var(--text)] leading-tight">
+              Awards & Achievements
+            </h2>
+          </div>
+
+          {/* AWARDS GRID */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              {
+                img: "/icons/awards1.png",
+                title: "Best Event Planner 2024",
+              },
+              {
+                img: "/icons/awards2.png",
+                title: "Luxury Wedding Awards",
+              },
+              {
+                img: "/icons/awards3.png",
+                title: "Top 10 Event Company",
+              },
+              {
+                img: "/icons/awards4.png",
+                title: "Featured In Media",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="group relative text-center p-6  overflow-hidden transition-all duration-500"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #ffffff 0%, #faf8f5 100%)",
+                }}
+              >
+                {/* HOVER GLOW */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500"
+                  style={{
+                    background:
+                      "radial-gradient(circle at center, rgba(180,140,90,0.12), transparent 70%)",
+                  }}
+                />
+
+                {/* ICON CONTAINER */}
+                <div className="relative z-10 flex justify-center">
+                  <div
+                    className="h-[90px] w-[90px] rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                    style={{
+                      background: "rgba(180,140,90,0.08)",
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+                    }}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className=" object-contain opacity-90 group-hover:opacity-100 transition"
+                    />
+                  </div>
+                </div>
+
+                {/* TITLE */}
+                <p className="relative z-10 mt-6 text-[14px] tracking-wide text-[var(--text)] font-medium leading-5">
+                  {item.title}
+                </p>
+
+                {/* HOVER SHADOW */}
+                <div className="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 transition duration-500" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-20  bg-[var(--secondary-bg)]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
           {/* Heading */}
