@@ -27,6 +27,7 @@ export default function BlogClient({
   relatedBlogs: RelatedBlogType[];
 }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   /* popup buttons inside blog html */
   useEffect(() => {
@@ -96,6 +97,61 @@ export default function BlogClient({
                 }}
               />
             </div>
+            {/* FAQ SECTION */}
+            {blog.faqs && blog.faqs.length > 0 && (
+              <div className="lg:col-span-3">
+                <div className="bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 md:p-10">
+                  <h2 className="font-serif text-2xl md:text-3xl text-[var(--text)] mb-6">
+                    Frequently Asked Questions
+                  </h2>
+
+                  <div className="space-y-4">
+                    {blog.faqs.map((faq: any, index: number) => {
+                      const isOpen = openIndex === index;
+
+                      return (
+                        <div
+                          key={index}
+                          className="border border-[var(--border)] rounded-xl overflow-hidden"
+                        >
+                          {/* Question */}
+                          <button
+                            onClick={() => setOpenIndex(isOpen ? null : index)}
+                            className="
+                  w-full text-left px-5 py-4
+                  flex justify-between items-center
+                  bg-[var(--bg-secondary)]
+                  hover:bg-[var(--bg-hover)]
+                  transition
+                "
+                          >
+                            <span className="font-medium text-[var(--text)]">
+                              {faq.question}
+                            </span>
+
+                            <span className="text-xl">
+                              {isOpen ? "-" : "+"}
+                            </span>
+                          </button>
+
+                          {/* Answer */}
+                          <div
+                            className={`
+                  px-5 transition-all duration-300 ease-in-out
+                  ${isOpen ? "max-h-96 py-4" : "max-h-0 overflow-hidden"}
+                `}
+                          >
+                            <p className="text-[var(--text-light)] text-sm leading-relaxed">
+                              {faq.answer}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </article>
 
           {/* SIDEBAR */}

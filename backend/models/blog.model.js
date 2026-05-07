@@ -19,7 +19,7 @@ const blogPostSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: String, // Just the name, no avatar
+    type: String,
     required: true,
   },
   coverImage: {
@@ -34,6 +34,20 @@ const blogPostSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+
+  // ✅ NEW FAQ FIELD
+  faqs: [
+    {
+      question: {
+        type: String,
+        required: true,
+      },
+      answer: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 
   datePublished: {
     type: Date,

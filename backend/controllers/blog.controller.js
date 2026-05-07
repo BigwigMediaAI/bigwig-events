@@ -5,8 +5,16 @@ const BlogPost = require("../models/blog.model");
  */
 exports.createBlog = async (req, res) => {
   try {
-    const { title, slug, excerpt, content, author, tags, coverImageAlt } =
-      req.body;
+    const {
+      title,
+      slug,
+      excerpt,
+      content,
+      author,
+      tags,
+      coverImageAlt,
+      faqs, // ✅ NEW
+    } = req.body;
 
     // 🔒 Basic validation
     if (!title || !slug || !excerpt || !content || !author) {
@@ -36,6 +44,21 @@ exports.createBlog = async (req, res) => {
     const imageAltText =
       coverImageAlt?.trim()?.length > 0 ? coverImageAlt.trim() : title;
 
+    // ✅ Handle FAQs safely
+    let parsedFaqs = [];
+    if (faqs) {
+      try {
+        parsedFaqs = typeof faqs === "string" ? JSON.parse(faqs) : faqs;
+
+        // Optional validation
+        parsedFaqs = parsedFaqs.filter((f) => f.question && f.answer);
+      } catch (err) {
+        return res.status(400).json({
+          error: "Invalid FAQ format",
+        });
+      }
+    }
+
     const blogPost = new BlogPost({
       title,
       slug,
@@ -45,6 +68,7 @@ exports.createBlog = async (req, res) => {
       tags: tags ? tags.split(",").map((t) => t.trim()) : [],
       coverImage,
       coverImageAlt: imageAltText,
+      faqs: parsedFaqs, // ✅ SAVE FAQs
     });
 
     await blogPost.save();
@@ -79,7 +103,15 @@ exports.getAllBlogs = async (req, res) => {
  */
 exports.updateBlog = async (req, res) => {
   const { slug } = req.params;
-  const { title, content, author, excerpt, tags, coverImageAlt } = req.body;
+  const {
+    title,
+    content,
+    author,
+    excerpt,
+    tags,
+    coverImageAlt,
+    faqs, // ✅ NEW
+  } = req.body;
 
   try {
     const updateFields = {
@@ -92,6 +124,22 @@ exports.updateBlog = async (req, res) => {
       lastUpdated: new Date(),
     };
 
+    // ✅ Handle FAQs
+    if (faqs !== undefined) {
+      try {
+        let parsedFaqs = typeof faqs === "string" ? JSON.parse(faqs) : faqs;
+
+        parsedFaqs = parsedFaqs.filter((f) => f.question && f.answer);
+
+        updateFields.faqs = parsedFaqs;
+      } catch (err) {
+        return res.status(400).json({
+          error: "Invalid FAQ format",
+        });
+      }
+    }
+
+    // ✅ Handle image update
     if (req.file && (req.file.secure_url || req.file.path)) {
       updateFields.coverImage = req.file.secure_url || req.file.path;
     }

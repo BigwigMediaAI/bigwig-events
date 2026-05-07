@@ -20,6 +20,7 @@ interface BlogPost {
   tags?: string;
   coverImage?: string;
   coverImageAlt?: string;
+  faqs?: { question: string; answer: string }[];
 }
 
 interface Props {
@@ -39,6 +40,7 @@ const AddBlog = ({ onClose, onSuccess, existingBlog = null }: Props) => {
     coverImageAlt: "",
     coverImage: null as File | null,
   });
+  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
 
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -57,6 +59,9 @@ const AddBlog = ({ onClose, onSuccess, existingBlog = null }: Props) => {
         coverImageAlt: existingBlog.coverImageAlt || "",
         coverImage: null,
       });
+      if (existingBlog?.faqs?.length) {
+        setFaqs(existingBlog.faqs);
+      }
 
       if (existingBlog.coverImage) {
         setPreview(existingBlog.coverImage);
@@ -88,6 +93,25 @@ const AddBlog = ({ onClose, onSuccess, existingBlog = null }: Props) => {
         [name]: value,
       }));
     }
+  };
+
+  const handleFaqChange = (
+    index: number,
+    field: "question" | "answer",
+    value: string,
+  ) => {
+    const updated = [...faqs];
+    updated[index][field] = value;
+    setFaqs(updated);
+  };
+
+  const addFaq = () => {
+    setFaqs([...faqs, { question: "", answer: "" }]);
+  };
+
+  const removeFaq = (index: number) => {
+    const updated = faqs.filter((_, i) => i !== index);
+    setFaqs(updated.length ? updated : [{ question: "", answer: "" }]);
   };
 
   /* Image */
@@ -133,6 +157,7 @@ const AddBlog = ({ onClose, onSuccess, existingBlog = null }: Props) => {
           blogData.append(key, value as any);
         }
       });
+      blogData.append("faqs", JSON.stringify(faqs));
 
       const res = await fetch(
         existingBlog
@@ -388,6 +413,59 @@ const AddBlog = ({ onClose, onSuccess, existingBlog = null }: Props) => {
                 className="hidden"
               />
             </label>
+          </section>
+
+          {/* FAQ SECTION */}
+          <section className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-xs uppercase tracking-[2px] text-[var(--muted)]">
+                FAQs
+              </h3>
+
+              <button
+                type="button"
+                onClick={addFaq}
+                className="text-sm text-[var(--primary)]"
+              >
+                + Add FAQ
+              </button>
+            </div>
+
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="border border-[var(--border)] rounded-xl p-4 space-y-3 "
+              >
+                <input
+                  type="text"
+                  placeholder="Question"
+                  value={faq.question}
+                  onChange={(e) =>
+                    handleFaqChange(index, "question", e.target.value)
+                  }
+                  className="w-full h-11 px-3 border border-[var(--border)] outline-none"
+                />
+
+                <textarea
+                  placeholder="Answer"
+                  value={faq.answer}
+                  onChange={(e) =>
+                    handleFaqChange(index, "answer", e.target.value)
+                  }
+                  className="w-full p-3 border border-[var(--border)] outline-none resize-none"
+                />
+
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => removeFaq(index)}
+                    className="text-xs text-red-500"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
           </section>
 
           {/* Footer */}
