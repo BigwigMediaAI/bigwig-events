@@ -157,29 +157,22 @@ export default function PortfolioModal({
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="
-                w-full h-12 px-4
-                border border-[var(--border)]
-                bg-[var(--white)]
-                text-[var(--text)]
-                outline-none
-                focus:border-[var(--primary)]
-              "
+      w-full h-12 px-4
+      border border-[var(--border)]
+      bg-[var(--white)]
+      text-[var(--text)]
+      outline-none
+      focus:border-[var(--primary)]
+      transition-all duration-300
+    "
             >
               <option value="">Select category</option>
 
               <option value="Corporate Events">Corporate Events</option>
-
-              <option value="Corporate Travels">Corporate Travels</option>
-
-              <option value="Corporate Training">Corporate Training</option>
-
-              <option value="Corporate Festivities">
-                Corporate Festivities
-              </option>
-
-              <option value="Corporate Activations">
-                Corporate Activations
-              </option>
+              <option value="Social Celebrations">Social Celebrations</option>
+              <option value="Weddings">Weddings</option>
+              <option value="Travel">Travel</option>
+              <option value="Destination Events">Destination Events</option>
             </select>
           </div>
 

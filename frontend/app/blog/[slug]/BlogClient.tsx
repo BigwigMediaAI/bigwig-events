@@ -52,10 +52,6 @@ export default function BlogClient({
       {/* HERO */}
       <section className="pt-32 pb-14 border-b border-[var(--border)]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-4">
-            Blog Article
-          </p>
-
           <h1 className="font-serif text-[32px] md:text-[52px] lg:text-[64px] leading-[1.15] text-[var(--text)] max-w-5xl">
             {blog.title}
           </h1>
@@ -152,24 +148,6 @@ export default function BlogClient({
                   </div>
                 </div>
               )}
-
-              {/* CTA */}
-              <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl p-8">
-                <p className="uppercase tracking-[3px] text-xs text-[var(--primary)] mb-3">
-                  Need Event Planning?
-                </p>
-
-                <h3 className="font-serif text-2xl text-[var(--text)] mb-4">
-                  Let's Create Something Beautiful
-                </h3>
-
-                <button
-                  onClick={() => setIsPopupOpen(true)}
-                  className="h-12 px-8 border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
-                >
-                  Let's Talk
-                </button>
-              </div>
             </div>
           </aside>
         </div>

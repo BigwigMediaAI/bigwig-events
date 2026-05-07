@@ -41,11 +41,11 @@ const Dashboard = () => {
       icon: <FaUsers />,
       count: counts.leads,
     },
-    {
-      title: "Clients",
-      icon: <Users size={34} />,
-      count: counts.clients,
-    },
+    // {
+    //   title: "Clients",
+    //   icon: <Users size={34} />,
+    //   count: counts.clients,
+    // },
     {
       title: "Subscribers",
       icon: <User2 size={34} />,

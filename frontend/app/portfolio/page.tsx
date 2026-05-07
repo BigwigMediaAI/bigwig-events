@@ -18,10 +18,11 @@ interface Portfolio {
 
 const categories = [
   "All",
+  "Corporate Events",
+  "Social Celebrations",
   "Weddings",
-  "Corporate",
-  "Social Events",
-  "Destinations",
+  "Travel",
+  "Destination Events",
 ];
 
 export default function PortfolioPage() {
