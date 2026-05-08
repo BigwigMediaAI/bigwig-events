@@ -19,6 +19,7 @@ import {
   Heart,
   Search,
 } from "lucide-react";
+import FloatingContact from "@/components/Floating";
 
 const features = [
   {
@@ -298,7 +299,7 @@ export default function TravelDestinations() {
 
       <CTA />
       <Footer />
-
+      <FloatingContact />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

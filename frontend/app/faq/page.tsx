@@ -1,5 +1,6 @@
 "use client";
 
+import FloatingContact from "@/components/Floating";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
@@ -148,7 +149,7 @@ export default function FAQ() {
 
       <CTA />
       <Footer />
-
+      <FloatingContact />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

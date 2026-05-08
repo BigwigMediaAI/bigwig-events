@@ -19,6 +19,7 @@ import {
   Settings,
   BarChart3,
 } from "lucide-react";
+import FloatingContact from "@/components/Floating";
 
 const features = [
   {
@@ -300,7 +301,7 @@ export default function DigitalExperiences() {
 
       <CTA />
       <Footer />
-
+      <FloatingContact />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 import { Sparkles, Lightbulb, Handshake, Heart, Users } from "lucide-react";
 import { CalendarDays, Star, MapPin, Gem } from "lucide-react";
 import CTA from "@/components/home/CTA";
+import FloatingContact from "@/components/Floating";
 
 const values = [
   {
@@ -384,6 +385,7 @@ export default function AboutPage() {
       <CTA />
 
       <Footer />
+      <FloatingContact />
 
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>

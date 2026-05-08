@@ -10,6 +10,7 @@ import Footer from "@/components/layout/Footer";
 import CTA from "@/components/home/CTA";
 import ServicePopup from "@/components/layout/Popup";
 import ContactFormCard from "@/components/layout/ContactFormCard";
+import FloatingContact from "@/components/Floating";
 
 interface Blog {
   _id: string;
@@ -240,7 +241,7 @@ export default function BlogPage() {
       <CTA />
 
       <Footer />
-
+      <FloatingContact />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

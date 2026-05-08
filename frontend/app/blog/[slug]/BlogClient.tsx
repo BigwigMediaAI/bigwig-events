@@ -9,6 +9,7 @@ import ContactFormCard from "@/components/layout/ContactFormCard";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import ServicePopup from "@/components/layout/Popup";
+import FloatingContact from "@/components/Floating";
 
 interface RelatedBlogType {
   title: string;
@@ -212,7 +213,7 @@ export default function BlogClient({
       <CTA />
 
       <Footer />
-
+      <FloatingContact />
       <ServicePopup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}

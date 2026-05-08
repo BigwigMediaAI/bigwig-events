@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import ServicePopup from "@/components/layout/Popup";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingContact from "@/components/Floating";
 
 interface Portfolio {
   _id: string;
@@ -210,7 +211,7 @@ export default function PortfolioPage() {
           )}
         </div>
       </section>
-
+      <FloatingContact />
       <CTA />
       <Footer />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />

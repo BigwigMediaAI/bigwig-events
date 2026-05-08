@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
+import FloatingContact from "@/components/Floating";
 
 const features = [
   {
@@ -306,6 +307,7 @@ export default function SocialCelebrations() {
 
       <CTA />
       <Footer />
+      <FloatingContact />
       <ServicePopup isOpen={open} onClose={() => setOpen(false)} />
     </div>
   );

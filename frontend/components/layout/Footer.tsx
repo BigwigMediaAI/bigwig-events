@@ -17,16 +17,14 @@ import {
 const quickLinks = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: "Services", href: "/" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
+
   { name: "FAQ", href: "/faq" },
 ];
 
 const services = [
   "Corporate Events",
-  "Conferences & Seminars",
   "Weddings",
   "Social Celebrations",
   "Travel & Destinations",
