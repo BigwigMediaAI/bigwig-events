@@ -138,7 +138,7 @@ export default function AboutPage() {
               {/* Main Image */}
               <div className="relative z-10 overflow-hidden">
                 <img
-                  src="/events.png"
+                  src="/whoweare.jpg"
                   alt="Who We Are"
                   className="w-full h-[420px] md:h-[520px] object-cover"
                 />

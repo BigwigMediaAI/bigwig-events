@@ -4,32 +4,48 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
-const categories = ["All", "Weddings", "Corporate", "Social", "Travel"];
+const categories = ["All", "Corporate", "Social", "Weddings", "Travel"];
 
 const portfolioItems = [
   {
-    title: "Royal Wedding",
-    location: "Jaipur",
-    category: "Weddings",
-    image: "/weding.png",
-  },
-  {
-    title: "Leadership Summit",
-    location: "New Delhi",
     category: "Corporate",
-    image: "/training.png",
+    image: "/corporate/img (1).jpg",
   },
   {
-    title: "50th Anniversary",
-    location: "Mumbai",
+    category: "Corporate",
+    image: "/corporate/img (2).jpg",
+  },
+  {
+    category: "Corporate",
+    image: "/corporate/img (3).jpg",
+  },
+  {
+    category: "Corporate",
+    image: "/corporate/img (4).jpg",
+  },
+  {
     category: "Social",
-    image: "/festi.png",
+    image: "/social/img (1).jpg",
   },
   {
-    title: "Destination Retreat",
-    location: "Maldives",
+    category: "Social",
+    image: "/social/img (2).jpg",
+  },
+  {
+    category: "Social",
+    image: "/social/img (3).jpg",
+  },
+  {
+    category: "Social",
+    image: "/social/img (4).jpg",
+  },
+  {
     category: "Travel",
     image: "/travel.png",
+  },
+  {
+    category: "Weddings",
+    image: "/weding.png",
   },
 ];
 
@@ -38,8 +54,10 @@ export default function FeaturedWork() {
 
   const filteredItems =
     activeTab === "All"
-      ? portfolioItems
-      : portfolioItems.filter((item) => item.category === activeTab);
+      ? portfolioItems.slice(0, 4)
+      : portfolioItems
+          .filter((item) => item.category === activeTab)
+          .slice(0, 4);
 
   return (
     <section className="py-20 bg-[var(--white)]">
@@ -86,7 +104,7 @@ export default function FeaturedWork() {
               <div className="relative h-[350px]">
                 <Image
                   src={item.image}
-                  alt={item.title}
+                  alt="Bigwig Events"
                   fill
                   className="object-cover group-hover:scale-110 transition duration-700"
                 />
@@ -94,27 +112,6 @@ export default function FeaturedWork() {
 
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 w-full p-5 flex justify-between items-end">
-                <div>
-                  <h3 className="font-serif text-2xl text-white">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-2 text-xs uppercase tracking-[2px] text-white/80">
-                    {item.location}
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                {/* <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center group-hover:bg-[var(--primary)] transition">
-                  <ArrowRight
-                    size={18}
-                    className="text-black group-hover:text-white"
-                  />
-                </div> */}
-              </div>
             </div>
           ))}
         </div>
