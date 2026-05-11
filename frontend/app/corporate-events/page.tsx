@@ -76,24 +76,16 @@ const process = [
 
 const projects = [
   {
-    image: "/training.png",
-    title: "Leadership Summit 2024",
-    location: "New Delhi",
+    image: "/corporate/img (7).jpg",
   },
   {
-    image: "/training.png",
-    title: "Annual Business Conference",
-    location: "Mumbai",
+    image: "/corporate/img (5).jpg",
   },
   {
-    image: "/training.png",
-    title: "Product Launch Event",
-    location: "Bengaluru",
+    image: "/corporate/img (3).jpg",
   },
   {
-    image: "/training.png",
-    title: "Corporate Offsite Retreat",
-    location: "Goa",
+    image: "/corporate/img (4).jpg",
   },
 ];
 
@@ -175,7 +167,7 @@ export default function CorporateEvents() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-[500px]  overflow-hidden">
             <Image
-              src="/about.png"
+              src="/corporate/img (3).jpg"
               alt="Corporate event"
               fill
               className="object-cover"
@@ -280,19 +272,11 @@ export default function CorporateEvents() {
                 <div className="relative h-[250px] rounded-lg overflow-hidden">
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt="Bigwig event"
                     fill
                     className="object-cover"
                   />
                 </div>
-
-                <h3 className="mt-5 font-serif text-xl text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-sm uppercase tracking-[2px] text-[var(--primary)]">
-                  {item.location}
-                </p>
               </div>
             ))}
           </div>
