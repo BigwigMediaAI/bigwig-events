@@ -7,7 +7,6 @@ import Button from "./ui/Button";
 
 interface PortfolioData {
   _id?: string;
-  title: string;
   category: string;
   image?: string;
 }
@@ -23,32 +22,23 @@ export default function PortfolioModal({
   onClose,
   onSuccess,
 }: Props) {
-  const [title, setTitle] = useState("");
-
   const [category, setCategory] = useState("");
-
-  const [imageFile, setImageFile] = useState<File | null>(null);
-
-  const [existingImage, setExistingImage] = useState<string | null>(null);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([]);
 
   const [loading, setLoading] = useState(false);
 
   /* Prefill */
   useEffect(() => {
     if (initialData) {
-      setTitle(initialData.title);
-
       setCategory(initialData.category);
-
-      setExistingImage(initialData.image || null);
+      setExistingImages(initialData.images || []);
     }
   }, [initialData]);
 
-  /* Submit */
   const handleSubmit = async () => {
-    if (!title.trim() || !category.trim()) {
-      alert("Title and category are required");
-
+    if (!category.trim()) {
+      alert("Category is required");
       return;
     }
 
@@ -56,14 +46,11 @@ export default function PortfolioModal({
       setLoading(true);
 
       const formData = new FormData();
-
-      formData.append("title", title);
-
       formData.append("category", category);
 
-      if (imageFile) {
-        formData.append("image", imageFile);
-      }
+      imageFiles.forEach((file) => {
+        formData.append("images", file); // 🔥 important
+      });
 
       const url = initialData
         ? `${process.env.NEXT_PUBLIC_API_BASE}/portfolio/${initialData._id}`
@@ -71,20 +58,17 @@ export default function PortfolioModal({
 
       const res = await fetch(url, {
         method: initialData ? "PUT" : "POST",
-
         body: formData,
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message);
-      }
+      if (!res.ok) throw new Error(data.message);
 
       onSuccess();
       onClose();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to save portfolio");
+      alert(err instanceof Error ? err.message : "Failed");
     } finally {
       setLoading(false);
     }
@@ -126,27 +110,6 @@ export default function PortfolioModal({
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
-          {/* Title */}
-          <div>
-            <label className="text-xs uppercase tracking-[2px] text-[var(--muted)] mb-2 block">
-              Title
-            </label>
-
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Event title"
-              className="
-                w-full h-12 px-4
-                border border-[var(--border)]
-                bg-[var(--white)]
-                text-[var(--text)]
-                outline-none
-                focus:border-[var(--primary)]
-              "
-            />
-          </div>
-
           {/* Category */}
           <div>
             <label className="text-xs uppercase tracking-[2px] text-[var(--muted)] mb-2 block">
@@ -176,55 +139,107 @@ export default function PortfolioModal({
             </select>
           </div>
 
-          {/* Upload */}
           <div>
             <label className="text-xs uppercase tracking-[2px] text-[var(--muted)] mb-3 block">
-              Portfolio Image
+              Portfolio Images
             </label>
 
             <label
               htmlFor="portfolio-image"
               className="
-                flex flex-col items-center justify-center
-                h-44
-                border-2 border-dashed border-[var(--border)]
-                rounded-2xl
-                bg-[var(--bg-secondary)]
-                cursor-pointer
-                hover:border-[var(--primary)]
-                transition
-              "
+      flex flex-col items-center justify-center
+      h-44
+      border-2 border-dashed border-[var(--border)]
+      rounded-2xl
+      bg-[var(--bg-secondary)]
+      cursor-pointer
+      hover:border-[var(--primary)]
+      transition
+    "
             >
-              {imageFile ? (
-                <img
-                  src={URL.createObjectURL(imageFile)}
-                  className="w-full h-full object-cover rounded-2xl"
-                />
-              ) : existingImage ? (
-                <img
-                  src={existingImage}
-                  className="w-full h-full object-cover rounded-2xl"
-                />
-              ) : (
-                <>
-                  <ImageIcon size={24} className="text-[var(--muted)] mb-2" />
-
-                  <p className="text-sm text-[var(--text-light)]">
-                    Upload portfolio image
-                  </p>
-
-                  <p className="text-xs text-[var(--muted)] mt-1">JPG or PNG</p>
-                </>
-              )}
+              <ImageIcon size={24} className="text-[var(--muted)] mb-2" />
+              <p className="text-sm text-[var(--text-light)]">
+                Upload multiple images
+              </p>
+              <p className="text-xs text-[var(--muted)] mt-1">JPG or PNG</p>
 
               <input
                 id="portfolio-image"
                 type="file"
+                multiple
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                onChange={(e) =>
+                  setImageFiles(Array.from(e.target.files || []))
+                }
               />
             </label>
+
+            {/* Preview */}
+            {/* Preview */}
+            {(imageFiles.length > 0 || existingImages.length > 0) && (
+              <div className="grid grid-cols-3 gap-3 mt-4">
+                {/* New Images */}
+                {imageFiles.map((file, i) => (
+                  <div key={i} className="relative group">
+                    <img
+                      src={URL.createObjectURL(file)}
+                      className="h-24 w-full object-cover rounded-lg"
+                    />
+
+                    {/* REMOVE BUTTON */}
+                    <button
+                      onClick={() =>
+                        setImageFiles((prev) =>
+                          prev.filter((_, index) => index !== i),
+                        )
+                      }
+                      className="
+            absolute top-1 right-1
+            h-6 w-6
+            flex items-center justify-center
+            bg-black/70 text-white
+            rounded-full
+            opacity-0 group-hover:opacity-100
+            transition
+          "
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ))}
+
+                {/* Existing Images (Edit Mode) */}
+                {existingImages.map((img, i) => (
+                  <div key={i} className="relative group">
+                    <img
+                      src={img}
+                      className="h-24 w-full object-cover rounded-lg"
+                    />
+
+                    {/* REMOVE BUTTON */}
+                    <button
+                      onClick={() =>
+                        setExistingImages((prev) =>
+                          prev.filter((_, index) => index !== i),
+                        )
+                      }
+                      className="
+            absolute top-1 right-1
+            h-6 w-6
+            flex items-center justify-center
+            bg-black/70 text-white
+            rounded-full
+            opacity-0 group-hover:opacity-100
+            transition
+          "
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

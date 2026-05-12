@@ -1,16 +1,13 @@
 "use client";
 
 import PortfolioModal from "@/components/CreatePortfolio";
-
 import { Trash2, Plus, Pencil, Image as ImageIcon } from "lucide-react";
-
 import { useEffect, useState } from "react";
 
 interface Portfolio {
   _id: string;
-  title: string;
   category: string;
-  image: string;
+  images: string[]; // ✅ changed
   createdAt: string;
 }
 
@@ -18,13 +15,9 @@ const ITEMS_PER_PAGE = 10;
 
 export default function AdminPortfolio() {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
-
   const [showModal, setShowModal] = useState(false);
-
   const [editData, setEditData] = useState<Portfolio | null>(null);
-
   const [loading, setLoading] = useState(true);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   /* Fetch */
@@ -86,18 +79,9 @@ export default function AdminPortfolio() {
         <button
           onClick={() => {
             setEditData(null);
-
             setShowModal(true);
           }}
-          className="
-            h-11 px-6
-            bg-[var(--primary)]
-            text-white
-            rounded-xl
-            flex items-center gap-2
-            hover:bg-[var(--primary-dark)]
-            transition
-          "
+          className="h-11 px-6 bg-[var(--primary)] text-white rounded-xl flex items-center gap-2 hover:bg-[var(--primary-dark)] transition"
         >
           <Plus size={16} />
           Add Portfolio
@@ -108,7 +92,6 @@ export default function AdminPortfolio() {
       {loading && (
         <div className="flex flex-col items-center justify-center h-[300px]">
           <div className="w-10 h-10 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin mb-4" />
-
           <p className="text-[var(--text-light)]">Loading portfolio...</p>
         </div>
       )}
@@ -117,11 +100,9 @@ export default function AdminPortfolio() {
       {!loading && portfolios.length === 0 && (
         <div className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-12 text-center">
           <ImageIcon size={34} className="mx-auto text-[var(--muted)] mb-4" />
-
           <h3 className="font-serif text-2xl text-[var(--text)] mb-2">
             No Portfolio Found
           </h3>
-
           <p className="text-[var(--text-light)]">
             Create your first portfolio item.
           </p>
@@ -136,31 +117,25 @@ export default function AdminPortfolio() {
             {visibleItems.map((item) => (
               <div
                 key={item._id}
-                className="
-                      bg-[var(--white)]
-                      border border-[var(--border)]
-                      rounded-2xl
-                      p-4
-                    "
+                className="bg-[var(--white)] border border-[var(--border)] rounded-2xl p-4"
               >
-                <img
-                  src={item.image}
-                  className="w-full h-44 object-cover rounded-xl mb-4"
-                />
+                {/* 🔥 Multiple images */}
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  {item.images?.slice(0, 3).map((img, i) => (
+                    <img
+                      key={i}
+                      src={img}
+                      className="w-full h-24 object-cover rounded-lg"
+                    />
+                  ))}
+                </div>
 
-                <h3 className="font-semibold text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="text-sm text-[var(--muted)] mt-1">
-                  {item.category}
-                </p>
+                <p className="text-sm text-[var(--muted)]">{item.category}</p>
 
                 <div className="flex justify-end gap-4 mt-4">
                   <button
                     onClick={() => {
                       setEditData(item);
-
                       setShowModal(true);
                     }}
                     className="text-blue-500"
@@ -184,14 +159,9 @@ export default function AdminPortfolio() {
             <table className="w-full">
               <thead className="bg-[var(--bg-secondary)]">
                 <tr>
-                  <th className="px-5 py-4 text-left">Image</th>
-
-                  {/* <th className="px-5 py-4 text-left">Title</th> */}
-
+                  <th className="px-5 py-4 text-left">Images</th>
                   <th className="px-5 py-4 text-left">Category</th>
-
                   <th className="px-5 py-4 text-left">Created</th>
-
                   <th className="px-5 py-4 text-left">Actions</th>
                 </tr>
               </thead>
@@ -203,15 +173,16 @@ export default function AdminPortfolio() {
                     className="border-t border-[var(--border)] hover:bg-[var(--bg-secondary)]"
                   >
                     <td className="px-5 py-4">
-                      <img
-                        src={item.image}
-                        className="h-12 w-20 object-cover rounded-lg"
-                      />
+                      <div className="flex gap-2">
+                        {item.images?.slice(0, 3).map((img, i) => (
+                          <img
+                            key={i}
+                            src={img}
+                            className="h-12 w-16 object-cover rounded-lg"
+                          />
+                        ))}
+                      </div>
                     </td>
-
-                    {/* <td className="px-5 py-4 text-[var(--text)] font-medium">
-                      {item.title}
-                    </td> */}
 
                     <td className="px-5 py-4 text-[var(--text-light)]">
                       {item.category}
@@ -226,7 +197,6 @@ export default function AdminPortfolio() {
                         <button
                           onClick={() => {
                             setEditData(item);
-
                             setShowModal(true);
                           }}
                           className="text-blue-500"
@@ -254,12 +224,7 @@ export default function AdminPortfolio() {
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((p) => p - 1)}
-                className="
-                    h-10 px-5
-                    border border-[var(--border)]
-                    text-[var(--text-light)]
-                    disabled:opacity-40
-                  "
+                className="h-10 px-5 border border-[var(--border)] text-[var(--text-light)] disabled:opacity-40"
               >
                 Prev
               </button>
@@ -271,12 +236,7 @@ export default function AdminPortfolio() {
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((p) => p + 1)}
-                className="
-                    h-10 px-5
-                    border border-[var(--border)]
-                    text-[var(--text-light)]
-                    disabled:opacity-40
-                  "
+                className="h-10 px-5 border border-[var(--border)] text-[var(--text-light)] disabled:opacity-40"
               >
                 Next
               </button>

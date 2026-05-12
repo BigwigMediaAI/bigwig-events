@@ -14,13 +14,13 @@ const storage = require("../config/storage");
 const upload = multer({ storage });
 
 // CREATE
-router.post("/", upload.single("image"), createPortfolio);
+router.post("/", upload.array("images", 10), createPortfolio);
 
 // GET ALL
 router.get("/", getAllPortfolio);
 
 // UPDATE
-router.put("/:id", upload.single("image"), updatePortfolio);
+router.put("/:id", upload.array("images", 10), updatePortfolio);
 
 // DELETE
 router.delete("/:id", deletePortfolio);

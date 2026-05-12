@@ -5,38 +5,32 @@ const Portfolio = require("../models/portfolio.model");
 ========================= */
 exports.createPortfolio = async (req, res) => {
   try {
-    const { title, category } = req.body;
+    const { category } = req.body;
 
-    // 🔒 Validation
-    if (!title || !category) {
+    if (!category) {
       return res.status(400).json({
-        message: "Title and category are required",
+        message: "Category is required",
       });
     }
 
-    // 🔒 Image Handling (Same as testimonial)
-    let image = null;
-
-    if (req.file) {
-      if (req.file.secure_url) {
-        image = req.file.secure_url;
-      } else if (req.file.path) {
-        image = req.file.path;
-      } else {
-        return res.status(400).json({
-          message: "Image upload failed (no path or URL)",
-        });
-      }
-    } else {
+    if (!req.files || req.files.length === 0) {
       return res.status(400).json({
-        message: "Portfolio image is required",
+        message: "At least one image is required",
       });
     }
+
+    // Handle multiple images
+    const images = req.files
+      .map((file) => {
+        if (file.secure_url) return file.secure_url;
+        if (file.path) return file.path;
+        return null;
+      })
+      .filter(Boolean);
 
     const portfolio = new Portfolio({
-      title,
       category,
-      image,
+      images,
     });
 
     await portfolio.save();
@@ -111,28 +105,29 @@ exports.deletePortfolio = async (req, res) => {
 exports.updatePortfolio = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, category } = req.body;
+    const { category } = req.body;
 
     const portfolio = await Portfolio.findById(id);
 
     if (!portfolio) {
       return res.status(404).json({
-        success: false,
         message: "Portfolio not found",
       });
     }
 
-    // Update fields
-    if (title) portfolio.title = title;
     if (category) portfolio.category = category;
 
-    // Image update (same logic)
-    if (req.file) {
-      if (req.file.secure_url) {
-        portfolio.image = req.file.secure_url;
-      } else if (req.file.path) {
-        portfolio.image = req.file.path;
-      }
+    // Add new images (append, not replace)
+    if (req.files && req.files.length > 0) {
+      const newImages = req.files
+        .map((file) => {
+          if (file.secure_url) return file.secure_url;
+          if (file.path) return file.path;
+          return null;
+        })
+        .filter(Boolean);
+
+      portfolio.images = [...portfolio.images, ...newImages];
     }
 
     await portfolio.save();
@@ -143,7 +138,7 @@ exports.updatePortfolio = async (req, res) => {
       portfolio,
     });
   } catch (error) {
-    console.error("UPDATE PORTFOLIO ERROR:", error);
+    console.error("UPDATE ERROR:", error);
     return res.status(500).json({
       success: false,
       message: "Failed to update portfolio",
