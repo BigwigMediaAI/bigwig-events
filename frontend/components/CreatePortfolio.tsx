@@ -8,7 +8,7 @@ import Button from "./ui/Button";
 interface PortfolioData {
   _id?: string;
   category: string;
-  image?: string;
+  images?: string[];
 }
 
 interface Props {
