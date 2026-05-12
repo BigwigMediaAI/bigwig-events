@@ -13,7 +13,7 @@ const portfolioItems = [
   },
   {
     category: "Corporate",
-    image: "/corporate/img (2).jpg",
+    image: "/corporate/img (7).jpg",
   },
   {
     category: "Corporate",
@@ -21,7 +21,7 @@ const portfolioItems = [
   },
   {
     category: "Corporate",
-    image: "/corporate/img (4).jpg",
+    image: "/corporate/img (15).jpg",
   },
   {
     category: "Social",
@@ -29,7 +29,7 @@ const portfolioItems = [
   },
   {
     category: "Social",
-    image: "/social/img (2).jpg",
+    image: "/social/img (6).jpg",
   },
   {
     category: "Social",
@@ -101,7 +101,7 @@ export default function FeaturedWork() {
               className="relative group overflow-hidden cursor-pointer"
             >
               {/* Image */}
-              <div className="relative h-[350px]">
+              <div className="relative h-[250px]">
                 <Image
                   src={item.image}
                   alt="Bigwig Events"
