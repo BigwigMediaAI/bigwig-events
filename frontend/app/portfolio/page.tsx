@@ -191,11 +191,11 @@ export default function PortfolioPage() {
                         alt={project.title}
                         width={600}
                         height={450}
-                        className="w-full h-[350px] object-cover transition duration-700 group-hover:scale-105"
+                        className="w-full  object-cover transition duration-700 group-hover:scale-105"
                       />
                     </div>
 
-                    <div className="mt-4">
+                    {/* <div className="mt-4">
                       <p className="text-xs uppercase tracking-[3px] text-[var(--primary)] mb-2">
                         {project.category}
                       </p>
@@ -203,7 +203,7 @@ export default function PortfolioPage() {
                       <h3 className="font-serif text-2xl text-[var(--text)]">
                         {project.title}
                       </h3>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
               </div>

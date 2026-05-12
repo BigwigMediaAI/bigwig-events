@@ -186,7 +186,7 @@ export default function AdminPortfolio() {
                 <tr>
                   <th className="px-5 py-4 text-left">Image</th>
 
-                  <th className="px-5 py-4 text-left">Title</th>
+                  {/* <th className="px-5 py-4 text-left">Title</th> */}
 
                   <th className="px-5 py-4 text-left">Category</th>
 
@@ -209,9 +209,9 @@ export default function AdminPortfolio() {
                       />
                     </td>
 
-                    <td className="px-5 py-4 text-[var(--text)] font-medium">
+                    {/* <td className="px-5 py-4 text-[var(--text)] font-medium">
                       {item.title}
-                    </td>
+                    </td> */}
 
                     <td className="px-5 py-4 text-[var(--text-light)]">
                       {item.category}
