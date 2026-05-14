@@ -9,7 +9,7 @@ const categories = ["All", "Corporate", "Social", "Weddings", "Travel"];
 const portfolioItems = [
   {
     category: "Corporate",
-    image: "/corporate/img1.jpg",
+    image: "/corporate/img1.webp",
   },
   {
     category: "Corporate",
