@@ -2,12 +2,12 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 const galleryImages = [
-  "/insta/img1.jpg",
-  "/insta/img2.jpg",
-  "/insta/img3.jpg",
-  "/insta/img4.jpg",
-  "/insta/img5.jpg",
-  "/insta/img6.jpg",
+  "/insta/img1.webp",
+  "/insta/img2.webp",
+  "/insta/img3.webp",
+  "/insta/img4.webp",
+  "/insta/img5.webp",
+  "/insta/img6.webp",
 ];
 
 export default function InstagramSection() {

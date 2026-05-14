@@ -76,16 +76,16 @@ const process = [
 
 const projects = [
   {
-    image: "/corporate/img7.jpg",
+    image: "/corporate/img7.webp",
   },
   {
-    image: "/corporate/img5.jpg",
+    image: "/corporate/img5.webp",
   },
   {
-    image: "/corporate/img3.jpg",
+    image: "/corporate/img3.webp",
   },
   {
-    image: "/corporate/img4.jpg",
+    image: "/corporate/img4.webp",
   },
 ];
 
@@ -167,7 +167,7 @@ export default function CorporateEvents() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-[500px]  overflow-hidden">
             <Image
-              src="/corporate/img3.jpg"
+              src="/corporate/img3.webp"
               alt="Corporate event"
               fill
               className="object-cover"

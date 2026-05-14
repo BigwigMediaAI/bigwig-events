@@ -13,31 +13,31 @@ const portfolioItems = [
   },
   {
     category: "Corporate",
-    image: "/corporate/img7.jpg",
+    image: "/corporate/img7.webp",
   },
   {
     category: "Corporate",
-    image: "/corporate/img3.jpg",
+    image: "/corporate/img3.webp",
   },
   {
     category: "Corporate",
-    image: "/corporate/img15.jpg",
+    image: "/corporate/img10.webp",
   },
   {
     category: "Social",
-    image: "/social/img1.jpg",
+    image: "/social/img1.webp",
   },
   {
     category: "Social",
-    image: "/social/img6.jpg",
+    image: "/social/img6.webp",
   },
   {
     category: "Social",
-    image: "/social/img3.jpg",
+    image: "/social/img3.webp",
   },
   {
     category: "Social",
-    image: "/social/img4.jpg",
+    image: "/social/img4.webp",
   },
   {
     category: "Travel",

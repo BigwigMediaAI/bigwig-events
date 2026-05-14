@@ -79,22 +79,22 @@ const process = [
 
 const projects = [
   {
-    image: "/social/img5.jpg",
+    image: "/social/img5.webp",
     title: "Surprise Birthday Party",
     location: "New Delhi",
   },
   {
-    image: "/social/img6.jpg",
+    image: "/social/img6.webp",
     title: "Silver Anniversary",
     location: "Jaipur",
   },
   {
-    image: "/social/img1.jpg",
+    image: "/social/img1.webp",
     title: "Family Get-Together",
     location: "Goa",
   },
   {
-    image: "/social/img2.jpg",
+    image: "/social/img2.webp",
     title: "Private Celebration",
     location: "Mumbai",
   },
@@ -181,7 +181,7 @@ export default function SocialCelebrations() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-[500px]  overflow-hidden">
             <Image
-              src="/social/img4.jpg"
+              src="/social/img4.webp"
               alt="Socail Celebrations"
               fill
               className="object-cover"
