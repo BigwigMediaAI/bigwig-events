@@ -9,35 +9,35 @@ const categories = ["All", "Corporate", "Social", "Weddings", "Travel"];
 const portfolioItems = [
   {
     category: "Corporate",
-    image: "/corporate/img (1).jpg",
+    image: "/corporate/img1.jpg",
   },
   {
     category: "Corporate",
-    image: "/corporate/img (7).jpg",
+    image: "/corporate/img7.jpg",
   },
   {
     category: "Corporate",
-    image: "/corporate/img (3).jpg",
+    image: "/corporate/img3.jpg",
   },
   {
     category: "Corporate",
-    image: "/corporate/img (15).jpg",
+    image: "/corporate/img15.jpg",
   },
   {
     category: "Social",
-    image: "/social/img (1).jpg",
+    image: "/social/img1.jpg",
   },
   {
     category: "Social",
-    image: "/social/img (6).jpg",
+    image: "/social/img6.jpg",
   },
   {
     category: "Social",
-    image: "/social/img (3).jpg",
+    image: "/social/img3.jpg",
   },
   {
     category: "Social",
-    image: "/social/img (4).jpg",
+    image: "/social/img4.jpg",
   },
   {
     category: "Travel",
