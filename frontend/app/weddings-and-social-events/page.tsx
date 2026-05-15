@@ -282,19 +282,11 @@ export default function Wedding() {
                 <div className="relative h-[250px] rounded-lg overflow-hidden">
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt="Wedding and social events"
                     fill
                     className="object-cover"
                   />
                 </div>
-
-                <h3 className="mt-5 font-serif text-xl text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-sm uppercase tracking-[2px] text-[var(--primary)]">
-                  {item.location}
-                </p>
               </div>
             ))}
           </div>
