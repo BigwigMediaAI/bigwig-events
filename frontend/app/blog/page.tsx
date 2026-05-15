@@ -100,7 +100,7 @@ export default function BlogPage() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image3.png')",
+            backgroundImage: "url('/blogpage.png')",
           }}
         />
 
@@ -111,7 +111,7 @@ export default function BlogPage() {
               Latest Insights
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[56px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
+            <h1 className="font-serif  text-[38px] md:text-[50px] lg:text-[60px] leading-[1.1] text-[var(--text)] font-light">
               Ideas That
               <br />
               <span className="italic text-[var(--primary)]">Drive Growth</span>

@@ -13,6 +13,7 @@ import {
   MapPin,
   ArrowRight,
 } from "lucide-react";
+import { BsInstagram } from "react-icons/bs";
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -24,10 +25,22 @@ const quickLinks = [
 ];
 
 const services = [
-  "Corporate Events",
-  "Weddings",
-  "Social Celebrations",
-  "Travel & Destinations",
+  {
+    name: "Corporate Events",
+    slug: "/corporate-events",
+  },
+  {
+    name: "Travel & MICE",
+    slug: "/travel-mice",
+  },
+  {
+    name: "Weddings & Social Events",
+    slug: "/weddings-and-social-events",
+  },
+  {
+    name: "Digital",
+    slug: "/digital",
+  },
 ];
 
 export default function Footer() {
@@ -82,11 +95,11 @@ export default function Footer() {
             <Image
               src="/logo2.png"
               alt="Bigwig Events"
-              width={70}
-              height={70}
+              width={140}
+              height={140}
             />
 
-            <h3 className="font-serif text-3xl text-[var(--text)] mt-5 leading-tight">
+            <h3 className="font-serif text-xl text-[var(--text)] mt-5 leading-tight">
               Let's Create Something
               <br />
               Exceptional Together
@@ -95,20 +108,6 @@ export default function Footer() {
             <p className="mt-4 text-sm text-[var(--text-light)] leading-7">
               Crafting experiences that stay with you.
             </p>
-
-            <div className="flex gap-3 mt-6">
-              {[Instagram, Facebook, Linkedin].map((Icon, index) => (
-                <button
-                  key={index}
-                  className="group w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center hover:border-[var(--primary)] transition"
-                >
-                  <Icon
-                    size={16}
-                    className="text-[var(--text)] group-hover:text-[var(--primary)] transition"
-                  />
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* QUICK LINKS */}
@@ -138,9 +137,13 @@ export default function Footer() {
 
             <div className="space-y-3">
               {services.map((item) => (
-                <p key={item} className="text-sm text-[var(--text-light)]">
-                  {item}
-                </p>
+                <Link
+                  key={item.name}
+                  href={item.slug}
+                  className="block text-sm text-[var(--text-light)] hover:text-[var(--primary)] transition"
+                >
+                  {item.name}
+                </Link>
               ))}
             </div>
           </div>
@@ -155,22 +158,27 @@ export default function Footer() {
               <div className="flex gap-3">
                 <Phone size={16} className="text-[var(--primary)] mt-1" />
                 <span className="text-sm text-[var(--text-light)]">
-                  +91 98765 43210
+                  +91 8800818156
                 </span>
               </div>
 
               <div className="flex gap-3">
                 <Mail size={16} className="text-[var(--primary)] mt-1" />
                 <span className="text-sm text-[var(--text-light)]">
-                  hello@bigwigevents.com
+                  ashima@bigwigmedia.in
                 </span>
               </div>
 
               <div className="flex gap-3">
-                <MapPin size={16} className="text-[var(--primary)] mt-1" />
-                <span className="text-sm text-[var(--text-light)]">
-                  New Delhi, India
-                </span>
+                <BsInstagram size={16} className="text-[var(--primary)] mt-1" />
+                <Link
+                  href="https://www.instagram.com/bigwig_events?igsh=OXNpd2ZrdGJhMmFo&utm_source=qr"
+                  target="_blank"
+                >
+                  <span className="text-sm text-[var(--text-light)]">
+                    Bigwig Events
+                  </span>
+                </Link>
               </div>
             </div>
           </div>

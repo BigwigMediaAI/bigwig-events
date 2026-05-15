@@ -40,32 +40,39 @@ export default function FAQ() {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative min-h-[70vh] overflow-hidden pt-12">
+      <section className="relative min-h-screen w-full overflow-hidden pt-12">
+        {/* Background */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image2.png')",
+            backgroundImage: "url('/faqpage.png')",
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[rgba(253,251,247,0.95)] to-transparent" />
-
-        <div className="relative z-10 max-w-[1400px] mx-auto min-h-[70vh] flex items-center px-6 md:px-12">
+        {/* Content */}
+        <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12 lg:px-16">
           <div className="max-w-[650px]">
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
+            <p className="text-[var(--primary)] uppercase tracking-[5px] text-xs md:text-sm mb-5">
               Help Center
             </p>
 
-            <h1 className="font-serif text-[32px] md:text-[48px] lg:text-[60px] leading-[1.15] text-[var(--text)] font-light">
+            <h1 className="font-serif  text-[38px] md:text-[50px] lg:text-[60px] leading-[1.1] text-[var(--text)] font-light">
               Frequently Asked
               <br />
               <span className="italic text-[var(--primary)]">Questions</span>
             </h1>
 
-            <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
+            <p className="mt-6 text-[var(--text-light)] text-base md:text-lg leading-8 max-w-[540px]">
               Everything you need to know about our services, planning process,
               and how we bring your events to life.
             </p>
+
+            <button
+              onClick={() => setOpen(true)}
+              className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
+            >
+              Let's Talk
+            </button>
           </div>
         </div>
       </section>

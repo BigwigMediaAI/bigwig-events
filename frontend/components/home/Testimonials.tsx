@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,32 +9,77 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 
-const testimonials = [
-  {
-    name: "Ananya & Rishabh",
-    event: "Jaipur Wedding",
-    quote:
-      "Bigwig Events turned our vision into a dream come true. Every detail was perfect and the experience was beyond our expectations.",
-    image: "/image1.png",
-  },
-  {
-    name: "Rahul Mehta",
-    event: "Corporate Summit",
-    quote:
-      "From planning to execution, the entire event felt effortless. Truly world-class management and creativity.",
-    image: "/image2.png",
-  },
-  {
-    name: "Priya Kapoor",
-    event: "Destination Celebration",
-    quote:
-      "Every guest was amazed. The attention to detail and hospitality created memories for a lifetime.",
-    image: "/about.png",
-  },
-];
+interface Testimonial {
+  _id: string;
+  name: string;
+  message: string;
+  designation?: string;
+  image?: string;
+  isActive: boolean;
+}
 
 export default function TestimonialSection() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(0);
+
+  /* Fetch API */
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE}/testimonial`,
+          {
+            cache: "no-store",
+          },
+        );
+
+        const data = await res.json();
+
+        const activeTestimonials = data.filter(
+          (item: Testimonial) => item.isActive,
+        );
+
+        setTestimonials(activeTestimonials);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="border-y border-[var(--border)]">
+        <div className="hidden md:grid grid-cols-2 h-[240px] animate-pulse">
+          {/* Left skeleton */}
+          <div className="bg-[var(--bg-secondary)] px-12 flex flex-col justify-center">
+            <div className="h-4 w-10 bg-gray-200 rounded mb-6" />
+            <div className="h-4 w-[80%] bg-gray-200 rounded mb-3" />
+            <div className="h-4 w-[70%] bg-gray-200 rounded mb-6" />
+            <div className="h-3 w-32 bg-gray-200 rounded mb-2" />
+            <div className="h-2 w-20 bg-gray-200 rounded" />
+          </div>
+
+          {/* Right skeleton */}
+          <div className="bg-gray-200" />
+        </div>
+
+        {/* Mobile skeleton */}
+        <div className="md:hidden p-6 bg-[var(--bg-secondary)] animate-pulse">
+          <div className="h-4 w-10 bg-gray-200 rounded mx-auto mb-5" />
+          <div className="h-4 w-full bg-gray-200 rounded mb-3" />
+          <div className="h-4 w-[80%] mx-auto bg-gray-200 rounded mb-5" />
+          <div className="h-3 w-28 mx-auto bg-gray-200 rounded" />
+        </div>
+      </section>
+    );
+  }
+
+  if (!testimonials.length) return null;
 
   const nextSlide = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -53,15 +98,14 @@ export default function TestimonialSection() {
         <Swiper
           modules={[Autoplay]}
           slidesPerView={1}
-          spaceBetween={20}
           loop={true}
           autoplay={{
             delay: 4000,
             disableOnInteraction: false,
           }}
         >
-          {testimonials.map((item, index) => (
-            <SwiperSlide key={index}>
+          {testimonials.map((item) => (
+            <SwiperSlide key={item._id}>
               <div className="px-5 py-10 text-center">
                 <Quote
                   size={28}
@@ -69,7 +113,7 @@ export default function TestimonialSection() {
                 />
 
                 <p className="text-sm leading-7 text-[var(--text)]">
-                  {item.quote}
+                  {item.message}
                 </p>
 
                 <div className="mt-5">
@@ -77,9 +121,11 @@ export default function TestimonialSection() {
                     {item.name}
                   </h4>
 
-                  <p className="mt-1 uppercase tracking-[2px] text-[10px] text-[var(--text-light)]">
-                    {item.event}
-                  </p>
+                  {item.designation && (
+                    <p className="mt-1 uppercase tracking-[2px] text-[10px] text-[var(--text-light)]">
+                      {item.designation}
+                    </p>
+                  )}
                 </div>
               </div>
             </SwiperSlide>
@@ -94,7 +140,7 @@ export default function TestimonialSection() {
           <Quote size={30} className="text-[var(--primary)] mb-4" />
 
           <p className="text-sm md:text-base text-[var(--text)] leading-7 max-w-[500px]">
-            {current.quote}
+            {current.message}
           </p>
 
           <div className="mt-5">
@@ -102,9 +148,11 @@ export default function TestimonialSection() {
               {current.name}
             </h4>
 
-            <p className="mt-1 uppercase tracking-[2px] text-[10px] text-[var(--text-light)]">
-              {current.event}
-            </p>
+            {current.designation && (
+              <p className="mt-1 uppercase tracking-[2px] text-[10px] text-[var(--text-light)]">
+                {current.designation}
+              </p>
+            )}
           </div>
 
           {/* Dots */}
@@ -126,7 +174,7 @@ export default function TestimonialSection() {
         {/* RIGHT */}
         <div className="relative h-full">
           <Image
-            src={current.image}
+            src={current.image || "/placeholder.jpg"}
             alt={current.name}
             fill
             className="object-cover"

@@ -1,108 +1,99 @@
 "use client";
-
 import Image from "next/image";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import ServicePopup from "@/components/layout/Popup";
-import { useState } from "react";
-
+import Button from "@/components/ui/Button";
 import {
-  MapPinned,
-  Plane,
-  Hotel,
-  Compass,
+  ClipboardPenLine,
+  MapPin,
+  Flower2,
+  Users,
+  Bell,
   Camera,
   MessageCircle,
+  Pencil,
   ClipboardCheck,
   Settings,
   Heart,
-  Search,
 } from "lucide-react";
+import ServicePopup from "@/components/layout/Popup";
+import { useState } from "react";
 import FloatingContact from "@/components/Floating";
 
 const features = [
   {
-    icon: MapPinned,
-    title: "Dream Destinations",
-    desc: "Curated locations that match your vision and style.",
+    icon: ClipboardPenLine,
+    title: "Celebration Planning",
+    desc: "Luxury weddings and social celebrations designed flawlessly.",
   },
   {
-    icon: Plane,
-    title: "Travel Planning",
-    desc: "Flights, transfers and logistics managed perfectly.",
+    icon: MapPin,
+    title: "Destination Venues",
+    desc: "Exclusive venues across beaches, palaces and luxury resorts.",
   },
   {
-    icon: Hotel,
-    title: "Luxury Stays",
-    desc: "Premium resorts, villas and unforgettable hospitality.",
+    icon: Flower2,
+    title: "Luxury Decor",
+    desc: "Elegant themes, floral styling and immersive decor concepts.",
   },
   {
-    icon: Compass,
-    title: "Local Experiences",
-    desc: "Authentic experiences crafted for your celebration.",
+    icon: Users,
+    title: "Guest Experience",
+    desc: "Seamless hospitality, guest management and coordination.",
   },
   {
-    icon: Camera,
-    title: "Memories Forever",
-    desc: "Beautiful moments captured for a lifetime.",
+    icon: Bell,
+    title: "Entertainment",
+    desc: "Artists, live performances and unforgettable experiences.",
   },
 ];
 
 const process = [
   {
-    icon: Search,
-    title: "Discover",
-    desc: "We understand your dream destination and expectations.",
-  },
-  {
     icon: MessageCircle,
     title: "Consult",
-    desc: "We discuss experiences, budget and guest planning.",
+    desc: "Understanding your vision, style and celebration goals.",
+  },
+  {
+    icon: Pencil,
+    title: "Design",
+    desc: "Creating themes, decor concepts and guest experiences.",
   },
   {
     icon: ClipboardCheck,
     title: "Plan",
-    desc: "Travel, stay, venues and activities planned perfectly.",
+    desc: "Managing venues, hospitality, entertainment and logistics.",
   },
   {
     icon: Settings,
     title: "Execute",
-    desc: "Our team manages every detail seamlessly.",
+    desc: "Bringing every celebration detail together flawlessly.",
   },
   {
     icon: Heart,
-    title: "Explore",
-    desc: "Celebrate, relax and create lifelong memories.",
+    title: "Celebrate",
+    desc: "Creating memories that stay with you forever.",
   },
 ];
 
 const projects = [
   {
     image: "/training.png",
-    title: "Beach Celebration",
-    location: "Maldives",
   },
   {
     image: "/training.png",
-    title: "Mountain Retreat",
-    location: "Switzerland",
   },
   {
     image: "/training.png",
-    title: "Royal Experience",
-    location: "Udaipur",
   },
   {
     image: "/training.png",
-    title: "Island Escape",
-    location: "Bali",
   },
 ];
 
-export default function TravelDestinations() {
+export default function Wedding() {
   const [open, setOpen] = useState(false);
-
   return (
     <div className="bg-[var(--bg)]">
       <Navbar />
@@ -112,38 +103,34 @@ export default function TravelDestinations() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image2.png')",
+            backgroundImage: "url('/wedding.png')",
           }}
         />
-
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[rgba(253,251,247,0.94)] to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              Travel & Destinations
+              Weddings & Social Celebrations
             </p>
 
-            <h1 className="font-serif text-[32px] md:text-[48px] lg:text-[62px] leading-[1.15] text-[var(--text)] font-light max-w-[650px]">
-              Explore The World.
+            <h1 className="font-serif text-[38px] md:text-[50px] lg:text-[60px] leading-[1.1] text-[var(--text)] font-light">
+              Beautiful Celebrations.
               <br />
-              Celebrate In{" "}
               <span className="italic text-[var(--primary)]">
-                Extraordinary Places.
+                Timeless Memories.
               </span>
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
-              From exotic beaches to royal palaces and mountain escapes, we
-              create destination experiences filled with elegance, adventure and
-              unforgettable memories.
+              Designing unforgettable celebrations filled with elegance,
+              emotions, and personalized experiences for every special occasion.
             </p>
 
             <button
               onClick={() => setOpen(true)}
               className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
             >
-              Plan Your Journey
+              Create Timeless Celebrations
             </button>
           </div>
         </div>
@@ -178,10 +165,10 @@ export default function TravelDestinations() {
       {/* ABOUT */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[500px] overflow-hidden">
+          <div className="relative h-[500px]  overflow-hidden">
             <Image
               src="/about.png"
-              alt="Destination"
+              alt="Corporate event"
               fill
               className="object-cover"
             />
@@ -189,26 +176,38 @@ export default function TravelDestinations() {
 
           <div>
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Destination Experiences
+              About Our Celebrations
             </p>
 
-            <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              Every Journey.
-              <br />A Story Worth Telling.
+            <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.2] text-[var(--text)]">
+              Weddings, Parties &
+              <br />
+              Moments That Matter.
             </h2>
 
-            <p className="mt-6 text-[var(--text-light)] leading-8">
-              We create immersive destination experiences where travel,
-              celebration and luxury come together beautifully.
-            </p>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-10">
+              {[
+                "Destination Weddings",
+                "Wedding Planning & Coordination",
+                "Luxury Decor & Styling",
+                "Venue Selection & Hospitality",
+                "Artist & Entertainment Management",
+                "Birthday Celebrations",
+                "Anniversary Parties",
+                "Baby Showers & Private Gatherings",
+                "Theme-Based Celebrations",
+                "Guest Management Services",
+                "Food & Beverage Coordination",
+                "Entertainment & Live Performances",
+              ].map((service, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-[var(--primary)] mt-1">✦</span>
 
-            <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Luxury Destinations</p>
-              <p>• Guest Hospitality</p>
-              <p>• Travel Management</p>
-              <p>• Venue Planning</p>
-              <p>• Local Experiences</p>
-              <p>• Lifetime Memories</p>
+                  <p className="text-[15px] text-[var(--text)] leading-6">
+                    {service}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -219,11 +218,11 @@ export default function TravelDestinations() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-10">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Journey
+              Our Process
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Planning To Paradise
+              From Dream To I Do
             </h2>
           </div>
 
@@ -233,22 +232,27 @@ export default function TravelDestinations() {
 
               return (
                 <div key={i} className="text-center relative">
+                  {/* connector line */}
                   {i !== process.length - 1 && (
                     <div className="hidden md:block absolute top-10 left-[60%] w-full h-[1px] bg-[rgba(0,0,0,0.08)] z-0" />
                   )}
 
+                  {/* icon circle */}
                   <div className="relative z-10 w-20 h-20 rounded-full bg-white border border-[rgba(0,0,0,0.08)] flex items-center justify-center mx-auto">
                     <Icon size={28} className="text-[var(--primary)]" />
                   </div>
 
+                  {/* number */}
                   <p className="mt-5 text-sm font-medium text-[var(--primary)]">
                     {String(i + 1).padStart(2, "0")}
                   </p>
 
+                  {/* title */}
                   <h3 className="mt-2 font-semibold text-[var(--text)] uppercase tracking-[1px]">
                     {item.title}
                   </h3>
 
+                  {/* description */}
                   <p className="mt-3 text-sm leading-7 text-[var(--text-light)] max-w-[180px] mx-auto">
                     {item.desc}
                   </p>
@@ -259,16 +263,16 @@ export default function TravelDestinations() {
         </div>
       </section>
 
-      {/* DESTINATIONS */}
+      {/* PROJECTS */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Destinations We've Crafted
+              Celebrations We've Crafted
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Travel. Celebrate. Remember.
+              Real Moments. Timeless Memories.
             </h2>
           </div>
 

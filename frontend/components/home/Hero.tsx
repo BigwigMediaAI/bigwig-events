@@ -80,7 +80,7 @@ export default function Hero() {
               {currentSlide.tag}
             </p>
 
-            <h1 className="font-serif text-[44px] md:text-[70px] leading-[1.05] text-[var(--text)] font-light whitespace-pre-line">
+            <h1 className="font-serif  text-[38px] md:text-[50px] lg:text-[60px] leading-[1.05] text-[var(--text)] font-light whitespace-pre-line">
               {currentSlide.title}
             </h1>
 

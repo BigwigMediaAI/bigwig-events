@@ -132,10 +132,13 @@ export default function PortfolioModal({
               <option value="">Select category</option>
 
               <option value="Corporate Events">Corporate Events</option>
+              <option value="Luxury Weddings">Luxury Weddings</option>
               <option value="Social Celebrations">Social Celebrations</option>
-              <option value="Weddings">Weddings</option>
-              <option value="Travel">Travel</option>
-              <option value="Destination Events">Destination Events</option>
+              <option value="MICE">MICE</option>
+              <option value="Brand Activations">Brand Activations</option>
+              <option value="Destination Experiences">
+                Destination Experiences
+              </option>
             </select>
           </div>
 

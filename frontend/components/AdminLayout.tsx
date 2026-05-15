@@ -50,21 +50,21 @@ export default function AdminLayout({
       label: "Subscribers",
       to: "/admin/subscribers",
     },
-    // {
-    //   icon: <Users2 size={18} />,
-    //   label: "Clients",
-    //   to: "/admin/clients",
-    // },
+    {
+      icon: <Users2 size={18} />,
+      label: "Clients",
+      to: "/admin/clients",
+    },
     {
       icon: <FaMailBulk size={18} />,
       label: "Newsletter",
       to: "/admin/newsletter",
     },
-    // {
-    //   icon: <FaQuoteRight size={18} />,
-    //   label: "Testimonial",
-    //   to: "/admin/testimonial",
-    // },
+    {
+      icon: <FaQuoteRight size={18} />,
+      label: "Testimonial",
+      to: "/admin/testimonial",
+    },
     {
       icon: <GalleryThumbnails size={18} />,
       label: "Portfolio",

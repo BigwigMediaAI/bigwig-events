@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const galleryImages = [
   "/insta/img1.webp",
@@ -28,16 +29,18 @@ export default function InstagramSection() {
           </div>
 
           {/* Button */}
-          <button className="group border border-[var(--border)] h-12 px-6 flex items-center gap-3 hover:border-[var(--primary)] transition">
-            <span className="uppercase text-xs tracking-[2px] text-[var(--text)]">
-              View Instagram
-            </span>
+          <Link href="https://www.instagram.com/bigwig_events?igsh=OXNpd2ZrdGJhMmFo&utm_source=qr">
+            <button className="group border border-[var(--border)] h-12 px-6 flex items-center gap-3 hover:border-[var(--primary)] transition">
+              <span className="uppercase text-xs tracking-[2px] text-[var(--text)]">
+                View Instagram
+              </span>
 
-            <ArrowRight
-              size={16}
-              className="group-hover:text-[var(--primary)] transition"
-            />
-          </button>
+              <ArrowRight
+                size={16}
+                className="group-hover:text-[var(--primary)] transition"
+              />
+            </button>
+          </Link>
         </div>
 
         {/* Gallery */}

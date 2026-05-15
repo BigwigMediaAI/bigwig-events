@@ -100,11 +100,9 @@ export default function CorporateEvents() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image2.png')",
+            backgroundImage: "url('/corporate.png')",
           }}
         />
-
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[rgba(253,251,247,0.94)] to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
@@ -112,7 +110,7 @@ export default function CorporateEvents() {
               Corporate Events
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[58px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
+            <h1 className="font-serif  text-[38px] md:text-[50px] lg:text-[60px] leading-[1.1] text-[var(--text)] font-light">
               Events That{" "}
               <span className="italic text-[var(--primary)]">Inspire.</span>
               <br />
@@ -121,16 +119,16 @@ export default function CorporateEvents() {
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
-              From conferences to product launches, we create impactful
-              corporate events that engage, inspire and deliver business
-              results.
+              Delivering professionally curated corporate experiences that
+              inspire engagement, strengthen brand presence, and create
+              meaningful business connections.
             </p>
 
             <button
               onClick={() => setOpen(true)}
               className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
             >
-              Let’s Plan
+              Explore Corporate Experiences
             </button>
           </div>
         </div>
@@ -165,7 +163,8 @@ export default function CorporateEvents() {
       {/* ABOUT */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[500px]  overflow-hidden">
+          {/* LEFT IMAGE */}
+          <div className="relative h-[500px] overflow-hidden">
             <Image
               src="/corporate/img3.webp"
               alt="Corporate event"
@@ -174,30 +173,44 @@ export default function CorporateEvents() {
             />
           </div>
 
+          {/* RIGHT CONTENT */}
           <div>
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Corporate Events
+            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-3">
+              Corporate Services
             </p>
 
-            <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              Purposeful Events.
+            <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.2] text-[var(--text)]">
+              Events Designed
               <br />
-              Powerful Outcomes.
+              For Business Growth.
             </h2>
 
-            <p className="mt-6 text-[var(--text-light)] leading-8">
-              We partner with brands to create corporate experiences that
-              communicate your vision, strengthen relationships, and elevate
-              your business presence.
-            </p>
+            {/* SERVICES */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-10">
+              {[
+                "Conferences & Seminars",
+                "Annual Day Celebrations",
+                "Family Day Celebrations",
+                "Product Launches",
+                "Dealer Meets & Channel Partner Events",
+                "Exhibitions & Trade Shows",
+                "Award Nights & Gala Dinners",
+                "Team Building Activities",
+                "Corporate Offsites",
+                "Employee Engagement Programs",
+                "Brand Activations",
+                "Hybrid & Virtual Events",
+                "Artist & Celebrity Management",
+                "Corporate Gifting Solutions",
+              ].map((service, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-[var(--primary)] mt-1">✦</span>
 
-            <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Conferences</p>
-              <p>• Award Ceremonies</p>
-              <p>• Product Launches</p>
-              <p>• Team Offsites</p>
-              <p>• Seminars</p>
-              <p>• Corporate Parties</p>
+                  <p className="text-[15px] text-[var(--text)] leading-6">
+                    {service}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -211,7 +224,7 @@ export default function CorporateEvents() {
               Our Approach
             </p>
 
-            <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
+            <h2 className="mt-3 font-serif text-[42px] text-[var(--text)]">
               From Vision To Impact
             </h2>
           </div>

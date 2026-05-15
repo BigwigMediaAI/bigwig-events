@@ -36,7 +36,7 @@ export default function FloatingContact() {
             <div>
               {/* WhatsApp */}
               <a
-                href="https://api.whatsapp.com/send?phone=918368573451"
+                href="https://api.whatsapp.com/send?phone=918800818156"
                 target="_blank"
                 className="flex items-center gap-4 px-6 py-5 border-b transition-all duration-300 hover:bg-[rgba(180,140,90,0.04)]"
                 style={{
@@ -63,7 +63,7 @@ export default function FloatingContact() {
 
               {/* Call */}
               <a
-                href="tel:+918368573451"
+                href="tel:+918800818156"
                 className="flex items-center gap-4 px-6 py-5 border-b transition-all duration-300 hover:bg-[rgba(180,140,90,0.04)]"
                 style={{
                   borderColor: "rgba(0,0,0,0.06)",
@@ -82,14 +82,14 @@ export default function FloatingContact() {
                 <div>
                   <p className="font-medium text-[var(--text)]">Call Us</p>
                   <p className="text-sm text-[var(--text-light)]">
-                    +91 83685 73451
+                    +91 88008 18156
                   </p>
                 </div>
               </a>
 
               {/* Meeting */}
               <a
-                href="https://api.whatsapp.com/send?phone=918368573451&text=Hello,%20I%20want%20to%20book%20a%20consultation"
+                href="https://api.whatsapp.com/send?phone=918800818156&text=Hello,%20I%20want%20to%20book%20a%20consultation"
                 target="_blank"
                 className="flex items-center gap-4 px-6 py-5 transition-all duration-300 hover:bg-[rgba(180,140,90,0.04)]"
               >
@@ -140,7 +140,7 @@ export default function FloatingContact() {
         >
           {/* WhatsApp */}
           <a
-            href="https://api.whatsapp.com/send?phone=918368573451"
+            href="https://api.whatsapp.com/send?phone=918800818156"
             target="_blank"
             className="flex-1 flex items-center justify-center gap-2 py-4 font-medium"
             style={{
@@ -153,7 +153,7 @@ export default function FloatingContact() {
 
           {/* Call */}
           <a
-            href="tel:+918368573451"
+            href="tel:+918800818156"
             className="flex-1 flex items-center justify-center gap-2 py-4 font-medium"
             style={{
               background: "var(--primary)",

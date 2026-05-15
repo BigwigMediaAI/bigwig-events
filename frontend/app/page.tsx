@@ -7,11 +7,11 @@ import InstagramSection from "@/components/home/Followup";
 import Gallery from "@/components/home/Followup";
 import Hero from "@/components/home/Hero";
 import FeatureStrip from "@/components/home/Services";
-import Testimonials from "@/components/home/Testimonials";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import ClientsSection from "@/components/home/Client";
+import TestimonialSection from "@/components/home/Testimonials";
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
       <FeaturedWork />
       <WhyChooseUs />
       <ClientsSection />
-      <Testimonials />
+      <TestimonialSection />
       <InstagramSection />
       <FloatingContact />
       <Footer />

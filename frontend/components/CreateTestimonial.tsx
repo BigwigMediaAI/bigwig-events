@@ -267,19 +267,16 @@ export default function TestimonialModal({
               {imageFile ? (
                 <img
                   src={URL.createObjectURL(imageFile)}
-                  className="w-20 h-20 rounded-full object-cover"
+                  className="w-1/2 h-30  object-cover"
                 />
               ) : existingImage ? (
-                <img
-                  src={existingImage}
-                  className="w-20 h-20 rounded-full object-cover"
-                />
+                <img src={existingImage} className="w-20 h-20  object-cover" />
               ) : (
                 <>
                   <ImageIcon size={24} className="text-[var(--muted)] mb-2" />
 
                   <p className="text-sm text-[var(--text-light)]">
-                    Upload client image
+                    Upload image
                   </p>
                 </>
               )}

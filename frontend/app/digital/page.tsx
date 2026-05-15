@@ -116,15 +116,13 @@ export default function DigitalExperiences() {
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[rgba(253,251,247,0.94)] to-transparent" />
-
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
               Digital Experiences
             </p>
 
-            <h1 className="font-serif text-[32px] md:text-[48px] lg:text-[62px] leading-[1.15] text-[var(--text)] font-light max-w-[650px]">
+            <h1 className="font-serif  text-[38px] md:text-[50px] lg:text-[60px] leading-[1.15] text-[var(--text)] font-light max-w-[650px]">
               Digital Events.
               <br />
               Real{" "}

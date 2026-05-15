@@ -136,11 +136,13 @@ export default function ClientModal({
       <div
         className="
           w-full max-w-2xl
-          bg-[var(--white)]
-          border border-[var(--border)]
-          rounded-2xl
-          shadow-2xl
-          overflow-hidden
+    max-h-[90vh]
+    bg-[var(--white)]
+    border border-[var(--border)]
+    rounded-2xl
+    shadow-2xl
+    flex flex-col
+    overflow-hidden
         "
       >
         {/* Header */}
@@ -158,7 +160,7 @@ export default function ClientModal({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6 overflow-auto">
           {/* Error */}
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm">

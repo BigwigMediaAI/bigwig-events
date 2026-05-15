@@ -10,10 +10,9 @@ import ServicePopup from "./Popup";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: " Events", href: "/corporate-events" },
-  { name: "Social ", href: "/social-celebrations" },
-  { name: "Wedding", href: "/wedding" },
-  { name: "Travel", href: "/travel" },
+  { name: "Corporate Events", href: "/corporate-events" },
+  { name: "Travel & Mice ", href: "/travel-mice" },
+  { name: "Weddings & Social Events", href: "/weddings-and-social-events" },
   { name: "Digital", href: "/digital" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Blog", href: "/blog" },
@@ -55,7 +54,7 @@ export default function Navbar() {
           </Link>
 
           {/* Center Menu */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-5">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -69,15 +68,12 @@ export default function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center gap-4">
-            {/* CTA */}
-            <button
-              onClick={() => setOpen(true)}
-              className="cursor-pointer hidden md:flex px-6 h-11 items-center justify-center border border-[#b89b5e] text-[#b89b5e] text-sm uppercase tracking-wider hover:bg-[#b89b5e] hover:text-white transition"
-            >
-              Let's Plan
-            </button>
+            <Link href="/contact">
+              <button className="cursor-pointer hidden md:flex px-6 h-11 items-center justify-center border border-[#b89b5e] text-[#b89b5e] text-sm uppercase tracking-wider hover:bg-[#b89b5e] hover:text-white transition">
+                Contact Us
+              </button>
+            </Link>
 
-            {/* Menu Icon */}
             <button onClick={() => setMenuOpen(true)}>
               <CgMenuLeft size={28} className="text-[#b89b5e] cursor-pointer" />
             </button>
@@ -154,17 +150,24 @@ export default function Navbar() {
 
             <div className="flex items-center gap-3 text-[var(--text)]">
               <Phone size={18} />
-              <span>+91 9876543210</span>
+              <span>+91 8800818156</span>
             </div>
 
             <div className="flex items-center gap-3 text-[var(--text)]">
               <Mail size={18} />
-              <span>hello@bigwigevents.com</span>
+              <span>ashima@bigwigmedia.in</span>
             </div>
 
             <div className="flex items-center gap-3 text-[var(--text)]">
               <Instagram size={18} />
-              <span>@bigwig.events</span>
+              <span>
+                <Link
+                  href="https://www.instagram.com/bigwig_events?igsh=OXNpd2ZrdGJhMmFo&utm_source=qr"
+                  target="_blank"
+                >
+                  @bigwig.events
+                </Link>
+              </span>
             </div>
           </div>
         </div>

@@ -1,107 +1,100 @@
 "use client";
+
 import Image from "next/image";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import Button from "@/components/ui/Button";
+import ServicePopup from "@/components/layout/Popup";
+import { useState } from "react";
+
 import {
-  ClipboardPenLine,
-  MapPin,
-  Flower2,
-  Users,
-  Bell,
+  MapPinned,
+  Plane,
+  Hotel,
+  Compass,
   Camera,
   MessageCircle,
-  Pencil,
   ClipboardCheck,
   Settings,
   Heart,
+  Search,
 } from "lucide-react";
-import ServicePopup from "@/components/layout/Popup";
-import { useState } from "react";
 import FloatingContact from "@/components/Floating";
 
 const features = [
   {
-    icon: ClipboardPenLine,
-    title: "Bespoke Planning",
-    desc: "Customized wedding experiences crafted around your vision.",
+    icon: MapPinned,
+    title: "Global Destinations",
+    desc: "Exclusive business and leisure destinations worldwide.",
   },
   {
-    icon: MapPin,
-    title: "Venue Selection",
-    desc: "Handpicked venues that match your dream celebration.",
+    icon: Plane,
+    title: "Travel Management",
+    desc: "Flights, visas, transfers and logistics handled smoothly.",
   },
   {
-    icon: Flower2,
-    title: "Design & Decor",
-    desc: "Beautiful designs and magical decor experiences.",
+    icon: Hotel,
+    title: "Luxury Hospitality",
+    desc: "Premium stays for executives, teams and delegates.",
   },
   {
-    icon: Users,
-    title: "Vendor Management",
-    desc: "Trusted vendors and flawless coordination.",
+    icon: Compass,
+    title: "MICE Expertise",
+    desc: "Strategic meetings, conferences and incentive programs.",
   },
   {
-    icon: Bell,
-    title: "Hospitality",
-    desc: "Exceptional guest experiences with premium care.",
+    icon: Camera,
+    title: "Memorable Experiences",
+    desc: "Business journeys designed to inspire and connect.",
   },
 ];
 
 const process = [
   {
-    icon: MessageCircle,
-    title: "Consult",
-    desc: "We understand your story, preferences and vision.",
+    icon: Search,
+    title: "Discover",
+    desc: "Understanding business goals, destination and audience.",
   },
   {
-    icon: Pencil,
-    title: "Design",
-    desc: "We create a concept that reflects your dream wedding.",
+    icon: MessageCircle,
+    title: "Consult",
+    desc: "Budget, travel style and event expectations discussed.",
   },
   {
     icon: ClipboardCheck,
     title: "Plan",
-    desc: "Every detail is planned with precision and care.",
+    desc: "Flights, stays, venues and activities planned perfectly.",
   },
   {
     icon: Settings,
     title: "Execute",
-    desc: "We bring everything together seamlessly.",
+    desc: "Managing every travel and event detail seamlessly.",
   },
   {
     icon: Heart,
-    title: "Celebrate",
-    desc: "You enjoy every moment while we handle everything.",
+    title: "Experience",
+    desc: "Creating journeys that leave lasting impact.",
   },
 ];
 
 const projects = [
   {
     image: "/training.png",
-    title: "Royal Palace Wedding",
-    location: "Udaipur",
   },
   {
     image: "/training.png",
-    title: "Beachside Wedding",
-    location: "Goa",
   },
   {
     image: "/training.png",
-    title: "Luxury Ballroom Wedding",
-    location: "New Delhi",
   },
   {
     image: "/training.png",
-    title: "Garden Wedding",
-    location: "Jaipur",
   },
 ];
 
-export default function Wedding() {
+export default function TravelDestinations() {
   const [open, setOpen] = useState(false);
+
   return (
     <div className="bg-[var(--bg)]">
       <Navbar />
@@ -111,38 +104,37 @@ export default function Wedding() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image2.png')",
+            backgroundImage: "url('/travelmice.png')",
           }}
         />
-
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[rgba(253,251,247,0.94)] to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              Weddings
+              Travel & MICE
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[52px] lg:text-[64px] leading-[1.1] text-[var(--text)] font-light">
-              Your Dream{" "}
-              <span className="italic text-[var(--primary)]">Wedding.</span>
+            <h1 className="font-serif text-[38px] md:text-[50px] lg:text-[60px] leading-[1.15] text-[var(--text)] font-light max-w-[700px]">
+              Business Travel.
               <br />
-              Our Passion To{" "}
+              Global Experiences.
+              <br />
               <span className="italic text-[var(--primary)]">
-                Make It Perfect.
+                Exceptional Results.
               </span>
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
-              From intimate ceremonies to grand celebrations, we design and
-              execute weddings as unique as your love story.
+              Curating seamless domestic and international travel experiences
+              with complete planning, hospitality, logistics, and destination
+              management services.
             </p>
 
             <button
               onClick={() => setOpen(true)}
               className="mt-8 h-12 px-8 border border-[var(--primary)] text-[var(--primary)] uppercase tracking-wider text-sm hover:bg-[var(--primary)] hover:text-white transition-all duration-300"
             >
-              Let’s Plan
+              Discover Global Journeys
             </button>
           </div>
         </div>
@@ -177,10 +169,10 @@ export default function Wedding() {
       {/* ABOUT */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[500px]  overflow-hidden">
+          <div className="relative h-[500px] overflow-hidden">
             <Image
               src="/about.png"
-              alt="Corporate event"
+              alt="Travel and MICE"
               fill
               className="object-cover"
             />
@@ -188,27 +180,39 @@ export default function Wedding() {
 
           <div>
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Our Weddings
+              Travel & MICE Services
             </p>
 
-            <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              We Don't Just Plan Weddings,
+            <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.2] text-[var(--text)]">
+              Business Travel.
               <br />
-              We Create Timeless Stories.
+              Elevated Experiences.
             </h2>
 
-            <p className="mt-6 text-[var(--text-light)] leading-8">
-              We blend creativity, tradition and flawless execution to design
-              weddings that reflect your personality and leave lasting memories.
-            </p>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-10">
+              {[
+                "International Incentive Tours",
+                "Corporate MICE Programs",
+                "Destination Conferences",
+                "Leadership Retreats",
+                "Corporate Offsites",
+                "Group Travel Management",
+                "Luxury Leisure Holidays",
+                "Hotel & Flight Reservations",
+                "Visa Assistance",
+                "Transportation & Logistics",
+                "Cruise Experiences",
+                "Customized Travel Itineraries",
+                "Destination Management Services",
+              ].map((service, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-[var(--primary)] mt-1">✦</span>
 
-            <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Personalized Wedding Concepts</p>
-              <p>• End-to-End Planning</p>
-              <p>• Attention To Every Detail</p>
-              <p>• Stress-Free Experience</p>
-              <p>• Luxury Guest Management</p>
-              <p>• Memories Forever</p>
+                  <p className="text-[15px] text-[var(--text)] leading-6">
+                    {service}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -219,11 +223,11 @@ export default function Wedding() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-10">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Process
+              Our Journey
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Dream To I Do
+              From Planning To Experience
             </h2>
           </div>
 
@@ -264,16 +268,16 @@ export default function Wedding() {
         </div>
       </section>
 
-      {/* PROJECTS */}
+      {/* DESTINATIONS */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Weddings We've Crafted
+              Destinations We've Crafted
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Real Weddings. Real Love Stories.
+              Travel. Celebrate. Remember.
             </h2>
           </div>
 
@@ -283,19 +287,11 @@ export default function Wedding() {
                 <div className="relative h-[250px] rounded-lg overflow-hidden">
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt="Travel & Mice"
                     fill
                     className="object-cover"
                   />
                 </div>
-
-                <h3 className="mt-5 font-serif text-xl text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-sm uppercase tracking-[2px] text-[var(--primary)]">
-                  {item.location}
-                </p>
               </div>
             ))}
           </div>

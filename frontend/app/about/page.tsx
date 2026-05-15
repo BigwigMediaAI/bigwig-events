@@ -91,7 +91,7 @@ export default function AboutPage() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image1.png')",
+            backgroundImage: "url('/aboutpage.png')",
           }}
         />
 
@@ -104,17 +104,21 @@ export default function AboutPage() {
               About Bigwig Events
             </p>
 
-            <h1 className="font-serif text-[38px] md:text-[56px] lg:text-[72px] leading-[1.1] text-[var(--text)] font-light">
-              Crafting Experiences
+            <h1 className="font-serif text-[38px] md:text-[50px] lg:text-[60px] leading-[1.1] text-[var(--text)] font-light">
+              Creating Experiences
               <br />
-              That Stay{" "}
-              <span className="italic text-[var(--primary)]">With You</span>
+              That Leave{" "}
+              <span className="italic text-[var(--primary)]">
+                Lasting Impressions
+              </span>
             </h1>
 
             <p className="mt-6 text-[var(--text-light)] text-base md:text-lg leading-8 max-w-[520px]">
-              At Bigwig Events, we believe every celebration should be as unique
-              as the people behind it. We blend creativity, precision, and
-              passion to design unforgettable moments.
+              We are a full-service event management and experiential company
+              specializing in Corporate Events, Travel & MICE, Weddings, and
+              Social Celebrations. With a passion for detail and a commitment to
+              flawless execution, we curate experiences that are elegant,
+              impactful, and unforgettable.
             </p>
 
             <button

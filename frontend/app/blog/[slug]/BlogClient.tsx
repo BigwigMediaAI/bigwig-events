@@ -54,7 +54,7 @@ export default function BlogClient({
       {/* HERO */}
       <section className="pt-32 pb-14 border-b border-[var(--border)]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <h1 className="font-serif text-[32px] md:text-[52px] lg:text-[64px] leading-[1.15] text-[var(--text)] max-w-5xl">
+          <h1 className="font-serif  text-[38px] md:text-[50px] lg:text-[60px] leading-[1.15] text-[var(--text)] max-w-5xl">
             {blog.title}
           </h1>
 
