@@ -14,7 +14,7 @@ const slides = [
     desc: "Premium conferences, product launches and business experiences designed to inspire impact.",
   },
   {
-    image: "/img4.png",
+    image: "/b.png",
     tag: "Crafting Experiences",
     title: "That Stay\nWith You",
     desc: "From boardrooms to beachfronts, we design and deliver unforgettable events tailored to perfection.",
@@ -58,7 +58,7 @@ export default function Hero() {
         {/* Left Arrow */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/80 backdrop-blur-md border border-[var(--border)] flex items-center justify-center hover:border-[var(--primary)] transition"
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/80 backdrop-blur-md border border-[var(--border)] flex items-center justify-center hover:border-[var(--primary)] transition"
         >
           <ChevronLeft color="black" />
         </button>
@@ -66,13 +66,13 @@ export default function Hero() {
         {/* Right Arrow */}
         <button
           onClick={nextSlide}
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/80 backdrop-blur-md border border-[var(--border)] flex items-center justify-center hover:border-[var(--primary)] transition"
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/80 backdrop-blur-md border border-[var(--border)] flex items-center justify-center hover:border-[var(--primary)] transition"
         >
           <ChevronRight color="black" />
         </button>
 
         {/* Content */}
-        <div className="relative z-10 h-full max-w-[1100px] mx-auto px-4 md:px-14 flex items-center">
+        <div className="relative z-10 h-full max-w-[1300px] mx-auto px-4 md:px-14 flex items-center">
           <div className="max-w-[540px] pt-16">
             <p className="text-[var(--primary)] uppercase tracking-[5px] text-xs md:text-sm mb-5">
               {currentSlide.tag}

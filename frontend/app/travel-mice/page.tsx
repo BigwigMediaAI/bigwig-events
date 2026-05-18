@@ -21,62 +21,6 @@ import {
 } from "lucide-react";
 import FloatingContact from "@/components/Floating";
 
-const features = [
-  {
-    icon: MapPinned,
-    title: "Global Destinations",
-    desc: "Exclusive business and leisure destinations worldwide.",
-  },
-  {
-    icon: Plane,
-    title: "Travel Management",
-    desc: "Flights, visas, transfers and logistics handled smoothly.",
-  },
-  {
-    icon: Hotel,
-    title: "Luxury Hospitality",
-    desc: "Premium stays for executives, teams and delegates.",
-  },
-  {
-    icon: Compass,
-    title: "MICE Expertise",
-    desc: "Strategic meetings, conferences and incentive programs.",
-  },
-  {
-    icon: Camera,
-    title: "Memorable Experiences",
-    desc: "Business journeys designed to inspire and connect.",
-  },
-];
-
-const process = [
-  {
-    icon: Search,
-    title: "Discover",
-    desc: "Understanding business goals, destination and audience.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Consult",
-    desc: "Budget, travel style and event expectations discussed.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Plan",
-    desc: "Flights, stays, venues and activities planned perfectly.",
-  },
-  {
-    icon: Settings,
-    title: "Execute",
-    desc: "Managing every travel and event detail seamlessly.",
-  },
-  {
-    icon: Heart,
-    title: "Experience",
-    desc: "Creating journeys that leave lasting impact.",
-  },
-];
-
 const projects = [
   {
     image: "/training.png",
@@ -140,32 +84,6 @@ export default function TravelDestinations() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="border-y border-[rgba(0,0,0,0.06)] bg-white">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
-          {features.map((item, i) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={i}
-                className="text-center px-6 py-10 border-r last:border-r-0 border-[rgba(0,0,0,0.06)]"
-              >
-                <Icon size={30} className="mx-auto text-[var(--primary)]" />
-
-                <h3 className="mt-4 font-semibold text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-7 text-[var(--text-light)]">
-                  {item.desc}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* ABOUT */}
       <section className="py-16">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
@@ -214,56 +132,6 @@ export default function TravelDestinations() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="py-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-10">
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Journey
-            </p>
-
-            <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Planning To Experience
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-5 gap-8 relative">
-            {process.map((item, i) => {
-              const Icon = item.icon;
-
-              return (
-                <div key={i} className="text-center relative">
-                  {/* connector line */}
-                  {i !== process.length - 1 && (
-                    <div className="hidden md:block absolute top-10 left-[60%] w-full h-[1px] bg-[rgba(0,0,0,0.08)] z-0" />
-                  )}
-
-                  {/* icon circle */}
-                  <div className="relative z-10 w-20 h-20 rounded-full bg-white border border-[rgba(0,0,0,0.08)] flex items-center justify-center mx-auto">
-                    <Icon size={28} className="text-[var(--primary)]" />
-                  </div>
-
-                  {/* number */}
-                  <p className="mt-5 text-sm font-medium text-[var(--primary)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-
-                  {/* title */}
-                  <h3 className="mt-2 font-semibold text-[var(--text)] uppercase tracking-[1px]">
-                    {item.title}
-                  </h3>
-
-                  {/* description */}
-                  <p className="mt-3 text-sm leading-7 text-[var(--text-light)] max-w-[180px] mx-auto">
-                    {item.desc}
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>

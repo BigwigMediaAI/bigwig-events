@@ -17,7 +17,7 @@ const navItems = [
       { name: "Social Events", href: "/social-events" },
     ],
   },
-  { name: "Travel ", href: "/travel-mice" },
+  { name: "Travels ", href: "/travel-mice" },
   { name: "Weddings", href: "/weddings" },
   { name: "Digital", href: "/digital" },
   { name: "Portfolio", href: "/portfolio" },

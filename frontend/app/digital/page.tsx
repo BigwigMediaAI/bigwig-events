@@ -112,7 +112,7 @@ export default function DigitalExperiences() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image2.png')",
+            backgroundImage: "url('/digitalpage.png')",
           }}
         />
 
@@ -147,114 +147,69 @@ export default function DigitalExperiences() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="border-y border-[rgba(0,0,0,0.06)] bg-white">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
-          {features.map((item, i) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={i}
-                className="text-center px-6 py-10 border-r last:border-r-0 border-[rgba(0,0,0,0.06)]"
-              >
-                <Icon size={30} className="mx-auto text-[var(--primary)]" />
-
-                <h3 className="mt-4 font-semibold text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-7 text-[var(--text-light)]">
-                  {item.desc}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* ABOUT */}
       <section className="py-16">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[500px] overflow-hidden">
-            <Image
-              src="/about.png"
-              alt="Digital experience"
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          <div>
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Digital Experiences
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          {/* Heading */}
+          <div className="mb-12">
+            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-3">
+              Digital Event Services
             </p>
 
-            <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
+            <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.2] text-[var(--text)]">
               Where Innovation.
               <br />
               Meets Engagement.
             </h2>
+          </div>
 
-            <p className="mt-6 text-[var(--text-light)] leading-8">
-              We combine creative storytelling, cutting-edge technology and
-              flawless execution to create digital experiences your audience
-              will remember.
-            </p>
-
-            <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Virtual Conferences</p>
-              <p>• Live Product Launches</p>
-              <p>• Webinar Production</p>
-              <p>• Interactive Sessions</p>
-              <p>• Audience Analytics</p>
-              <p>• Global Reach</p>
+          {/* Content */}
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Left Image */}
+            <div className="relative h-[500px] overflow-hidden">
+              <Image
+                src="/about.png"
+                alt="Digital experience"
+                fill
+                className="object-cover"
+              />
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* PROCESS */}
-      <section className="py-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-10">
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Process
-            </p>
+            {/* Right Services */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+              {[
+                "Virtual Conferences",
+                "Hybrid Events",
+                "Webinars & Live Sessions",
+                "Virtual Product Launches",
+                "Online Award Ceremonies",
+                "Live Streaming Solutions",
+                "Online Training Programs",
+                "Digital Team-Building Activities",
+                "Online Workshops & Masterclasses",
+                "Registration & Ticketing Platforms",
+                "Event App Integration",
+                "Audience Engagement Tools",
+                "Live Polls & Q&A Management",
+                "Virtual Booth Management",
+                "Speaker & Panel Coordination",
+                "Digital Branding & Creatives",
+                "Social Media Live Coverage",
+                "Event Analytics & Reporting",
+                "AV & Technical Production",
+                "Backstage Production Management",
+                "Recording & Post-Event Editing",
+                "Simultaneous Interpretation Services",
+              ].map((service, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-[var(--primary)] mt-1">✦</span>
 
-            <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Vision To Broadcast
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-5 gap-8 relative">
-            {process.map((item, i) => {
-              const Icon = item.icon;
-
-              return (
-                <div key={i} className="text-center relative">
-                  {i !== process.length - 1 && (
-                    <div className="hidden md:block absolute top-10 left-[60%] w-full h-[1px] bg-[rgba(0,0,0,0.08)] z-0" />
-                  )}
-
-                  <div className="relative z-10 w-20 h-20 rounded-full bg-white border border-[rgba(0,0,0,0.08)] flex items-center justify-center mx-auto">
-                    <Icon size={28} className="text-[var(--primary)]" />
-                  </div>
-
-                  <p className="mt-5 text-sm font-medium text-[var(--primary)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-
-                  <h3 className="mt-2 font-semibold text-[var(--text)] uppercase tracking-[1px]">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-3 text-sm leading-7 text-[var(--text-light)] max-w-[180px] mx-auto">
-                    {item.desc}
+                  <p className="text-[15px] text-[var(--text)] leading-6">
+                    {service}
                   </p>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
       </section>

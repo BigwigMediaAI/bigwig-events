@@ -41,7 +41,7 @@ const values = [
 const stats = [
   {
     icon: CalendarDays,
-    number: "10+",
+    number: "15+",
     title: "Years of Experience",
   },
   {
@@ -56,7 +56,7 @@ const stats = [
   },
   {
     icon: Gem,
-    number: "100%",
+    number: "98%",
     title: "Client Satisfaction",
   },
 ];
@@ -71,11 +71,6 @@ const teamMembers = [
     image: "/team2.png",
     name: "Vipul Dutta",
     role: "Managing Director",
-  },
-  {
-    image: "/team3.png",
-    name: "Creative Team",
-    role: "Design & Event Specialists",
   },
 ];
 
@@ -142,7 +137,7 @@ export default function AboutPage() {
               {/* Main Image */}
               <div className="relative z-10 overflow-hidden">
                 <img
-                  src="/whoweare.webp"
+                  src="/corporate/img4.webp"
                   alt="Who We Are"
                   className="w-full h-[420px] md:h-[520px] object-cover"
                 />
@@ -281,66 +276,29 @@ export default function AboutPage() {
           </div>
 
           {/* AWARDS GRID */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {[
-              {
-                img: "/icons/awards1.png",
-                title: "Best Event Planner 2024",
-              },
-              {
-                img: "/icons/awards2.png",
-                title: "Luxury Wedding Awards",
-              },
-              {
-                img: "/icons/awards3.png",
-                title: "Top 10 Event Company",
-              },
-              {
-                img: "/icons/awards4.png",
-                title: "Featured In Media",
-              },
+              { img: "/icons/award.webp" },
+              { img: "/icons/award1.webp" },
+              { img: "/icons/award2.webp" },
+              { img: "/icons/award3.webp" },
+              { img: "/icons/award4.webp" },
             ].map((item, i) => (
               <div
                 key={i}
-                className="group relative text-center p-6  overflow-hidden transition-all duration-500"
-                style={{
-                  background:
-                    "linear-gradient(180deg, #ffffff 0%, #faf8f5 100%)",
-                }}
+                className="group relative flex items-center justify-center border border-[#f3eee8] bg-[#faf8f5] min-h-[220px] transition-all duration-500 hover:shadow-xl"
               >
-                {/* HOVER GLOW */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500"
-                  style={{
-                    background:
-                      "radial-gradient(circle at center, rgba(180,140,90,0.12), transparent 70%)",
-                  }}
-                />
+                {/* Glow Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-b from-transparent to-[#b48c5a10]" />
 
-                {/* ICON CONTAINER */}
-                <div className="relative z-10 flex justify-center">
-                  <div
-                    className="h-[90px] w-[90px] rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
-                    style={{
-                      background: "rgba(180,140,90,0.08)",
-                      boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className=" object-contain opacity-90 group-hover:opacity-100 transition"
-                    />
-                  </div>
+                {/* Image */}
+                <div className="relative z-10 w-[200px] h-[200px] flex items-center justify-center">
+                  <img
+                    src={item.img}
+                    alt="Bigwig Events"
+                    className="max-w-full max-h-full object-contain group-hover:scale-105 transition duration-500"
+                  />
                 </div>
-
-                {/* TITLE */}
-                <p className="relative z-10 mt-6 text-[14px] tracking-wide text-[var(--text)] font-medium leading-5">
-                  {item.title}
-                </p>
-
-                {/* HOVER SHADOW */}
-                <div className="absolute inset-0 rounded-2xl shadow-lg opacity-0 group-hover:opacity-100 transition duration-500" />
               </div>
             ))}
           </div>
@@ -361,10 +319,9 @@ export default function AboutPage() {
           </div>
 
           {/* Team Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {teamMembers.slice(0, 2).map((member, i) => (
               <div key={i} className="group">
-                {/* Image */}
                 <div className="overflow-hidden mb-5">
                   <img
                     src={member.image}
@@ -373,7 +330,6 @@ export default function AboutPage() {
                   />
                 </div>
 
-                {/* Content */}
                 <h3 className="font-serif text-2xl text-[var(--text)]">
                   {member.name}
                 </h3>

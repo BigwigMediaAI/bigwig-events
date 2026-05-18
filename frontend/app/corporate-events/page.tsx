@@ -3,90 +3,55 @@ import Image from "next/image";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import Button from "@/components/ui/Button";
-import {
-  Lightbulb,
-  ShieldCheck,
-  Settings,
-  BarChart3,
-  Users,
-  Search,
-  ClipboardCheck,
-  Megaphone,
-} from "lucide-react";
+
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 import FloatingContact from "@/components/Floating";
 
-const features = [
-  {
-    icon: Users,
-    title: "Strategic Planning",
-    desc: "Thoughtful planning aligned with your business goals.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Creative Concepts",
-    desc: "Unique ideas that leave a lasting impression.",
-  },
-  {
-    icon: Settings,
-    title: "Seamless Execution",
-    desc: "Flawless execution down to every detail.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Experienced Team",
-    desc: "Professional team with industry expertise.",
-  },
-  {
-    icon: BarChart3,
-    title: "Measurable Impact",
-    desc: "Events that drive engagement and results.",
-  },
-];
-
-const process = [
-  {
-    icon: Search,
-    title: "Discover",
-    desc: "Understand your goals, audience and objectives.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Plan",
-    desc: "Craft a tailored event strategy and roadmap.",
-  },
-  {
-    icon: Settings,
-    title: "Execute",
-    desc: "Managing every detail with precision.",
-  },
-  {
-    icon: Megaphone,
-    title: "Engage",
-    desc: "Create memorable experiences that connect.",
-  },
-  {
-    icon: BarChart3,
-    title: "Deliver",
-    desc: "Ensuring impact and long-lasting results.",
-  },
-];
-
 const projects = [
   {
-    image: "/corporate/img7.webp",
+    image: "/corporate/img20.jpeg",
   },
   {
     image: "/corporate/img5.webp",
   },
   {
-    image: "/corporate/img3.webp",
+    image: "/corporate/img2.webp",
   },
   {
     image: "/corporate/img4.webp",
   },
+];
+
+const services = [
+  "Conferences & Seminars",
+  "Annual Day Celebrations",
+  "Family Day Celebrations",
+  "Product Launches",
+  "Dealer Meets & Channel Partner Events",
+  "Exhibitions & Trade Shows",
+  "Award Nights & Gala Dinners",
+  "Team Building Activities",
+  "Corporate Offsites",
+  "Employee Engagement Programs",
+  "Brand Activations",
+  "Hybrid & Virtual Events",
+  "Artist & Celebrity Management",
+  "Corporate Gifting Solutions",
+
+  "Sound, Light & AV Solutions",
+  "LED Walls & Visual Effects",
+  "Stage Production",
+  "Special Effects & Fireworks",
+  "Photography & Videography",
+  "Live Streaming Services",
+
+  "Venue Selection Assistance",
+  "Vendor Management",
+  "Permissions & Licensing",
+  "Security & Crowd Management",
+  "On-Ground Coordination",
+  "End-to-End Event Execution",
 ];
 
 export default function CorporateEvents() {
@@ -134,47 +99,10 @@ export default function CorporateEvents() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="border-y border-[rgba(0,0,0,0.06)] bg-white">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
-          {features.map((item, i) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={i}
-                className="text-center px-6 py-10 border-r last:border-r-0 border-[rgba(0,0,0,0.06)]"
-              >
-                <Icon size={30} className="mx-auto text-[var(--primary)]" />
-
-                <h3 className="mt-4 font-semibold text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-7 text-[var(--text-light)]">
-                  {item.desc}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ABOUT */}
       <section className="py-16">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          {/* LEFT IMAGE */}
-          <div className="relative h-[500px] overflow-hidden">
-            <Image
-              src="/corporate/img3.webp"
-              alt="Corporate event"
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          {/* RIGHT CONTENT */}
-          <div>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          {/* Heading */}
+          <div className="mb-12">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-3">
               Corporate Services
             </p>
@@ -184,25 +112,23 @@ export default function CorporateEvents() {
               <br />
               For Business Growth.
             </h2>
+          </div>
 
-            {/* SERVICES */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-10">
-              {[
-                "Conferences & Seminars",
-                "Annual Day Celebrations",
-                "Family Day Celebrations",
-                "Product Launches",
-                "Dealer Meets & Channel Partner Events",
-                "Exhibitions & Trade Shows",
-                "Award Nights & Gala Dinners",
-                "Team Building Activities",
-                "Corporate Offsites",
-                "Employee Engagement Programs",
-                "Brand Activations",
-                "Hybrid & Virtual Events",
-                "Artist & Celebrity Management",
-                "Corporate Gifting Solutions",
-              ].map((service, i) => (
+          {/* Content */}
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Left Image */}
+            <div className="relative h-[500px] overflow-hidden">
+              <Image
+                src="/corporate/img19.jpeg"
+                alt="Corporate event"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Right Services */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+              {services.map((service, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-[var(--primary)] mt-1">✦</span>
 
@@ -212,56 +138,6 @@ export default function CorporateEvents() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="py-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-10">
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Approach
-            </p>
-
-            <h2 className="mt-3 font-serif text-[42px] text-[var(--text)]">
-              From Vision To Impact
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-5 gap-8 relative">
-            {process.map((item, i) => {
-              const Icon = item.icon;
-
-              return (
-                <div key={i} className="text-center relative">
-                  {/* connector line */}
-                  {i !== process.length - 1 && (
-                    <div className="hidden md:block absolute top-10 left-[60%] w-full h-[1px] bg-[rgba(0,0,0,0.08)] z-0" />
-                  )}
-
-                  {/* icon circle */}
-                  <div className="relative z-10 w-20 h-20 rounded-full bg-white border border-[rgba(0,0,0,0.08)] flex items-center justify-center mx-auto">
-                    <Icon size={28} className="text-[var(--primary)]" />
-                  </div>
-
-                  {/* number */}
-                  <p className="mt-5 text-sm font-medium text-[var(--primary)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-
-                  {/* title */}
-                  <h3 className="mt-2 font-semibold text-[var(--text)] uppercase tracking-[1px]">
-                    {item.title}
-                  </h3>
-
-                  {/* description */}
-                  <p className="mt-3 text-sm leading-7 text-[var(--text-light)] max-w-[180px] mx-auto">
-                    {item.desc}
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>

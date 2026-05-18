@@ -3,100 +3,23 @@ import Image from "next/image";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import Button from "@/components/ui/Button";
-import {
-  Cake,
-  Heart,
-  Users,
-  Award,
-  Wine,
-  Camera,
-  MessageCircle,
-  Lightbulb,
-  ClipboardCheck,
-  Settings,
-  HeartHandshake,
-} from "lucide-react";
+
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 import FloatingContact from "@/components/Floating";
 
-const features = [
-  {
-    icon: Cake,
-    title: "Birthday Parties",
-    desc: "Unique themes and setups that make every birthday extra special.",
-  },
-  {
-    icon: Heart,
-    title: "Anniversary Events",
-    desc: "Celebrate your journey with elegant and memorable moments.",
-  },
-  {
-    icon: Users,
-    title: "Family Gatherings",
-    desc: "Thoughtfully planned celebrations that bring loved ones together.",
-  },
-  {
-    icon: Award,
-    title: "Festive Celebrations",
-    desc: "Traditional and modern celebrations with style.",
-  },
-  {
-    icon: Wine,
-    title: "Private Parties",
-    desc: "Personalized experiences with flawless execution.",
-  },
-];
-
-const process = [
-  {
-    icon: MessageCircle,
-    title: "Understand",
-    desc: "We understand your ideas, style and expectations.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Design",
-    desc: "Creative concepts tailored to your celebration.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Plan",
-    desc: "Every detail planned with precision and care.",
-  },
-  {
-    icon: Settings,
-    title: "Execute",
-    desc: "Our team delivers a seamless celebration.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Celebrate",
-    desc: "Relax and enjoy while we create memories.",
-  },
-];
-
 const projects = [
   {
+    image: "/social/img9.jpeg",
+  },
+  {
     image: "/social/img5.webp",
-    title: "Surprise Birthday Party",
-    location: "New Delhi",
+  },
+  {
+    image: "/social/img7.jpeg",
   },
   {
     image: "/social/img6.webp",
-    title: "Silver Anniversary",
-    location: "Jaipur",
-  },
-  {
-    image: "/social/img1.webp",
-    title: "Family Get-Together",
-    location: "Goa",
-  },
-  {
-    image: "/social/img2.webp",
-    title: "Private Celebration",
-    location: "Mumbai",
   },
 ];
 
@@ -111,11 +34,9 @@ export default function SocialCelebrations() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/image2.png')",
+            backgroundImage: "url('/socialpage.png')",
           }}
         />
-
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[rgba(253,251,247,0.94)] to-transparent" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen flex items-center px-6 md:px-12">
           <div className="max-w-[700px]">
@@ -124,15 +45,11 @@ export default function SocialCelebrations() {
             </p>
 
             <h1 className="font-serif text-[38px] md:text-[52px] lg:text-[62px] leading-[1.1] text-[var(--text)] font-light">
-              Celebrate Life’s{" "}
-              <span className="italic text-[var(--primary)]">
-                Beautiful Moments.
-              </span>
+              Celebrate With{" "}
+              <span className="italic text-[var(--primary)]">Style.</span>
               <br />
-              We Make Them{" "}
-              <span className="italic text-[var(--primary)]">
-                Unforgettable.
-              </span>
+              Create Memories{" "}
+              <span className="italic text-[var(--primary)]">Forever.</span>
             </h1>
 
             <p className="mt-8 text-lg leading-8 text-[var(--text-light)] max-w-[550px]">
@@ -150,119 +67,64 @@ export default function SocialCelebrations() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="border-y border-[rgba(0,0,0,0.06)] bg-white">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
-          {features.map((item, i) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={i}
-                className="text-center px-6 py-10 border-r last:border-r-0 border-[rgba(0,0,0,0.06)]"
-              >
-                <Icon size={30} className="mx-auto text-[var(--primary)]" />
-
-                <h3 className="mt-4 font-semibold text-[var(--text)]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-7 text-[var(--text-light)]">
-                  {item.desc}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* ABOUT */}
       <section className="py-16">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[500px]  overflow-hidden">
-            <Image
-              src="/social/img4.webp"
-              alt="Socail Celebrations"
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          <div>
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-5">
-              About Social Celebrations
-            </p>
-
-            <h2 className="font-serif text-[36px] md:text-[54px] leading-[1.2] text-[var(--text)]">
-              Every Celebration
-              <br />
-              Tells A Story.
-            </h2>
-
-            <p className="mt-6 text-[var(--text-light)] leading-8">
-              We believe every celebration is unique. Our team listens,
-              understands your vision, and creates unforgettable experiences
-              that reflect your personality and joy.
-            </p>
-
-            <div className="grid grid-cols-2 gap-y-5 mt-10 text-[var(--text)]">
-              <p>• Personalized Themes</p>
-              <p>• Event Planning</p>
-              <p>• Vendor Management</p>
-              <p>• Decoration & Styling</p>
-              <p>• Entertainment</p>
-              <p>• Lifetime Memories</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-10">
-            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Our Approach
+          {/* Heading */}
+          <div className="mb-12">
+            <p className="uppercase tracking-[4px] text-sm text-[var(--primary)] mb-3">
+              Social Event Services
             </p>
 
-            <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              From Vision To Impact
+            <h2 className="font-serif text-[32px] md:text-[42px] leading-[1.2] text-[var(--text)]">
+              Events Designed
+              <br />
+              For Memorable Celebrations.
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-8 relative">
-            {process.map((item, i) => {
-              const Icon = item.icon;
+          {/* Content */}
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Left Image */}
+            <div className="relative h-[500px] overflow-hidden">
+              <Image
+                src="/social/img8.jpeg"
+                alt="Social event"
+                fill
+                className="object-cover"
+              />
+            </div>
 
-              return (
-                <div key={i} className="text-center relative">
-                  {/* connector line */}
-                  {i !== process.length - 1 && (
-                    <div className="hidden md:block absolute top-10 left-[60%] w-full h-[1px] bg-[rgba(0,0,0,0.08)] z-0" />
-                  )}
+            {/* Right Services */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+              {[
+                "Birthday Parties",
+                "Kids’ Theme Parties",
+                "Milestone Celebrations",
+                "Baby Showers",
+                "Naming Ceremonies",
+                "Graduation Parties",
+                "Housewarming Events",
+                "Family Get-Togethers",
+                "Reunion Parties",
+                "High Tea Gatherings",
+                "Brunch Events",
+                "Poolside Parties",
+                "Yacht Parties",
+                "Sundowner Experiences",
+                "Private Dining Experiences",
+                "VIP Guest Experiences",
+                "Curated Luxury Celebrations",
+              ].map((service, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-[var(--primary)] mt-1">✦</span>
 
-                  {/* icon circle */}
-                  <div className="relative z-10 w-20 h-20 rounded-full bg-white border border-[rgba(0,0,0,0.08)] flex items-center justify-center mx-auto">
-                    <Icon size={28} className="text-[var(--primary)]" />
-                  </div>
-
-                  {/* number */}
-                  <p className="mt-5 text-sm font-medium text-[var(--primary)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-
-                  {/* title */}
-                  <h3 className="mt-2 font-semibold text-[var(--text)] uppercase tracking-[1px]">
-                    {item.title}
-                  </h3>
-
-                  {/* description */}
-                  <p className="mt-3 text-sm leading-7 text-[var(--text-light)] max-w-[180px] mx-auto">
-                    {item.desc}
+                  <p className="text-[15px] text-[var(--text)] leading-6">
+                    {service}
                   </p>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
       </section>

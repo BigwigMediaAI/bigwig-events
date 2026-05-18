@@ -14,11 +14,16 @@ const portfolioItems = [
   { category: "Corporate", image: "/corporate/img7.webp" },
   { category: "Corporate", image: "/corporate/img3.webp" },
   { category: "Corporate", image: "/corporate/img10.webp" },
+  { category: "Corporate", image: "/corporate/img19.jpeg" },
+  { category: "Corporate", image: "/corporate/img20.jpeg" },
 
   { category: "Social", image: "/social/img1.webp" },
   { category: "Social", image: "/social/img6.webp" },
   { category: "Social", image: "/social/img3.webp" },
   { category: "Social", image: "/social/img4.webp" },
+  { category: "Social", image: "/social/img7.jpeg" },
+  { category: "Social", image: "/social/img8.jpeg" },
+  { category: "Social", image: "/social/img9.jpeg" },
 ];
 
 export default function FeaturedWork() {
