@@ -8,19 +8,20 @@ import Link from "next/link";
 
 const slides = [
   {
-    image: "/image1.png",
-    tag: "Crafting Experiences",
-    title: "That Stay\nWith You",
-    desc: "From boardrooms to beachfronts, we design and deliver unforgettable events tailored to perfection.",
-  },
-  {
-    image: "/image2.png",
+    image: "/image3.png",
     tag: "Corporate Excellence",
     title: "Events That\nBuild Brands",
     desc: "Premium conferences, product launches and business experiences designed to inspire impact.",
   },
   {
-    image: "/image3.png",
+    image: "/img4.png",
+    tag: "Crafting Experiences",
+    title: "That Stay\nWith You",
+    desc: "From boardrooms to beachfronts, we design and deliver unforgettable events tailored to perfection.",
+  },
+
+  {
+    image: "/image2.png",
     tag: "Luxury Celebrations",
     title: "Moments Worth\nRemembering",
     desc: "Destination weddings, social gatherings and iconic celebrations curated with elegance.",
@@ -40,7 +41,7 @@ export default function Hero() {
   };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000);
+    const timer = setInterval(nextSlide, 8000);
     return () => clearInterval(timer);
   }, []);
 
@@ -54,9 +55,6 @@ export default function Hero() {
           backgroundImage: `url(${currentSlide.image})`,
         }}
       >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/55 to-transparent" />
-
         {/* Left Arrow */}
         <button
           onClick={prevSlide}

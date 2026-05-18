@@ -30,12 +30,16 @@ const services = [
     slug: "/corporate-events",
   },
   {
+    name: "Social Events",
+    slug: "/social-events",
+  },
+  {
     name: "Travel & MICE",
     slug: "/travel-mice",
   },
   {
-    name: "Weddings & Social Events",
-    slug: "/weddings-and-social-events",
+    name: "Weddings",
+    slug: "/weddings",
   },
   {
     name: "Digital",

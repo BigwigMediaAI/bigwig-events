@@ -4,7 +4,7 @@ import { CalendarDays, Star, MapPin } from "lucide-react";
 const stats = [
   {
     icon: CalendarDays,
-    value: "10+",
+    value: "15+",
     label: "Years of Experience",
   },
   {

@@ -20,9 +20,9 @@ export default function Home() {
       <Hero />
       <About />
       <FeatureStrip />
-
-      <FeaturedWork />
       <WhyChooseUs />
+      <FeaturedWork />
+
       <ClientsSection />
       <TestimonialSection />
       <InstagramSection />

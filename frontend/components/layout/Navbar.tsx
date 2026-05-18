@@ -10,9 +10,15 @@ import ServicePopup from "./Popup";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: "Corporate Events", href: "/corporate-events" },
-  { name: "Travel & Mice ", href: "/travel-mice" },
-  { name: "Weddings & Social Events", href: "/weddings-and-social-events" },
+  {
+    name: "Events",
+    submenu: [
+      { name: "Corporate Events", href: "/corporate-events" },
+      { name: "Social Events", href: "/social-events" },
+    ],
+  },
+  { name: "Travel ", href: "/travel-mice" },
+  { name: "Weddings", href: "/weddings" },
   { name: "Digital", href: "/digital" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Blog", href: "/blog" },
@@ -54,16 +60,40 @@ export default function Navbar() {
           </Link>
 
           {/* Center Menu */}
-          <div className="hidden lg:flex items-center gap-5">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-[13px] uppercase tracking-wider text-black hover:text-[var(--primary)] transition"
-              >
-                {item.name}
-              </Link>
-            ))}
+          {/* Center Menu */}
+          <div className="hidden lg:flex items-center gap-7">
+            {navItems.map((item) =>
+              item.submenu ? (
+                <div
+                  key={item.name}
+                  className="relative group h-full flex items-center"
+                >
+                  <button className="flex items-center h-full text-[13px] uppercase tracking-wider text-black hover:text-[var(--primary)] transition cursor-pointer leading-none bg-transparent border-none outline-none">
+                    {item.name}
+                  </button>
+
+                  <div className="absolute top-full left-0 mt-3 min-w-[240px] bg-white shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    {item.submenu.map((sub) => (
+                      <Link
+                        key={sub.name}
+                        href={sub.href}
+                        className="block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[var(--primary)] transition"
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-[13px] uppercase tracking-wider text-black hover:text-[var(--primary)] transition"
+                >
+                  {item.name}
+                </Link>
+              ),
+            )}
           </div>
 
           {/* Right Side */}
@@ -102,16 +132,35 @@ export default function Navbar() {
         <div className="p-6 space-y-8">
           {/* Mobile Menu */}
           <div className="lg:hidden flex flex-col gap-5">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-[var(--text)] text-lg hover:text-[var(--primary)] transition"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.submenu ? (
+                <div key={item.name} className="flex flex-col gap-2">
+                  <span className="text-[var(--text)] text-lg font-medium">
+                    {item.name}
+                  </span>
+
+                  {item.submenu.map((sub) => (
+                    <Link
+                      key={sub.name}
+                      href={sub.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="pl-4 text-sm text-gray-600 hover:text-[var(--primary)]"
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-[var(--text)] text-lg hover:text-[var(--primary)] transition"
+                >
+                  {item.name}
+                </Link>
+              ),
+            )}
 
             <button
               onClick={() => setOpen(true)}

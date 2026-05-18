@@ -39,7 +39,7 @@ export default function ClientsSection() {
 
   if (loading) {
     return (
-      <section className="py-20 bg-[#faf8f5]">
+      <section className="py-20 ">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-10">
             <div className="h-3 w-28 mx-auto bg-gray-200 animate-pulse rounded" />
