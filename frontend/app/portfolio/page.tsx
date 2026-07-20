@@ -156,8 +156,27 @@ export default function PortfolioPage() {
 
               <div className="lg:sticky lg:top-20 h-fit">
                 <div className="bg-white border border-[rgba(0,0,0,0.08)] rounded-2xl p-6 shadow-sm">
-                  {/* CATEGORY LIST */}
-                  <div className="flex flex-col gap-2">
+                  {/* Mobile Dropdown */}
+                  <div className="lg:hidden">
+                    <label className="block text-xs uppercase tracking-[2px] text-[var(--text-light)] mb-2">
+                      Category
+                    </label>
+
+                    <select
+                      value={activeCategory}
+                      onChange={(e) => setActiveCategory(e.target.value)}
+                      className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-[var(--primary)]"
+                    >
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Desktop Category List */}
+                  <div className="hidden lg:flex flex-col gap-2">
                     {categories.map((cat) => (
                       <button
                         key={cat}

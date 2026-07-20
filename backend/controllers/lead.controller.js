@@ -47,13 +47,70 @@ exports.sendOTP = async (req, res) => {
     // Send OTP Email
     await sendEmail({
       to: email,
-      subject: "Your OTP - Bigwig Events",
+      subject: "Your OTP Verification Code | Bigwig Events",
       html: `
-        <h2>Hello ${name},</h2>
-        <p>Your verification OTP is:</p>
-        <h1 style="letter-spacing: 5px;">${otp}</h1>
-        <p>This OTP is valid for 5 minutes.</p>
-      `,
+  <div style="margin:0;padding:40px 20px;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;">
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e5e5e5;">
+
+      <!-- Header -->
+      <tr>
+        <td align="center" style="padding:35px 30px 20px;">
+          <img
+            src="https://res.cloudinary.com/dqrlkbsdq/image/upload/v1784537232/logo2_as10wg.webp"
+            alt="Bigwig Events"
+            style="max-width:180px;height:auto;"
+          />
+        </td>
+      </tr>
+
+      <!-- Content -->
+      <tr>
+        <td style="padding:0 40px 35px;">
+          <h2 style="margin:0 0 15px;color:#222;font-size:26px;">
+            Hello ${name},
+          </h2>
+
+          <p style="margin:0 0 20px;color:#555;font-size:16px;line-height:1.7;">
+            Thank you for choosing <strong>Bigwig Events</strong>.
+            Please use the verification code below to continue.
+          </p>
+
+          <div style="background:#f8f8f8;border:2px dashed #d4af37;border-radius:10px;padding:22px;text-align:center;margin:30px 0;">
+            <div style="font-size:14px;color:#777;letter-spacing:2px;margin-bottom:10px;">
+              YOUR VERIFICATION CODE
+            </div>
+
+            <div style="font-size:38px;font-weight:bold;color:#111;letter-spacing:10px;">
+              ${otp}
+            </div>
+          </div>
+
+          <p style="margin:0 0 12px;color:#555;font-size:15px;line-height:1.7;">
+            This OTP is valid for <strong>5 minutes</strong>.
+          </p>
+
+          <p style="margin:0;color:#555;font-size:15px;line-height:1.7;">
+            If you did not request this verification code, you can safely ignore this email.
+          </p>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="padding:25px;background:#fafafa;border-top:1px solid #eee;text-align:center;">
+          <p style="margin:0;color:#888;font-size:13px;line-height:1.8;">
+            © ${new Date().getFullYear()} Bigwig Events. All Rights Reserved.
+          </p>
+
+          <p style="margin:8px 0 0;color:#999;font-size:12px;">
+            Creating Extraordinary Events & Experiences
+          </p>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+  `,
     });
 
     res.status(200).json({
@@ -110,28 +167,155 @@ exports.verifyOTP = async (req, res) => {
     /* ===== Confirmation Email ===== */
     await sendEmail({
       to: email,
-      subject: "We Received Your Request - Bigwig Events",
+      subject: "We've Received Your Request | Bigwig Events",
       html: `
-        <h2>Hello ${record.data.name},</h2>
-        <p>Thank you for contacting Bigwig Events.</p>
-        <p>Our team will connect with you shortly.</p>
-      `,
+  <div style="margin:0;padding:40px 20px;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;">
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e5e5e5;">
+
+      <!-- Header -->
+      <tr>
+        <td align="center" style="padding:35px 30px 20px;">
+          <img
+            src="https://res.cloudinary.com/dqrlkbsdq/image/upload/v1784537232/logo2_as10wg.webp"
+            alt="Bigwig Events"
+            style="max-width:180px;height:auto;"
+          />
+        </td>
+      </tr>
+
+      <!-- Content -->
+      <tr>
+        <td style="padding:0 40px 35px;">
+          <h2 style="margin:0 0 15px;color:#222;font-size:26px;">
+            Hello ${record.data.name},
+          </h2>
+
+          <p style="margin:0 0 18px;color:#555;font-size:16px;line-height:1.7;">
+            Thank you for reaching out to <strong>Bigwig Events</strong>. We have successfully received your request.
+          </p>
+
+          <div style="background:#faf8f3;border-left:4px solid #d4af37;padding:18px 20px;border-radius:8px;margin:25px 0;">
+            <p style="margin:0;color:#444;font-size:15px;line-height:1.8;">
+              Our team is reviewing your enquiry and will get in touch with you shortly to discuss your requirements and assist you with the next steps.
+            </p>
+          </div>
+
+          <p style="margin:0;color:#555;font-size:15px;line-height:1.7;">
+            We appreciate your interest in Bigwig Events and look forward to creating an unforgettable experience for you.
+          </p>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="padding:25px;background:#fafafa;border-top:1px solid #eee;text-align:center;">
+          <p style="margin:0;color:#888;font-size:13px;">
+            © ${new Date().getFullYear()} Bigwig Events. All Rights Reserved.
+          </p>
+
+          <p style="margin:8px 0 0;color:#999;font-size:12px;">
+            Creating Extraordinary Events & Experiences
+          </p>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+  `,
     });
 
     /* ===== Internal Notification ===== */
     await sendEmail({
-      to: "chandangomia2812@gmail.com",
-      subject: "New Lead - Bigwig Events",
+      to: "ashima@bigwigmedia.in",
+      subject: "🔔 New Lead Received | Bigwig Events",
       html: `
-        <h3>New Lead Details</h3>
-        <p><strong>Name:</strong> ${record.data.name}</p>
-        <p><strong>Email:</strong> ${record.data.email}</p>
-        <p><strong>Phone:</strong> ${record.data.phone}</p>
-        <p><strong>Event Type:</strong> ${record.data.eventType}</p>
-        <p><strong>Event Date:</strong> ${record.data.eventDate || "-"}</p>
-        <p><strong>Location:</strong> ${record.data.eventLocation || "-"}</p>
-        <p><strong>Message:</strong><br/> ${record.data.message || "-"}</p>
-      `,
+  <div style="margin:0;padding:40px 20px;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;">
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:650px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e5e5e5;">
+
+      <!-- Header -->
+      <tr>
+        <td align="center" style="padding:35px 30px 20px;">
+          <img
+            src="https://res.cloudinary.com/dqrlkbsdq/image/upload/v1784537232/logo2_as10wg.webp"
+            alt="Bigwig Events"
+            style="max-width:180px;height:auto;"
+          />
+        </td>
+      </tr>
+
+      <!-- Title -->
+      <tr>
+        <td style="padding:0 40px 25px;">
+          <h2 style="margin:0;color:#222;font-size:28px;">
+            New Lead Received
+          </h2>
+
+          <p style="margin:12px 0 0;color:#666;font-size:15px;line-height:1.7;">
+            A new enquiry has been submitted through the <strong>Bigwig Events</strong> website.
+          </p>
+        </td>
+      </tr>
+
+      <!-- Lead Details -->
+      <tr>
+        <td style="padding:0 40px 35px;">
+          <table width="100%" cellpadding="12" cellspacing="0" style="border-collapse:collapse;border:1px solid #ececec;border-radius:8px;overflow:hidden;">
+
+            <tr style="background:#fafafa;">
+              <td style="font-weight:bold;width:180px;">Name</td>
+              <td>${record.data.name}</td>
+            </tr>
+
+            <tr>
+              <td style="font-weight:bold;">Email</td>
+              <td>${record.data.email}</td>
+            </tr>
+
+            <tr style="background:#fafafa;">
+              <td style="font-weight:bold;">Phone</td>
+              <td>${record.data.phone}</td>
+            </tr>
+
+            <tr>
+              <td style="font-weight:bold;">Event Type</td>
+              <td>${record.data.eventType}</td>
+            </tr>
+
+            <tr style="background:#fafafa;">
+              <td style="font-weight:bold;">Event Date</td>
+              <td>${record.data.eventDate || "-"}</td>
+            </tr>
+
+            <tr>
+              <td style="font-weight:bold;">Event Location</td>
+              <td>${record.data.eventLocation || "-"}</td>
+            </tr>
+
+            <tr style="background:#fafafa;">
+              <td style="font-weight:bold;vertical-align:top;">Message</td>
+              <td>${record.data.message || "-"}</td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="padding:22px;background:#fafafa;border-top:1px solid #eee;text-align:center;">
+          <p style="margin:0;color:#888;font-size:13px;">
+            This is an automated notification from the Bigwig Events website.
+          </p>
+
+          <p style="margin:8px 0 0;color:#999;font-size:12px;">
+            © ${new Date().getFullYear()} Bigwig Events. All Rights Reserved.
+          </p>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+  `,
     });
 
     res.status(200).json({
