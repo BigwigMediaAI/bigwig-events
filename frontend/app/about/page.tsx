@@ -63,12 +63,12 @@ const stats = [
 
 const teamMembers = [
   {
-    image: "/team1.png",
-    name: "Ashima Arora Datta",
+    image: "/aashima1.png",
+    name: "Ashima Arora Dutta",
     role: "Founder & Creative Director",
   },
   {
-    image: "/team2.png",
+    image: "/vipul.png",
     name: "Vipul Dutta",
     role: "Managing Director",
   },
