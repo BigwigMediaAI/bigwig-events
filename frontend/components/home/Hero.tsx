@@ -8,20 +8,20 @@ import Link from "next/link";
 
 const slides = [
   {
-    image: "/image3.png",
+    image: "/hero3.png",
     tag: "Corporate Excellence",
     title: "Events That\nBuild Brands",
     desc: "Premium conferences, product launches and business experiences designed to inspire impact.",
   },
   {
-    image: "/b.png",
+    image: "/hero1.png",
     tag: "Crafting Experiences",
     title: "That Stay\nWith You",
     desc: "From boardrooms to beachfronts, we design and deliver unforgettable events tailored to perfection.",
   },
 
   {
-    image: "/image2.png",
+    image: "/hero2.png",
     tag: "Luxury Celebrations",
     title: "Moments Worth\nRemembering",
     desc: "Destination weddings, social gatherings and iconic celebrations curated with elegance.",

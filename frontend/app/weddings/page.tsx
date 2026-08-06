@@ -7,19 +7,68 @@ import Navbar from "@/components/layout/Navbar";
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 import FloatingContact from "@/components/Floating";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 
 const projects = [
   {
-    image: "/training.png",
+    image: "/wedding/img (1).jpeg",
   },
   {
-    image: "/training.png",
+    image: "/wedding/img (2).jpeg",
   },
   {
-    image: "/training.png",
+    image: "/wedding/img (3).jpeg",
   },
   {
-    image: "/training.png",
+    image: "/wedding/img (4).jpeg",
+  },
+  {
+    image: "/wedding/img (5).jpeg",
+  },
+  {
+    image: "/wedding/img (6).jpeg",
+  },
+  {
+    image: "/wedding/img (7).jpeg",
+  },
+  {
+    image: "/wedding/img (8).jpeg",
+  },
+  {
+    image: "/wedding/img (9).jpeg",
+  },
+  {
+    image: "/wedding/img (10).jpeg",
+  },
+  {
+    image: "/wedding/img (11).jpeg",
+  },
+  {
+    image: "/wedding/img (12).jpeg",
+  },
+  {
+    image: "/wedding/img (13).jpeg",
+  },
+  {
+    image: "/wedding/img (14).jpeg",
+  },
+  {
+    image: "/wedding/img (15).jpeg",
+  },
+  {
+    image: "/wedding/img (16).jpeg",
+  },
+  {
+    image: "/wedding/img (17).jpeg",
+  },
+  {
+    image: "/wedding/img (18).jpeg",
+  },
+  {
+    image: "/wedding/img (19).jpeg",
   },
 ];
 
@@ -72,8 +121,8 @@ export default function Wedding() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-[500px]  overflow-hidden">
             <Image
-              src="/about.png"
-              alt="Corporate event"
+              src="/wedding/img (4).jpeg"
+              alt="Wedding event"
               fill
               className="object-cover"
             />
@@ -123,28 +172,51 @@ export default function Wedding() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Celebrations We've Crafted
+              Recent Wedding Events
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Real Moments. Timeless Memories.
+              Moments That Made Impact
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {projects.map((item, i) => (
-              <div key={i}>
-                <div className="relative h-[250px] rounded-lg overflow-hidden">
+          <Swiper
+            modules={[Autoplay]}
+            loop={true}
+            speed={6000}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            spaceBetween={24}
+            slidesPerView={1.2}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+            }}
+            className="corporate-gallery"
+          >
+            {projects.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="relative h-[260px] rounded-xl overflow-hidden group">
                   <Image
                     src={item.image}
-                    alt="Wedding and social events"
+                    alt={`Corporate Event ${index + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </section>
 

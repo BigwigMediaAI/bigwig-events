@@ -7,6 +7,10 @@ import Navbar from "@/components/layout/Navbar";
 import ServicePopup from "@/components/layout/Popup";
 import { useState } from "react";
 import FloatingContact from "@/components/Floating";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 
 const projects = [
   {
@@ -20,6 +24,12 @@ const projects = [
   },
   {
     image: "/social/img6.webp",
+  },
+  {
+    image: "/social/img10.jpeg",
+  },
+  {
+    image: "/social/img11.jpeg",
   },
 ];
 
@@ -134,28 +144,51 @@ export default function SocialCelebrations() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <p className="uppercase tracking-[4px] text-sm text-[var(--primary)]">
-              Celebrations We've Crafted
+              Recent Socail Events
             </p>
 
             <h2 className="mt-4 font-serif text-[42px] text-[var(--text)]">
-              Moments Of Joy. Memories For A Lifetime.
+              Moments That Made Impact
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {projects.map((item, i) => (
-              <div key={i}>
-                <div className="relative h-[250px] rounded-lg overflow-hidden">
+          <Swiper
+            modules={[Autoplay]}
+            loop={true}
+            speed={6000}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            spaceBetween={24}
+            slidesPerView={1.2}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+            }}
+            className="corporate-gallery"
+          >
+            {projects.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="relative h-[260px] rounded-xl overflow-hidden group">
                   <Image
                     src={item.image}
-                    alt="Bigwig event"
+                    alt={`Corporate Event ${index + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </section>
 
