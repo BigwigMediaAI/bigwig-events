@@ -63,9 +63,7 @@ const projects = [
   },
 
   // Tadiran – DCM Shriram
-  {
-    image: "/corporate/taskus-noida/tadiran (1).png",
-  },
+
   {
     image: "/corporate/taskus-noida/tadiran (2).png",
   },
@@ -136,6 +134,21 @@ const services = [
 
 const showcaseCards = [
   {
+    title: "Study Group – Masquerade R&R Night",
+    description:
+      "A spectacular evening where elegance met appreciation. Inspired by the allure of a masquerade, the event celebrated outstanding achievements through captivating décor, heartfelt recognitions, engaging in-house performances, and an unforgettable guest experience.",
+    images: [
+      "/corporate/taskus-noida/sg (1).jpeg",
+      "/corporate/taskus-noida/sg (2).jpeg",
+      "/corporate/taskus-noida/sg (3).jpeg",
+    ],
+  },
+  {
+    title: "MARUTI NEXA",
+    description: `We got a brief from Maruti Suzuki- One of Maruti Suzuki's most loved sedan, CIAZ was moving exclusively to NEXA (Maruti's premium dealerships)\n\nThe idea of a cargo box with priority delivery was finalised to build curiosity & hype- Executing it simultaneously in Delhi, Mumbai, Bangalore, Hyderabad & Ahmedabad was a huge logistical challenge that team All Terrain delivered with efficiency & precision`,
+    images: ["/corporate/taskus-noida/nexa.png"],
+  },
+  {
     title: "Taskus Noida - Honouring Heroes. Celebrating Milestones.",
     description:
       "An unforgettable experience created to commemorate the inauguration of TaskUs’ new office and recognise exceptional talent. Inspired by iconic Indian superheroes, the event brought together immersive storytelling, engaging entertainment, and seamless execution.",
@@ -157,20 +170,18 @@ const showcaseCards = [
       "/corporate/taskus-noida/tts2.jpeg",
     ],
   },
-  {
-    title: "Study Group – Masquerade R&R Night",
-    description:
-      "A spectacular evening where elegance met appreciation. Inspired by the allure of a masquerade, the event celebrated outstanding achievements through captivating décor, heartfelt recognitions, engaging in-house performances, and an unforgettable guest experience.",
-    images: [
-      "/corporate/taskus-noida/sg (1).jpeg",
-      "/corporate/taskus-noida/sg (2).jpeg",
-      "/corporate/taskus-noida/sg (3).jpeg",
-    ],
-  },
+
   {
     title: "Sembcorp Green Hydrogen MoU Signing",
-    description: `Sembcorp Green Hydrogen MoU Signing marked a landmark international collaboration, bringing together global partners, government representatives, and industry leaders for the formal signing of a multi-nation green hydrogen initiative. Hosted at The Lodhi, New Delhi, the high-profile
-event seamlessly combined protocol, media engagement, and elegant hospitality.`,
+    description: `Sembcorp Green Hydrogen MoU Signing marked
+a landmark international collaboration, bringing
+together global partners, government
+representatives, and industry leaders for the
+formal signing of a multi-nation green hydrogen
+initiative.
+Hosted at The Lodhi, New Delhi, the high-profile
+event seamlessly combined protocol, media
+engagement, and elegant hospitality.`,
     images: [
       "/corporate/taskus-noida/sc (1).png",
       "/corporate/taskus-noida/sc (2).png",
@@ -211,8 +222,8 @@ Indian manufacturing partner, celebrating the
 signing of the MoU for local production and
 exports.`,
     images: [
-      "/corporate/taskus-noida/tadiran (1).png",
       "/corporate/taskus-noida/tadiran (2).png",
+      "/corporate/taskus-noida/tadiran (1).png",
     ],
   },
   {
@@ -437,7 +448,7 @@ export default function CorporateEvents() {
                 {currentCard.title}
               </h3>
 
-              <p className="mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-[var(--text-light)]">
+              <p className="whitespace-pre-line mt-6 text-base sm:text-lg leading-7 text-[var(--text-light)]">
                 {currentCard.description}
               </p>
 

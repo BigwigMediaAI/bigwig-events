@@ -10,16 +10,10 @@ import "swiper/css";
 const categories = ["Corporate", "Social"];
 
 const portfolioItems = [
-  { category: "Corporate", image: "/corporate/taskus-noida/tn (1).jpeg" },
-  { category: "Corporate", image: "/corporate/taskus-noida/tn (4).jpeg" },
-  { category: "Corporate", image: "/corporate/taskus-noida/tts1.jpeg" },
-  { category: "Corporate", image: "/corporate/taskus-noida/sg (1).jpeg" },
+  { category: "Corporate", image: "/corporate/ibm.png" },
+  { category: "Corporate", image: "/corporate/img4.webp" },
   { category: "Corporate", image: "/corporate/taskus-noida/sc (1).png" },
   { category: "Corporate", image: "/corporate/taskus-noida/ag (1).png" },
-  { category: "Corporate", image: "/corporate/taskus-noida/seil (1).png" },
-  { category: "Corporate", image: "/corporate/taskus-noida/tadiran (1).png" },
-  { category: "Corporate", image: "/corporate/taskus-noida/taskus (1).png" },
-  { category: "Corporate", image: "/corporate/taskus-noida/img (1).jpeg" },
   { category: "Corporate", image: "/corporate/taskus-noida/img (3).jpeg" },
   { category: "Corporate", image: "/corporate/taskus-noida/img (5).jpeg" },
 
